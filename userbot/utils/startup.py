@@ -80,7 +80,7 @@ async def setup_bot():
             "🐶 My admins have banned you from using @DogeUserBot!\n\
             🐾 Check your saved messages in Telegram."
         )
-        doge.disconnect()
+        await doge.disconnect()
         exit(1)
 
 
