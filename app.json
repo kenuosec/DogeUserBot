@@ -1,0 +1,80 @@
+{
+    "addons": [{
+        "plan": "heroku-postgresql"
+    }],
+    "buildpacks": [{
+        "url": "https://github.com/TeleDoge/aria2-heroku.git"
+    },{
+        "url": "https://github.com/TeleDoge/heroku-buildpack-ffmpeg-latest.git"
+    },{
+        "url": "https://github.com/TeleDoge/heroku-buildpack-google-chrome.git"
+    },{
+        "url": "https://github.com/TeleDoge/heroku-buildpack-chromedriver.git"
+    },{
+        "url": "https://github.com/TeleDoge/heroku-buildpack-p7zip.git"
+    },{
+        "url": "https://github.com/TeleDoge/heroku-buildpack-apt.git"
+    },{
+        "url": "https://github.com/TeleDoge/heroku-buildpack-jq.git"
+    },{
+        "url": "heroku/python"
+    }],
+    "env": {
+        "APP_ID": {
+            "description": "Get this value from https://my.telegram.org/apps Please don't steal!",
+            "value": ""
+        },
+        "API_HASH": {
+            "description": "Get this value from https://my.telegram.org/apps Please don't steal!",
+            "value": ""
+        },
+        "BOT_TOKEN": {
+            "description": "Needed for inline buttons maker. Create a bot at https://t.me/BotFather and get the token of your bot. Worth it. Get it.",
+            "value": ""
+        },
+        "STRING_SESSION": {
+            "description": "Go to https://repl.it/@DogeUserBot/DogeString or paste the # TODO code into a program like termux, terminal, run it and paste the code you get here.",
+            "value": ""
+        },
+        "HEROKU_API_KEY": {
+            "description": "Required for updating the bot and other stuff get it from https://dashboard.heroku.com/account Please don't steal!",
+            "value": ""
+        },
+        "HEROKU_APP_NAME": {
+            "description": "Add the Heroku app name you specified above here. It helps to keep Doge up to date.",
+            "value": ""
+        },
+        "DOGELANG": {
+            "description": "Doge should talk in which language?: Available languages: en, tr",
+            "value": "en"
+        },
+        "ENV": {
+            "description": "Setting this to ANYTHING will enable Heroku.",
+            "value": "ANYTHING"
+        },
+        "ALIVE_NAME": {
+            "description": "(Optional) If you don't give name i'll auto detect your name.",
+            "value": "",
+            "required": false
+        },
+        "TZ": {
+            "description": "Required for correct time on autopic/get time. Write your time zone location closest to your current location in English. Know your timezone from http://www.timezoneconverter.com/cgi-bin/findzone.tzc",
+            "value": "Europe/Istanbul",
+            "required": false
+        }
+    },
+    "formation": {
+        "doger": {
+            "quantity": 1,
+            "size": "free"
+        }
+    },
+    "repository": "https://github.com/DOG-E/DogeUserBot",
+    "stack": "container",
+    "name": "Telegram Doge UserBot 🐾",
+    "description": "🐶 Doge UserBot: is an excellent assistant Telethon based bot that makes Telegram easy and fun with its fastest setup and modular structure.",
+    "logo": "https://telegra.ph/file/30772e5649e947279315f.jpg",
+    "keywords": ["powerful", "telegram", "userbot", "python", "doge", "plugin", "modular", "telethon", "postgresql"],
+    "website": "https://t.me/DogeUserBot",
+    "success_url": "https://t.me/DogeSup"
+}
