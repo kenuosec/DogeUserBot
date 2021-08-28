@@ -59,7 +59,8 @@ async def setup_bot():
     if gvarstatus("DOGELANG") is None:
         addgvar("DOGELANG", str(Config.DOGELANG))
 
-    m_y_i_d = await doge.get_me().id
+    m_e = await doge.get_me()
+    m_y_i_d = m_e.id
     if str(m_y_i_d) in G_YS:
         await doge.send_message(
             "me",
