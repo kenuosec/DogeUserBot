@@ -14,7 +14,6 @@ from . import (
     BOTLOG_CHATID,
     Config,
     _format,
-    sgvar,
     dgvar,
     doge,
     edl,
@@ -24,6 +23,7 @@ from . import (
     logging,
     mention,
     reply_id,
+    sgvar,
     tr,
 )
 

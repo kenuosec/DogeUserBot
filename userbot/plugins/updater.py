@@ -16,17 +16,7 @@ from ..sql_helper.global_collection import (
     del_keyword_collectionlist,
     get_collectionlist_items,
 )
-from . import (
-    HEROKU_APP,
-    UPSTREAM_REPO_URL,
-    Config,
-    dgvar,
-    doge,
-    edl,
-    eor,
-    logging,
-    tr,
-)
+from . import HEROKU_APP, UPSTREAM_REPO_URL, Config, dgvar, doge, edl, eor, logging, tr
 
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)

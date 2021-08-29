@@ -11,13 +11,13 @@ from . import (
     BOTLOG_CHATID,
     MONTHS,
     _dogeutils,
-    sgvar,
     doge,
     edl,
     eor,
     fsmessage,
     gvar,
     media_type,
+    sgvar,
 )
 
 plugin_category = "misc"

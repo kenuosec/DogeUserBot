@@ -8,7 +8,6 @@ from ..sql_helper import global_collectionjson as sql
 from ..sql_helper import global_list as sqllist
 from . import (
     Config,
-    sgvar,
     dgvar,
     doge,
     edl,
@@ -17,6 +16,7 @@ from . import (
     gvar,
     logging,
     mentionuser,
+    sgvar,
 )
 
 plugin_category = "bot"

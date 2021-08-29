@@ -24,7 +24,6 @@ from userbot.helpers.tools import media_type
 
 from . import (
     _dogetools,
-    sgvar,
     clippy,
     convert_toimage,
     dgvar,
@@ -34,6 +33,7 @@ from . import (
     gvar,
     lan,
     reply_id,
+    sgvar,
 )
 
 plugin_category = "misc"

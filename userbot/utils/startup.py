@@ -27,7 +27,7 @@ from ..sql_helper.global_collection import (
     del_keyword_collectionlist,
     get_item_collectionlist,
 )
-from ..sql_helper.globals import sgvar, dgvar, gvar
+from ..sql_helper.globals import dgvar, gvar, sgvar
 from .pluginmanager import load_module
 from .tools import create_channel, create_supergroup
 

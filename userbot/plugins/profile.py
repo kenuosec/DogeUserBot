@@ -10,7 +10,7 @@ from telethon.tl.functions.photos import (
 )
 from telethon.tl.types import InputPhoto
 
-from . import Config, sgvar, doge, edl, eor, logging
+from . import Config, doge, edl, eor, logging, sgvar
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)

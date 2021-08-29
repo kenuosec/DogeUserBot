@@ -14,7 +14,6 @@ from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from . import (
     _dogetools,
     add_frame,
-    sgvar,
     asciiart,
     convert_toimage,
     crop,
@@ -32,6 +31,7 @@ from . import (
     pframehelper,
     random_color,
     reply_id,
+    sgvar,
     solarize,
 )
 

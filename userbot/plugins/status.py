@@ -4,7 +4,7 @@ from urllib.request import urlretrieve
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.photos import DeletePhotosRequest, UploadProfilePhotoRequest
 
-from . import sgvar, doge, edl, eor, gvar
+from . import doge, edl, eor, gvar, sgvar
 
 plugin_category = "tool"
 

@@ -5,7 +5,7 @@ from heroku3 import from_key
 from .Config import Config
 from .core.logger import logging
 from .core.session import doge
-from .sql_helper.globals import sgvar, dgvar, gvar
+from .sql_helper.globals import dgvar, gvar, sgvar
 
 __version__ = "0.9.1"
 __license__ = "GNU Affero General Public License v3.0"

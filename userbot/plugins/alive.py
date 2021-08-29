@@ -83,9 +83,7 @@ async def thisalive(event):
     uptime = await get_readable_time((time() - StartTime))
     _, check_sgnirts = check_data_base_heal_th()
     ALIVE_TEXT = gvar("ALIVE_TEXT") or "🐶 Doɢᴇ UsᴇʀBoᴛ 🐾"
-    DOG_IMG = (
-        gvar("ALIVE_PIC") or "https://telegra.ph/file/dd72e42027e6e7de9c0c9.jpg"
-    )
+    DOG_IMG = gvar("ALIVE_PIC") or "https://telegra.ph/file/dd72e42027e6e7de9c0c9.jpg"
     doge_caption = gvar("ALIVE") or temp
     caption = doge_caption.format(
         msg=ALIVE_TEXT,

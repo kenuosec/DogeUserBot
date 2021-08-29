@@ -10,7 +10,7 @@ from pytz import country_timezones as c_tz
 from pytz import timezone as tz
 from requests import get
 
-from . import WEATHER_API, WEATHER_CITY, _format, sgvar, doge, eor, logging, reply_id
+from . import WEATHER_API, WEATHER_CITY, _format, doge, eor, logging, reply_id, sgvar
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)

@@ -5,7 +5,6 @@ from validators.url import url as validatorsurl
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
-    sgvar,
     dgvar,
     doge,
     edl,
@@ -14,6 +13,7 @@ from . import (
     gvar,
     lan,
     logging,
+    sgvar,
 )
 
 plugin_category = "bot"

@@ -1,7 +1,7 @@
 # Credits: Ultroid - UserBot
 from datetime import datetime
 
-from .globals import sgvar, gvar
+from .globals import gvar, sgvar
 
 try:
     gvar("AFK_DB")

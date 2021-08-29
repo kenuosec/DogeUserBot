@@ -31,12 +31,12 @@ from . import (
     Config,
     _dogeutils,
     _format,
-    sgvar,
     dgvar,
     doge,
     edl,
     gvar,
     logging,
+    sgvar,
 )
 
 plugin_category = "misc"

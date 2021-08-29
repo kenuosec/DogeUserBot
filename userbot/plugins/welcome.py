@@ -8,7 +8,7 @@ from ..sql_helper.welcome_sql import (
     rm_welcome_setting,
     update_previous_welcome,
 )
-from . import BOTLOG_CHATID, sgvar, dgvar, doge, edl, eor, gvar, logging
+from . import BOTLOG_CHATID, dgvar, doge, edl, eor, gvar, logging, sgvar
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)

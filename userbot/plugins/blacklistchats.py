@@ -8,7 +8,7 @@ from ..sql_helper.global_collectionjson import (
     del_collection,
     get_collection,
 )
-from . import sgvar, dgvar, doge, edl, eor, gvar, logging
+from . import dgvar, doge, edl, eor, gvar, logging, sgvar
 
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)

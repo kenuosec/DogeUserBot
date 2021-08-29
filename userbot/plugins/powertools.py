@@ -11,13 +11,13 @@ from . import (
     BOTLOG,
     BOTLOG_CHATID,
     HEROKU_APP,
-    sgvar,
     dgvar,
     doge,
     edl,
     eor,
     gvar,
     logging,
+    sgvar,
 )
 
 plugin_category = "bot"

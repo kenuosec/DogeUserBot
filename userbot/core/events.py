@@ -118,34 +118,19 @@ async def safe_check_text(msg):  # sourcery no-metrics
             or (gvar("BOT_TOKEN") in msg)
             or (gvar("CURRENCY_API") and gvar("CURRENCY_API") in msg)
             or (gvar("DEEPAI_API") and gvar("DEEPAI_API") in msg)
-            or (
-                gvar("G_DRIVE_CLIENT_ID")
-                and gvar("G_DRIVE_CLIENT_ID") in msg
-            )
-            or (
-                gvar("G_DRIVE_CLIENT_SECRET")
-                and gvar("G_DRIVE_CLIENT_SECRET") in msg
-            )
+            or (gvar("G_DRIVE_CLIENT_ID") and gvar("G_DRIVE_CLIENT_ID") in msg)
+            or (gvar("G_DRIVE_CLIENT_SECRET") and gvar("G_DRIVE_CLIENT_SECRET") in msg)
             or (gvar("G_DRIVE_DATA") and gvar("G_DRIVE_DATA") in msg)
             or (gvar("GENIUS_API") and gvar("GENIUS_API") in msg)
-            or (
-                gvar("GITHUB_ACCESS_TOKEN")
-                and gvar("GITHUB_ACCESS_TOKEN") in msg
-            )
+            or (gvar("GITHUB_ACCESS_TOKEN") and gvar("GITHUB_ACCESS_TOKEN") in msg)
             or (
                 gvar("IBM_WATSON_CRED_PASSWORD")
                 and gvar("IBM_WATSON_CRED_PASSWORD") in msg
             )
-            or (
-                gvar("IBM_WATSON_CRED_URL")
-                and gvar("IBM_WATSON_CRED_URL") in msg
-            )
+            or (gvar("IBM_WATSON_CRED_URL") and gvar("IBM_WATSON_CRED_URL") in msg)
             or (gvar("IPDATA_API") and gvar("IPDATA_API") in msg)
             or (gvar("LASTFM_API") and gvar("LASTFM_API") in msg)
-            or (
-                gvar("LASTFM_PASSWORD_PLAIN")
-                and gvar("LASTFM_PASSWORD_PLAIN") in msg
-            )
+            or (gvar("LASTFM_PASSWORD_PLAIN") and gvar("LASTFM_PASSWORD_PLAIN") in msg)
             or (gvar("LASTFM_SECRET") and gvar("LASTFM_SECRET") in msg)
             or (gvar("OCRSPACE_API") and gvar("OCRSPACE_API") in msg)
             or (gvar("RANDOMSTUFF_API") and gvar("RANDOMSTUFF_API") in msg)
