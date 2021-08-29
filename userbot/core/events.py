@@ -114,50 +114,51 @@ async def safe_check_text(msg):  # sourcery no-metrics
         (
             (Config.STRING_SESSION in msg)
             or (Config.API_HASH in msg)
-            or (Config.HEROKU_API_KEY
-            and Config.HEROKU_API_KEY in msg
-        )
-        or (gvarstatus("BOT_TOKEN") in msg)
-        or (gvarstatus("CURRENCY_API") and gvarstatus("CURRENCY_API") in msg)
-        or (gvarstatus("DEEPAI_API") and gvarstatus("DEEPAI_API") in msg)
-        or (gvarstatus("G_DRIVE_CLIENT_ID") and gvarstatus("G_DRIVE_CLIENT_ID") in msg)
-        or (
-            gvarstatus("G_DRIVE_CLIENT_SECRET")
-            and gvarstatus("G_DRIVE_CLIENT_SECRET") in msg
-        )
-        or (gvarstatus("G_DRIVE_DATA") and gvarstatus("G_DRIVE_DATA") in msg)
-        or (gvarstatus("GENIUS_API") and gvarstatus("GENIUS_API") in msg)
-        or (
-            gvarstatus("GITHUB_ACCESS_TOKEN")
-            and gvarstatus("GITHUB_ACCESS_TOKEN") in msg
-        )
-        or (
-            gvarstatus("IBM_WATSON_CRED_PASSWORD")
-            and gvarstatus("IBM_WATSON_CRED_PASSWORD") in msg
-        )
-        or (
-            gvarstatus("IBM_WATSON_CRED_URL")
-            and gvarstatus("IBM_WATSON_CRED_URL") in msg
-        )
-        or (gvarstatus("IPDATA_API") and gvarstatus("IPDATA_API") in msg)
-        or (gvarstatus("LASTFM_API") and gvarstatus("LASTFM_API") in msg)
-        or (
-            gvarstatus("LASTFM_PASSWORD_PLAIN")
-            and gvarstatus("LASTFM_PASSWORD_PLAIN") in msg
-        )
-        or (gvarstatus("LASTFM_SECRET") and gvarstatus("LASTFM_SECRET") in msg)
-        or (gvarstatus("OCRSPACE_API") and gvarstatus("OCRSPACE_API") in msg)
-        or (gvarstatus("RANDOMSTUFF_API") and gvarstatus("RANDOMSTUFF_API") in msg)
-        or (gvarstatus("REMOVEBG_API") and gvarstatus("REMOVEBG_API") in msg)
-        or (gvarstatus("SPAMWATCH_API") and gvarstatus("SPAMWATCH_API") in msg)
-        or (gvarstatus("SPOTIFY_DC") and gvarstatus("SPOTIFY_DC") in msg)
-        or (gvarstatus("SPOTIFY_KEY") and gvarstatus("SPOTIFY_KEY") in msg)
-        or (gvarstatus("SS_API") and gvarstatus("SS_API") in msg)
-        or (
-            gvarstatus("TG_2STEP_VERIFICATION_CODE")
-            and gvarstatus("TG_2STEP_VERIFICATION_CODE") in msg
-        )
-        or (gvarstatus("WEATHER_API") and gvarstatus("WEATHER_API") in msg)
+            or (Config.HEROKU_API_KEY and Config.HEROKU_API_KEY in msg)
+            or (gvarstatus("BOT_TOKEN") in msg)
+            or (gvarstatus("CURRENCY_API") and gvarstatus("CURRENCY_API") in msg)
+            or (gvarstatus("DEEPAI_API") and gvarstatus("DEEPAI_API") in msg)
+            or (
+                gvarstatus("G_DRIVE_CLIENT_ID")
+                and gvarstatus("G_DRIVE_CLIENT_ID") in msg
+            )
+            or (
+                gvarstatus("G_DRIVE_CLIENT_SECRET")
+                and gvarstatus("G_DRIVE_CLIENT_SECRET") in msg
+            )
+            or (gvarstatus("G_DRIVE_DATA") and gvarstatus("G_DRIVE_DATA") in msg)
+            or (gvarstatus("GENIUS_API") and gvarstatus("GENIUS_API") in msg)
+            or (
+                gvarstatus("GITHUB_ACCESS_TOKEN")
+                and gvarstatus("GITHUB_ACCESS_TOKEN") in msg
+            )
+            or (
+                gvarstatus("IBM_WATSON_CRED_PASSWORD")
+                and gvarstatus("IBM_WATSON_CRED_PASSWORD") in msg
+            )
+            or (
+                gvarstatus("IBM_WATSON_CRED_URL")
+                and gvarstatus("IBM_WATSON_CRED_URL") in msg
+            )
+            or (gvarstatus("IPDATA_API") and gvarstatus("IPDATA_API") in msg)
+            or (gvarstatus("LASTFM_API") and gvarstatus("LASTFM_API") in msg)
+            or (
+                gvarstatus("LASTFM_PASSWORD_PLAIN")
+                and gvarstatus("LASTFM_PASSWORD_PLAIN") in msg
+            )
+            or (gvarstatus("LASTFM_SECRET") and gvarstatus("LASTFM_SECRET") in msg)
+            or (gvarstatus("OCRSPACE_API") and gvarstatus("OCRSPACE_API") in msg)
+            or (gvarstatus("RANDOMSTUFF_API") and gvarstatus("RANDOMSTUFF_API") in msg)
+            or (gvarstatus("REMOVEBG_API") and gvarstatus("REMOVEBG_API") in msg)
+            or (gvarstatus("SPAMWATCH_API") and gvarstatus("SPAMWATCH_API") in msg)
+            or (gvarstatus("SPOTIFY_DC") and gvarstatus("SPOTIFY_DC") in msg)
+            or (gvarstatus("SPOTIFY_KEY") and gvarstatus("SPOTIFY_KEY") in msg)
+            or (gvarstatus("SS_API") and gvarstatus("SS_API") in msg)
+            or (
+                gvarstatus("TG_2STEP_VERIFICATION_CODE")
+                and gvarstatus("TG_2STEP_VERIFICATION_CODE") in msg
+            )
+            or (gvarstatus("WEATHER_API") and gvarstatus("WEATHER_API") in msg)
         )
     )
 
