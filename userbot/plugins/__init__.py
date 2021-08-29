@@ -22,10 +22,10 @@ bot = doge
 
 # OWNER:
 ALIVE_NAME = gvar("ALIVE_NAME")
-AUTONAME = Config.AUTONAME
+AUTONAME = gvar("AUTONAME")
 
-BIO_PREFIX = Config.BIO_PREFIX
-DEFAULT_BIO = Config.DEFAULT_BIO
+BIO_PREFIX = gvar("BIO_PREFIX")
+DEFAULT_BIO = gvar("DEFAULT_BIO") or "🐶 @DogeUserBot 🐾"
 
 USERID = doge.uid if Config.OWNER_ID == 0 else Config.OWNER_ID
 mention = f"[{gvar('ALIVE_NAME')}](tg://user?id={USERID})"

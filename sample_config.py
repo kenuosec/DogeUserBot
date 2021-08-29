@@ -32,8 +32,6 @@ class Config(object):
     UPSTREAM_REPO = os.environ.get("UPSTREAM_REPO", "DogeUserBot")
 
     # BASIC & MAIN CONFIG VARS
-    # For profile default name
-    AUTONAME = os.environ.get("AUTONAME", None)
     # Set this value with group ID of private group(can be found this value by .id)
     PRIVATE_GROUP_BOT_API_ID = int(os.environ.get("PRIVATE_GROUP_BOT_API_ID") or 0)
     # Set this value same as PRIVATE_GROUP_BOT_API_ID if you need PMGUARD
@@ -70,8 +68,6 @@ class Config(object):
     DIGITAL_PIC = os.environ.get("DIGITAL_PIC", None)
     # Your default pic Telegraph link
     DEFAULT_PIC = os.environ.get("DEFAULT_PIC", None)
-    # Set this with your default bio
-    DEFAULT_BIO = os.environ.get("DEFAULT_BIO", "🐶 @DogeUserBot 🐾")
     # Specify command handler that should be used for the plugins
     # This should be a valid "regex" pattern
     CMDSET = os.environ.get("CMDSET", r".")

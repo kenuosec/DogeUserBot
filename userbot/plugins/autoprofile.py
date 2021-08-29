@@ -24,6 +24,7 @@ from ..sql_helper.global_list import (
     rm_from_list,
 )
 from . import (
+    ALIVE_NAME,
     AUTONAME,
     BOTLOG,
     BOTLOG_CHATID,
@@ -43,7 +44,7 @@ plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
 
 DEFAULTUSERBIO = DEFAULT_BIO or "🐶 @DogeUserBot 🐾"
-DEFAULTUSER = AUTONAME or Config.ALIVE_NAME
+DEFAULTUSER = AUTONAME or ALIVE_NAME
 FONT_FILE_TO_USE = "userbot/helpers/resources/fonts/spacemono_regular.ttf"
 autopic_path = path.join(getcwd(), "userbot", "original_pic.png")
 digitalpic_path = path.join(getcwd(), "userbot", "digital_pic.png")
