@@ -1,4 +1,3 @@
-
 # 👍 https://github.com/D3vd for his awesome API
 #
 # Copyright (C) 2020 BY - GitHub.com/code-rgb [TG - @DeletedUser420]
@@ -76,7 +75,6 @@ async def reddit_fetch(event):
             flag = await wowmygroup(event, lan("pmsgtext"))
             if flag:
                 return
-
 
         await event.delete()
         captionx += f"Source: [r/{subreddit}]({postlink})"

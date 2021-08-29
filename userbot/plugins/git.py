@@ -1,14 +1,13 @@
 from datetime import datetime
-from os import getcwd, makedirs
+from os import getcwd, makedirs, remove
 from os.path import basename, isdir, join
-from os import remove
 
 from aiohttp import ClientSession
 from github import Github
 from pySmartDL import SmartDL
 from requests import get
 
-from . import GITHUB_ACCESS_TOKEN, GIT_REPO_NAME, doge, edl, eor, lan, logging, reply_id
+from . import GIT_REPO_NAME, GITHUB_ACCESS_TOKEN, doge, edl, eor, lan, logging, reply_id
 
 plugin_category = "tool"
 LOGS = logging.getLogger(basename(__name__))

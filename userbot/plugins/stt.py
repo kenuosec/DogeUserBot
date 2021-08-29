@@ -5,7 +5,17 @@ from os import makedirs, path, remove
 from requests import post
 from telethon.events import MessageEdited, NewMessage
 
-from . import IBM_WATSON_CRED_URL, IBM_WATSON_CRED_PASSWORD, Config, doge, edl, eor, fsmessage, gvarstatus, lan, media_type
+from . import (
+    IBM_WATSON_CRED_PASSWORD,
+    IBM_WATSON_CRED_URL,
+    Config,
+    doge,
+    edl,
+    eor,
+    fsmessage,
+    lan,
+    media_type,
+)
 
 plugin_category = "tool"
 
@@ -54,10 +64,7 @@ async def _(event):
             await conv.cancel_all()
 
     except:
-        if (
-            IBM_WATSON_CRED_URL is None
-            or IBM_WATSON_CRED_PASSWORD is None
-        ):
+        if IBM_WATSON_CRED_URL is None or IBM_WATSON_CRED_PASSWORD is None:
             return await edl(
                 event,
                 "`You need to set the required ENV variables for this module. \nModule stopping`",

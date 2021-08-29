@@ -4,7 +4,16 @@ from os.path import join
 
 from requests import post
 
-from . import REMOVEBG_API, Config, convert_toimage, convert_tosticker, doge, edl, eor, reply_id
+from . import (
+    REMOVEBG_API,
+    Config,
+    convert_toimage,
+    convert_tosticker,
+    doge,
+    edl,
+    eor,
+    reply_id,
+)
 
 plugin_category = "misc"
 

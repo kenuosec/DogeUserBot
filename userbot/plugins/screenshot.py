@@ -119,9 +119,7 @@ async def _(event):
     if not dogurl:
         return await dogevent.edit("`The given input is not supported url`")
     response_api = get(
-        sample_url.format(
-            SS_API, inputstr, "1", "2560x1440", "PNG", "1"
-        )
+        sample_url.format(SS_API, inputstr, "1", "2560x1440", "PNG", "1")
     )
     # https://stackoverflow.com/a/23718458/4723940
     contentType = response_api.headers["content-type"]

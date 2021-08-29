@@ -110,7 +110,8 @@ async def dvdvdv(event):  # sourcery no-metrics
     apilist = "".join(f"{i}. `{each}`\n" for i, each in enumerate(alist, start=1))
     if not vname:
         return await eor(
-            event, f"**🪀 Give correct VAR name from the list:\n\n**{vnlist}\n\n\n**⚙️ Give correct API name from the list:\n\n**{apilist}",
+            event,
+            f"**🪀 Give correct VAR name from the list:\n\n**{vnlist}\n\n\n**⚙️ Give correct API name from the list:\n\n**{apilist}",
         )
 
     vinfo = None
@@ -191,14 +192,15 @@ async def dvdvdv(event):  # sourcery no-metrics
                 )
                 await event.client.send_message(BOTLOG_CHATID, apinfo, silent=True)
             await edl(
-                event, f"⚙️ Value of **{apiname}** is changed.",
+                event,
+                f"⚙️ Value of **{apiname}** is changed.",
             )
         if cmd == "get":
             api_data = gvarstatus(apiname)
             await edl(event, "**I sent API data to BOTLOG.**")
             await event.client.send_message(
-                    BOTLOG_CHATID,
-                    f"⚙️ Value of **{apiname}** is  `{api_data}`",
+                BOTLOG_CHATID,
+                f"⚙️ Value of **{apiname}** is  `{api_data}`",
             )
         elif cmd == "del":
             delgvar(apiname)
@@ -215,7 +217,8 @@ async def dvdvdv(event):  # sourcery no-metrics
             )
     else:
         await eor(
-            event, f"**🪀 Give correct VAR name from the list:\n\n**{vnlist}\n\n\n**⚙️ Give correct API name from the list:\n\n**{apilist}",
+            event,
+            f"**🪀 Give correct VAR name from the list:\n\n**{vnlist}\n\n\n**⚙️ Give correct API name from the list:\n\n**{apilist}",
         )
 
 

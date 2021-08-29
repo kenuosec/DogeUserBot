@@ -16,6 +16,7 @@ from telethon.utils import get_input_location, pack_bot_file_id
 
 from . import (
     IPDATA_API,
+    SPAMWATCH,
     Config,
     _dogeutils,
     doge,
@@ -31,7 +32,6 @@ from . import (
     post_to_telegraph,
     reply_id,
     sanga_seperator,
-    SPAMWATCH,
     tr,
     wowcg_y,
     wowcmydev,

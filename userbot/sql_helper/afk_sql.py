@@ -3,7 +3,6 @@ from datetime import datetime
 
 from .globals import addgvar, gvarstatus
 
-
 try:
     gvarstatus("AFK_DB")
 except BaseException:

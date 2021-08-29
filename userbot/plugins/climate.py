@@ -58,7 +58,7 @@ def sun(unix, ctimezone):
 async def get_weather(event):  # sourcery no-metrics
     "To get the weather report of a city."
     # if WEATHER_API is None:
-        # await eor(event, "`Get an API key from` https://openweathermap.org/ ``")
+    # await eor(event, "`Get an API key from` https://openweathermap.org/ ``")
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     CITY = WEATHER_CITY if not input_str else input_str
     timezone_countries = {
@@ -77,7 +77,9 @@ async def get_weather(event):  # sourcery no-metrics
             except KeyError:
                 return await eor(event, "`Invalid Country.`")
             CITY = newcity[0].strip() + "," + countrycode.strip()
-    url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={WEATHER_API}"
+    url = (
+        f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={WEATHER_API}"
+    )
     async with ClientSession() as _session:
         async with _session.get(url) as request:
             requeststatus = request.status
@@ -143,7 +145,7 @@ async def get_weather(event):  # sourcery no-metrics
 async def set_default_city(event):
     "To set default city for climate/weather cmd"
     # if WEATHER_API is None:
-        # await eor(event, "`Get an API key from` https://openweathermap.org/ ``")
+    # await eor(event, "`Get an API key from` https://openweathermap.org/ ``")
     input_str = event.pattern_match.group(1)
     CITY = WEATHER_CITY if not input_str else input_str
     timezone_countries = {
@@ -162,7 +164,9 @@ async def set_default_city(event):
             except KeyError:
                 return await eor(event, "`Invalid country.`")
             CITY = newcity[0].strip() + "," + countrycode.strip()
-    url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={WEATHER_API}"
+    url = (
+        f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={WEATHER_API}"
+    )
     request = get(url)
     result = loads(request.text)
     if request.status_code != 200:
