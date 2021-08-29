@@ -5,7 +5,7 @@ from heroku3 import from_key
 from .Config import Config
 from .core.logger import logging
 from .core.session import doge
-from .sql_helper.globals import addgvar, delgvar, gvarstatus
+from .sql_helper.globals import sgvar, dgvar, gvar
 
 __version__ = "0.9.1"
 __license__ = "GNU Affero General Public License v3.0"
@@ -13,7 +13,7 @@ __author__ = "DogeUserBot <https://github.com/DOG-E/DogeUserBot>"
 __copyright__ = "Copyright (C) 2021, " + __author__
 
 doge.version = __version__
-if gvarstatus("BOT_TOKEN"):
+if gvar("BOT_TOKEN"):
     doge.tgbot.version = __version__
 LOGS = logging.getLogger("DogeUserBot")
 bot = doge
@@ -29,12 +29,12 @@ else:
 
 
 if Config.PRIVATE_GROUP_BOT_API_ID == 0:
-    if gvarstatus("PRIVATE_GROUP_BOT_API_ID") is None:
+    if gvar("PRIVATE_GROUP_BOT_API_ID") is None:
         Config.BOTLOG = False
         Config.BOTLOG_CHATID = "me"
     else:
-        Config.BOTLOG_CHATID = int(gvarstatus("PRIVATE_GROUP_BOT_API_ID"))
-        Config.PRIVATE_GROUP_BOT_API_ID = int(gvarstatus("PRIVATE_GROUP_BOT_API_ID"))
+        Config.BOTLOG_CHATID = int(gvar("PRIVATE_GROUP_BOT_API_ID"))
+        Config.PRIVATE_GROUP_BOT_API_ID = int(gvar("PRIVATE_GROUP_BOT_API_ID"))
         Config.BOTLOG = True
 else:
     if str(Config.PRIVATE_GROUP_BOT_API_ID)[0] != "-":
@@ -45,10 +45,10 @@ else:
 
 
 if Config.PM_LOGGER_GROUP_ID == 0:
-    if gvarstatus("PM_LOGGER_GROUP_ID") is None:
+    if gvar("PM_LOGGER_GROUP_ID") is None:
         Config.PM_LOGGER_GROUP_ID = -100
     else:
-        Config.PM_LOGGER_GROUP_ID = int(gvarstatus("PM_LOGGER_GROUP_ID"))
+        Config.PM_LOGGER_GROUP_ID = int(gvar("PM_LOGGER_GROUP_ID"))
 elif str(Config.PM_LOGGER_GROUP_ID)[0] != "-":
     Config.PM_LOGGER_GROUP_ID = int("-" + str(Config.PM_LOGGER_GROUP_ID))
 

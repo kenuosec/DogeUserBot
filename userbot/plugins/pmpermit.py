@@ -14,13 +14,13 @@ from . import (
     BOTLOG_CHATID,
     Config,
     _format,
-    addgvar,
-    delgvar,
+    sgvar,
+    dgvar,
     doge,
     edl,
     eor,
     get_user_from_event,
-    gvarstatus,
+    gvar,
     logging,
     mention,
     reply_id,
@@ -56,7 +56,7 @@ async def do_pm_permit_action(event, chat):  # sourcery no-metrics
     if str(chat.id) not in PM_WARNS:
         PM_WARNS[str(chat.id)] = 0
     try:
-        MAX_FLOOD_IN_PMS = int(gvarstatus("MAX_FLOOD_IN_PMS") or 6)
+        MAX_FLOOD_IN_PMS = int(gvar("MAX_FLOOD_IN_PMS") or 6)
     except (ValueError, TypeError):
         MAX_FLOOD_IN_PMS = 6
     totalwarns = MAX_FLOOD_IN_PMS + 1
@@ -71,7 +71,7 @@ async def do_pm_permit_action(event, chat):  # sourcery no-metrics
                 del PMMESSAGE_CACHE[str(chat.id)]
         except Exception as e:
             LOGS.info(str(e))
-        custompmblock = gvarstatus("pmblock") or None
+        custompmblock = gvar("pmblock") or None
         if custompmblock is not None:
             USER_BOT_WARN_ZERO = custompmblock.format(
                 mention=mention,
@@ -108,7 +108,7 @@ async def do_pm_permit_action(event, chat):  # sourcery no-metrics
             )
         except BaseException:
             return
-    custompmpermit = gvarstatus("pmpermit_txt") or None
+    custompmpermit = gvar("pmpermit_txt") or None
     if custompmpermit is not None:
         USER_BOT_NO_WARN = custompmpermit.format(
             mention=mention,
@@ -126,7 +126,7 @@ async def do_pm_permit_action(event, chat):  # sourcery no-metrics
             warns=warns,
             remwarns=remwarns,
         )
-    elif gvarstatus("pmmenu") is None:
+    elif gvar("pmmenu") is None:
         USER_BOT_NO_WARN = f"""__Hi__ {mention}__, I haven't approved you yet to personal message me.
 You have {warns}/{totalwarns} warns until you get blocked by the DogeUserBot.
 Choose an option from below to specify the reason of your message and wait for me to check it. __⬇️"""
@@ -134,14 +134,14 @@ Choose an option from below to specify the reason of your message and wait for m
         USER_BOT_NO_WARN = f"""__Hi__ {mention}__, I haven't approved you yet to personal message me.
 You have {warns}/{totalwarns} warns until you get blocked by the DogeUserBot.
 Don't spam my inbox. say reason and wait until my response.__"""
-    addgvar("pmpermit_text", USER_BOT_NO_WARN)
+    sgvar("pmpermit_text", USER_BOT_NO_WARN)
     PM_WARNS[str(chat.id)] += 1
     try:
-        if gvarstatus("pmmenu") is None:
+        if gvar("pmmenu") is None:
             results = await event.client.inline_query(Config.BOT_USERNAME, "pmpermit")
             msg = await results[0].click(chat.id, reply_to=reply_to_id, hide_via=True)
         else:
-            PM_PIC = gvarstatus("PM_PIC")
+            PM_PIC = gvar("PM_PIC")
             if PM_PIC:
                 DOG = [x for x in PM_PIC.split()]
                 PIC = list(DOG)
@@ -405,7 +405,7 @@ Now you can't do anything unless my master comes online and unblocks you.**"
 
 @doge.bot_cmd(incoming=True, func=lambda e: e.is_private, edited=False, forword=None)
 async def on_new_private_message(event):
-    if gvarstatus("pmpermit") is None:
+    if gvar("pmpermit") is None:
         return
     chat = await event.get_chat()
     if chat.bot or chat.verified:
@@ -427,7 +427,7 @@ async def on_new_private_message(event):
 
 @doge.bot_cmd(outgoing=True, func=lambda e: e.is_private, edited=False, forword=None)
 async def you_dm_other(event):
-    if gvarstatus("pmpermit") is None:
+    if gvar("pmpermit") is None:
         return
     chat = await event.get_chat()
     if chat.bot or chat.verified:
@@ -615,15 +615,15 @@ async def pmpermit_on(event):
     "Turn on/off pmpermit."
     input_str = event.pattern_match.group(1)
     if input_str == "on":
-        if gvarstatus("pmpermit") is None:
-            addgvar("pmpermit", "true")
+        if gvar("pmpermit") is None:
+            sgvar("pmpermit", "true")
             await edl(
                 event, "__Pmpermit has been enabled for your account successfully.__"
             )
         else:
             await edl(event, "__Pmpermit is already enabled for your account__")
-    elif gvarstatus("pmpermit") is not None:
-        delgvar("pmpermit")
+    elif gvar("pmpermit") is not None:
+        dgvar("pmpermit")
         await edl(event, "__Pmpermit has been disabled for your account successfully__")
     else:
         await edl(event, "__Pmpermit is already disabled for your account__")
@@ -641,16 +641,16 @@ async def pmpermit_on(event):
     "Turn on/off pmmenu."
     input_str = event.pattern_match.group(1)
     if input_str == "off":
-        if gvarstatus("pmmenu") is None:
-            addgvar("pmmenu", "false")
+        if gvar("pmmenu") is None:
+            sgvar("pmmenu", "false")
             await edl(
                 event,
                 "__Pmpermit Menu has been disabled for your account successfully.__",
             )
         else:
             await edl(event, "__Pmpermit Menu is already disabled for your account__")
-    elif gvarstatus("pmmenu") is not None:
-        delgvar("pmmenu")
+    elif gvar("pmmenu") is not None:
+        dgvar("pmmenu")
         await edl(
             event, "__Pmpermit Menu has been enabled for your account successfully__"
         )
@@ -671,7 +671,7 @@ async def pmpermit_on(event):
 )
 async def approve_p_m(event):  # sourcery no-metrics
     "To approve user to pm"
-    if gvarstatus("pmpermit") is None:
+    if gvar("pmpermit") is None:
         return await edl(
             event,
             f"__Turn on pmpermit by doing __`{tr}pmguard on` __for working of this plugin__",
@@ -750,7 +750,7 @@ async def approve_p_m(event):  # sourcery no-metrics
 )
 async def disapprove_p_m(event):
     "To disapprove user to direct message you."
-    if gvarstatus("pmpermit") is None:
+    if gvar("pmpermit") is None:
         return await edl(
             event,
             f"__Turn on pmpermit by doing __`{tr}pmguard on` __for working of this plugin__",
@@ -796,7 +796,7 @@ async def disapprove_p_m(event):
 )
 async def block_p_m(event):
     "To block user to direct message you."
-    if gvarstatus("pmpermit") is None:
+    if gvar("pmpermit") is None:
         return await edl(
             event,
             f"__Turn on pmpermit by doing __`{tr}pmguard on` __for working of this plugin__",
@@ -852,7 +852,7 @@ async def block_p_m(event):
 )
 async def unblock_pm(event):
     "To unblock a user."
-    if gvarstatus("pmpermit") is None:
+    if gvar("pmpermit") is None:
         return await edl(
             event,
             f"__Turn on pmpermit by doing __`{tr}pmguard on` __for working of this plugin__",
@@ -884,7 +884,7 @@ async def unblock_pm(event):
 )
 async def approve_p_m(event):
     "To see list of approved users."
-    if gvarstatus("pmpermit") is None:
+    if gvar("pmpermit") is None:
         return await edl(
             event,
             f"__Turn on pmpermit by doing __`{tr}pmguard on` __to work this plugin__",

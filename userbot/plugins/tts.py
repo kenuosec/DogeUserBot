@@ -4,7 +4,7 @@ from subprocess import STDOUT, CalledProcessError, check_output
 
 from gtts import gTTS
 
-from . import deEmojify, doge, edl, eor, gvarstatus, reply_id
+from . import deEmojify, doge, edl, eor, gvar, reply_id
 
 plugin_category = "tool"
 
@@ -31,12 +31,12 @@ async def _(event):
     elif event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         text = previous_message.message
-        lng = input_str or gvarstatus("TTS_LANG") or "en"
+        lng = input_str or gvar("TTS_LANG") or "en"
     else:
         if not input_str:
             return await eor(event, "Invalid Syntax. Module stopping.")
         text = input_str
-        lng = gvarstatus("TTS_LANG") or "en"
+        lng = gvar("TTS_LANG") or "en"
     dogevent = await eor(event, "`Recording......`")
     text = deEmojify(text.strip())
     lng = lng.strip()

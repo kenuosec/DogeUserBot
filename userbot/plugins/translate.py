@@ -1,6 +1,6 @@
 from googletrans import LANGUAGES
 
-from . import BOTLOG, BOTLOG_CHATID, deEmojify, doge, edl, eor, getTranslate, gvarstatus
+from . import BOTLOG, BOTLOG_CHATID, deEmojify, doge, edl, eor, getTranslate, gvar
 
 plugin_category = "tool"
 
@@ -65,7 +65,7 @@ async def translateme(trans):
     else:
         return await eor(trans, "`Give a text or reply to a message to translate!`")
 
-    TRT_LANG = gvarstatus("TRT_LANG") or "en"
+    TRT_LANG = gvar("TRT_LANG") or "en"
     try:
         reply_text = await getTranslate(deEmojify(message), dest=TRT_LANG)
     except ValueError:

@@ -8,13 +8,13 @@ from ..sql_helper import global_collectionjson as sql
 from ..sql_helper import global_list as sqllist
 from . import (
     Config,
-    addgvar,
-    delgvar,
+    sgvar,
+    dgvar,
     doge,
     edl,
     eor,
     get_user_from_event,
-    gvarstatus,
+    gvar,
     logging,
     mentionuser,
 )
@@ -52,9 +52,9 @@ async def chat_blacklist(event):
     input_str = event.pattern_match.group(1)
     sudousers = _sudousers_list()
     if input_str == "on":
-        if gvarstatus("sudoenable") is not None:
+        if gvar("sudoenable") is not None:
             return await edl(event, "__Sudo is already enabled.__")
-        addgvar("sudoenable", "true")
+        sgvar("sudoenable", "true")
         text = "__Enabled sudo successfully.__\n"
         if len(sudousers) != 0:
             text += (
@@ -70,8 +70,8 @@ async def chat_blacklist(event):
             event,
             text,
         )
-    if gvarstatus("sudoenable") is not None:
-        delgvar("sudoenable")
+    if gvar("sudoenable") is not None:
+        dgvar("sudoenable")
         text = "__Disabled sudo successfully.__"
         if len(sudousers) != 0:
             text += (

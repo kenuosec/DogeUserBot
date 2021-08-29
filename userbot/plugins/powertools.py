@@ -11,12 +11,12 @@ from . import (
     BOTLOG,
     BOTLOG_CHATID,
     HEROKU_APP,
-    addgvar,
-    delgvar,
+    sgvar,
+    dgvar,
     doge,
     edl,
     eor,
-    gvarstatus,
+    gvar,
     logging,
 )
 
@@ -53,7 +53,7 @@ async def _(event):
     except Exception as e:
         LOGS.error(e)
     try:
-        delgvar("ipaddress")
+        dgvar("ipaddress")
         await doge.disconnect()
     except CancelledError:
         pass
@@ -120,11 +120,11 @@ async def set_pmlog(event):
     "To update the your chat after restart or reload ."
     input_str = event.pattern_match.group(1)
     if input_str == "off":
-        if gvarstatus("restartupdate") is None:
+        if gvar("restartupdate") is None:
             return await edl(event, "__Notify was already disabled__")
-        delgvar("restartupdate")
+        dgvar("restartupdate")
         return await eor(event, "__Notify was disabled successfully.__")
-    if gvarstatus("restartupdate") is None:
-        addgvar("restartupdate", "turn-oned")
+    if gvar("restartupdate") is None:
+        sgvar("restartupdate", "turn-oned")
         return await eor(event, "__Notify was enabled successfully.__")
     await edl(event, "__Notify was already enabled.__")

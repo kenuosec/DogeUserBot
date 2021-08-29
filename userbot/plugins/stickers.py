@@ -32,7 +32,7 @@ from . import (
     edl,
     eor,
     fsmessage,
-    gvarstatus,
+    gvar,
     media_type,
     tr,
 )
@@ -65,11 +65,11 @@ def char_is_emoji(character):
 
 
 def pack_nick(username, pack, is_anim):
-    if gvarstatus("CUSTOM_STICKER_PACKNAME"):
+    if gvar("CUSTOM_STICKER_PACKNAME"):
         return (
-            f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} A. {pack}"
+            f"{gvar('CUSTOM_STICKER_PACKNAME')} A. {pack}"
             if is_anim
-            else f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} {pack}"
+            else f"{gvar('CUSTOM_STICKER_PACKNAME')} {pack}"
         )
     elif is_anim:
         return f"@DogeUserBot @{username} A. {pack}"

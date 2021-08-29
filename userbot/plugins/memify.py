@@ -14,7 +14,7 @@ from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from . import (
     _dogetools,
     add_frame,
-    addgvar,
+    sgvar,
     asciiart,
     convert_toimage,
     crop,
@@ -25,7 +25,7 @@ from . import (
     eor,
     flip_image,
     grayscale,
-    gvarstatus,
+    gvar,
     invert_colors,
     media_type,
     mirror_file,
@@ -123,7 +123,7 @@ async def customfont(event):
         await dogevent.edit(f"**Available Fonts names are here:**\n\n{FONTS}")
     else:
         arg = f"userbot/helpers/resources/fonts/{input_str}"
-        addgvar("CNG_FONTS", arg)
+        sgvar("CNG_FONTS", arg)
         await eor(event, f"**Fonts for memify changed to:** `{input_str}`")
 
 
@@ -575,10 +575,10 @@ async def dogemmf(event):
         heh, lol = img.read()
         imwrite("@DogeUserBot.png", lol)
         file = "@DogeUserBot.png"
-    if gvarstatus("CNG_FONTS") is None:
+    if gvar("CNG_FONTS") is None:
         CNG_FONTS = "userbot/helpers/resources/fonts/impact.ttf"
     else:
-        CNG_FONTS = gvarstatus("CNG_FONTS")
+        CNG_FONTS = gvar("CNG_FONTS")
     stick = await dogemmfhelper(file, dogeinput, CNG_FONTS)
     await event.client.send_file(
         event.chat_id, stick, force_document=False, reply_to=event.reply_to_msg_id
@@ -635,10 +635,10 @@ async def dogemms(event):
         heh, lol = img.read()
         imwrite("@DogeUserBot.png", lol)
         file = "@DogeUserBot.png"
-    if gvarstatus("CNG_FONTS") is None:
+    if gvar("CNG_FONTS") is None:
         CNG_FONTS = "userbot/helpers/resources/fonts/impact.ttf"
     else:
-        CNG_FONTS = gvarstatus("CNG_FONTS")
+        CNG_FONTS = gvar("CNG_FONTS")
     pic = await dogemmshelper(file, dogeinput, CNG_FONTS)
     await event.client.send_file(
         event.chat_id, pic, force_document=False, reply_to=event.reply_to_msg_id

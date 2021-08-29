@@ -10,7 +10,7 @@ from telethon.tl.functions.photos import (
 )
 from telethon.tl.types import InputPhoto
 
-from . import Config, addgvar, doge, edl, eor, logging
+from . import Config, sgvar, doge, edl, eor, logging
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
@@ -41,7 +41,7 @@ async def _(event):
     try:
         if len(bio) < 70:
             await event.client(UpdateProfileRequest(about=bio))
-            addgvar("AFKRBIO", bio)
+            sgvar("AFKRBIO", bio)
             await edl(event, "`Successfully changed my profile bio`")
         else:
             return await edl(

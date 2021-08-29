@@ -27,7 +27,7 @@ from ..sql_helper.global_collection import (
     del_keyword_collectionlist,
     get_item_collectionlist,
 )
-from ..sql_helper.globals import addgvar, delgvar, gvarstatus
+from ..sql_helper.globals import sgvar, dgvar, gvar
 from .pluginmanager import load_module
 from .tools import create_channel, create_supergroup
 
@@ -56,8 +56,8 @@ async def setup_bot():
         LOGS.error(f"STRING_SESSION - {e}")
         exit()
 
-    if gvarstatus("DOGELANG") is None:
-        addgvar("DOGELANG", str(Config.DOGELANG))
+    if gvar("DOGELANG") is None:
+        sgvar("DOGELANG", str(Config.DOGELANG))
 
     m_e = await doge.get_me()
     m_y_i_d = m_e.id
@@ -89,9 +89,9 @@ async def setup_assistantbot():
     To setup assistant bot
     """
     if Config.BOT_TOKEN:
-        addgvar("BOT_TOKEN", str(Config.BOT_TOKEN))
+        sgvar("BOT_TOKEN", str(Config.BOT_TOKEN))
         return
-    if gvarstatus("BOT_TOKEN"):
+    if gvar("BOT_TOKEN"):
         return
     LOGS.info("🦴 I'm creating your Telegram assistant bot with @BotFather!")
     my = await doge.get_me()
@@ -143,7 +143,7 @@ async def setup_assistantbot():
         now_ok = (await doge.get_messages(bf, limit=1))[0].text
         if now_ok.startswith("Done!"):
             bottoken = now_ok.split("`")[1]
-            addgvar("BOT_TOKEN", bottoken)
+            sgvar("BOT_TOKEN", bottoken)
             await doge.send_message(bf, "/setinline")
             await sleep(1)
             await doge.send_message(bf, f"@{botusername}")
@@ -160,7 +160,7 @@ async def setup_assistantbot():
 
     elif is_ok.startswith("Done!"):
         bottoken = is_ok.split("`")[1]
-        addgvar("BOT_TOKEN", bottoken)
+        sgvar("BOT_TOKEN", bottoken)
         await doge.send_message(bf, "/setinline")
         await sleep(1)
         await doge.send_message(bf, f"@{botusername}")
@@ -186,14 +186,14 @@ async def setup_me_bot():
     if not doge.me.bot and Config.OWNER_ID == 0:
         Config.OWNER_ID = doge.uid
 
-    if gvarstatus("ALIVE_NAME") is None:
+    if gvar("ALIVE_NAME") is None:
         if Config.ALIVE_NAME:
-            addgvar("ALIVE_NAME", str(Config.ALIVE_NAME))
+            sgvar("ALIVE_NAME", str(Config.ALIVE_NAME))
         else:
             my_first_name = doge.me.first_name
-            addgvar("ALIVE_NAME", my_first_name)
+            sgvar("ALIVE_NAME", my_first_name)
 
-    await doge.tgbot.start(bot_token=gvarstatus("BOT_TOKEN"))
+    await doge.tgbot.start(bot_token=gvar("BOT_TOKEN"))
     doge.tgbot.me = await doge.tgbot.get_me()
     bot_details = doge.tgbot.me
     Config.BOT_USERNAME = f"@{bot_details.username}"
@@ -204,12 +204,12 @@ async def ipchange():
     Just to check if ip change or not
     """
     newip = (get("https://httpbin.org/ip").json())["origin"]
-    if gvarstatus("ipaddress") is None:
-        addgvar("ipaddress", newip)
+    if gvar("ipaddress") is None:
+        sgvar("ipaddress", newip)
         return None
-    oldip = gvarstatus("ipaddress")
+    oldip = gvar("ipaddress")
     if oldip != newip:
-        delgvar("ipaddress")
+        dgvar("ipaddress")
         LOGS.info("IP change detected")
         try:
             await doge.disconnect()
@@ -290,13 +290,13 @@ async def verifyLoggerGroup():
         descmsg = "**🚧 DON'T LEAVE OR\n🚧 DON'T DELETE OR\n🚧 DON'T CHANGE THIS GROUP!**\n\n⛔ If you change or delete group,\nall your previous snips, welcome, etc. will be lost.\n\n**🧡 @DogeUserBot**"
         msg = await doge.send_message(groupid, descmsg)
         await msg.pin()
-        addgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
+        sgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
         print(
             "Private Group for PRIVATE_GROUP_BOT_API_ID is created successfully and added to vars."
         )
         flag = True
     if Config.PMLOGGER:
-        if PM_LOGGER_GROUP_ID != -100 or gvarstatus("PM_LOGGER_GROUP_ID"):
+        if PM_LOGGER_GROUP_ID != -100 or gvar("PM_LOGGER_GROUP_ID"):
             return
         descript = "🚧 DON'T DELETE THIS GROUP!\n⛔ If you delete group,\nPM Logger won't work.\nㅤ\n🧡 @DogeUserBot"
         gphoto = await doge.upload_file(file="userbot/helpers/resources/DogePmLog.jpg")
@@ -306,7 +306,7 @@ async def verifyLoggerGroup():
         descmsg = "**🚧 DON'T LEAVE OR\n🚧 DON'T DELETE OR\n🚧 DON'T CHANGE THIS GROUP!**\n\n⛔ If you change or delete group,\nPM Logger will not work.\n\n**🦴 IF YOU WANT TO DELETE THIS GROUP,\nMUST FIRST WRITE:**\n`.set var PMLOGGER False`\n\n**🧡 @DogeUserBot**"
         msg = await doge.send_message(groupid, descmsg)
         await msg.pin()
-        addgvar("PM_LOGGER_GROUP_ID", groupid)
+        sgvar("PM_LOGGER_GROUP_ID", groupid)
         print(
             "Private Group for PM_LOGGER_GROUP_ID is created succesfully and added to vars."
         )
@@ -335,7 +335,7 @@ async def verifyLoggerGroup():
             )
 
     if Config.PLUGINS:
-        if PLUGIN_CHANNEL or gvarstatus("PLUGIN_CHANNEL"):
+        if PLUGIN_CHANNEL or gvar("PLUGIN_CHANNEL"):
             return
         descript = "🚧 DON'T DELETE THIS CHANNEL!\n⛔ If you delete channel,\nall installed extra plugins will be lost.\nㅤ\n🧡 @DogeUserBot"
         cphoto = await doge.upload_file(
@@ -347,7 +347,7 @@ async def verifyLoggerGroup():
         descmsg = "**🚧 DON'T LEAVE OR\n🚧 DON'T DELETE OR\n🚧 DON'T CHANGE THIS CHANNEL!**\n\n⛔ If you change or delete channel,\nall your installed externally plugins will be lost.\n\n**🦴 IF YOU WANT TO DELETE THIS CHANNEL,\nMUST FIRST WRITE:**\n`.set var PLUGINS False`\n\n**🧡 @DogeUserBot**"
         msg = await doge.send_message(channelid, descmsg)
         await msg.pin()
-        addgvar("PLUGIN_CHANNEL", channelid)
+        sgvar("PLUGIN_CHANNEL", channelid)
         print(
             "Private Channel for PLUGIN_CHANNEL is created successfully and added to vars."
         )
@@ -478,7 +478,7 @@ async def startupmessage():
             message = await doge.get_messages(msg_details[0], ids=msg_details[1])
             text = message.text + "\n\n**🐶 Doge is back and alive.**"
             await doge.edit_message(msg_details[0], msg_details[1], text)
-            if gvarstatus("restartupdate") is not None:
+            if gvar("restartupdate") is not None:
                 await doge.send_message(
                     msg_details[0],
                     f"{tr}ping",
@@ -494,7 +494,7 @@ async def startupmessage():
 async def autous():
     try:
         await doge(JoinChannelRequest("@DogeUserBot"))
-        if gvarstatus("AUTOUS") is False:
+        if gvar("AUTOUS") is False:
             return
         else:
             try:

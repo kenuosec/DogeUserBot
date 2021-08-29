@@ -9,10 +9,10 @@ from . import (
     BOTLOG_CHATID,
     Config,
     _format,
-    addgvar,
+    sgvar,
     doge,
     edl,
-    gvarstatus,
+    gvar,
     logging,
     media_type,
     tgbot,
@@ -36,7 +36,7 @@ LOG_CHATS_ = LOG_CHATS()
 async def monito_p_m_s(event):  # sourcery no-metrics
     if Config.PM_LOGGER_GROUP_ID == -100:
         return
-    if gvarstatus("PMLOG") and gvarstatus("PMLOG") == "false":
+    if gvar("PMLOG") and gvar("PMLOG") == "false":
         return
     sender = await event.get_sender()
     if not sender.bot:
@@ -77,7 +77,7 @@ async def log_tagged_messages(event):
     hmm = await event.get_chat()
     from .afk import is_afk
 
-    if gvarstatus("GRPLOG") and gvarstatus("GRPLOG") == "false":
+    if gvar("GRPLOG") and gvar("GRPLOG") == "false":
         return
     if (
         (no_log_pms_sql.is_approved(hmm.id))
@@ -212,7 +212,7 @@ async def set_pmlog(event):
         h_type = False
     elif input_str == "on":
         h_type = True
-    if gvarstatus("PMLOG") and gvarstatus("PMLOG") == "false":
+    if gvar("PMLOG") and gvar("PMLOG") == "false":
         PMLOG = False
     else:
         PMLOG = True
@@ -220,10 +220,10 @@ async def set_pmlog(event):
         if h_type:
             await event.edit("`Pm logging is already enabled`")
         else:
-            addgvar("PMLOG", h_type)
+            sgvar("PMLOG", h_type)
             await event.edit("`Pm logging is disabled`")
     elif h_type:
-        addgvar("PMLOG", h_type)
+        sgvar("PMLOG", h_type)
         await event.edit("`Pm logging is enabled`")
     else:
         await event.edit("`Pm logging is already disabled`")
@@ -253,7 +253,7 @@ async def set_grplog(event):
         h_type = False
     elif input_str == "on":
         h_type = True
-    if gvarstatus("GRPLOG") and gvarstatus("GRPLOG") == "false":
+    if gvar("GRPLOG") and gvar("GRPLOG") == "false":
         GRPLOG = False
     else:
         GRPLOG = True
@@ -261,10 +261,10 @@ async def set_grplog(event):
         if h_type:
             await event.edit("`Group logging is already enabled`")
         else:
-            addgvar("GRPLOG", h_type)
+            sgvar("GRPLOG", h_type)
             await event.edit("`Group logging is disabled`")
     elif h_type:
-        addgvar("GRPLOG", h_type)
+        sgvar("GRPLOG", h_type)
         await event.edit("`Group logging is enabled`")
     else:
         await event.edit("`Group logging is already disabled`")

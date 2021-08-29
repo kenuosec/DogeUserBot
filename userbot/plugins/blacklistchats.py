@@ -8,7 +8,7 @@ from ..sql_helper.global_collectionjson import (
     del_collection,
     get_collection,
 )
-from . import addgvar, delgvar, doge, edl, eor, gvarstatus, logging
+from . import sgvar, dgvar, doge, edl, eor, gvar, logging
 
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
@@ -30,9 +30,9 @@ async def chat_blacklist(event):
     input_str = event.pattern_match.group(1)
     blkchats = blacklist_chats_list()
     if input_str == "on":
-        if gvarstatus("blacklist_chats") is not None:
+        if gvar("blacklist_chats") is not None:
             return await edl(event, "__Already it was turned on.__")
-        addgvar("blacklist_chats", "true")
+        sgvar("blacklist_chats", "true")
         text = "__From now on, your DogeUserBot doesn't work in the chats stored in database.__"
         if len(blkchats) != 0:
             text += (
@@ -48,8 +48,8 @@ async def chat_blacklist(event):
             event,
             text,
         )
-    if gvarstatus("blacklist_chats") is not None:
-        delgvar("blacklist_chats")
+    if gvar("blacklist_chats") is not None:
+        dgvar("blacklist_chats")
         text = "__Your DogeUserBot is as free as a bird. It works in Every Chat.__"
         if len(blkchats) != 0:
             text += (

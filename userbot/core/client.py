@@ -12,7 +12,7 @@ from telethon.errors import MessageIdInvalidError, MessageNotModifiedError
 from ..Config import Config
 from ..helpers.utils.events import checking
 from ..helpers.utils.format import paste_message
-from ..sql_helper.globals import gvarstatus
+from ..sql_helper.globals import gvar
 from . import BOT_INFO, CMD_INFO, GRP_INFO, LOADED_CMDS, PLG_INFO
 from .cmdinfo import _format_about
 from .data import _sudousers_list, blacklist_chats_list, sudo_enabled_cmds
@@ -53,7 +53,7 @@ class DogeUserBotClient(TelegramClient):
     ) -> callable:  # sourcery no-metrics
         kwargs["func"] = kwargs.get("func", lambda e: e.via_bot_id is None)
         kwargs.setdefault("forwards", forword)
-        if gvarstatus("blacklist_chats") is not None:
+        if gvar("blacklist_chats") is not None:
             kwargs["blacklist_chats"] = True
             kwargs["chats"] = blacklist_chats_list()
         stack = stacck()
@@ -175,7 +175,7 @@ class DogeUserBotClient(TelegramClient):
                     wrapper,
                     NewMessage(pattern=REGEX_.regex1, outgoing=True, **kwargs),
                 )
-                if allow_sudo and gvarstatus("sudoenable") is not None:
+                if allow_sudo and gvar("sudoenable") is not None:
                     if command is None or command[0] in sudo_enabledcmds:
                         if edited:
                             doge.add_event_handler(

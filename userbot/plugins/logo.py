@@ -24,14 +24,14 @@ from userbot.helpers.tools import media_type
 
 from . import (
     _dogetools,
-    addgvar,
+    sgvar,
     clippy,
     convert_toimage,
-    delgvar,
+    dgvar,
     doge,
     edl,
     eor,
-    gvarstatus,
+    gvar,
     lan,
     reply_id,
 )
@@ -79,18 +79,18 @@ async def very(event):
         return await edl(event, "**ಠ∀ಠ Gimmi text to make logo**")
     reply_to_id = await reply_id(event)
     dogevent = await eor(event, lan("processing"))
-    LOGO_FONT_SIZE = gvarstatus("LOGO_FONT_SIZE") or 220
-    LOGO_FONT_WIDTH = gvarstatus("LOGO_FONT_WIDTH") or 2
-    LOGO_FONT_HEIGHT = gvarstatus("LOGO_FONT_HEIGHT") or 2
-    LOGO_FONT_COLOR = gvarstatus("LOGO_FONT_COLOR") or "red"
-    LOGO_FONT_STROKE_WIDTH = gvarstatus("LOGO_FONT_STROKE_WIDTH") or 0
-    LOGO_FONT_STROKE_COLOR = gvarstatus("LOGO_FONT_STROKE_COLOR") or None
+    LOGO_FONT_SIZE = gvar("LOGO_FONT_SIZE") or 220
+    LOGO_FONT_WIDTH = gvar("LOGO_FONT_WIDTH") or 2
+    LOGO_FONT_HEIGHT = gvar("LOGO_FONT_HEIGHT") or 2
+    LOGO_FONT_COLOR = gvar("LOGO_FONT_COLOR") or "red"
+    LOGO_FONT_STROKE_WIDTH = gvar("LOGO_FONT_STROKE_WIDTH") or 0
+    LOGO_FONT_STROKE_COLOR = gvar("LOGO_FONT_STROKE_COLOR") or None
     LOGO_BACKGROUND = (
-        gvarstatus("LOGO_BACKGROUND")
+        gvar("LOGO_BACKGROUND")
         or f"https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/LogoBackgrounds/black.jpg"
     )
     LOGO_FONT = (
-        gvarstatus("LOGO_FONT")
+        gvar("LOGO_FONT")
         or f"https://github.com/DOG-E/Source/raw/DOGE/Material/Fonts/streamster.ttf"
     )
     if not osp.isdir("./temp"):
@@ -190,7 +190,7 @@ async def bad(event):
             return await edl(
                 event, "Give a valid Telegraph picture link, Or reply to a media."
             )
-        addgvar("LOGO_BACKGROUND", input_str)
+        sgvar("LOGO_BACKGROUND", input_str)
         return await edl(event, f"**Background for logo changed to :-** `{input_str}`")
     if not input_str:
         return await edl(event, lbg_list, time=60)
@@ -200,7 +200,7 @@ async def bad(event):
         await edl(dogevent, lbg_list, time=60)
     else:
         string = f"https://raw.githubusercontent.com/DOG-E/Source/DOGE/Material/LogoBackgrounds/{input_str}.jpg"
-        addgvar("LOGO_BACKGROUND", string)
+        sgvar("LOGO_BACKGROUND", string)
         await edl(
             event,
             f"**Background for logo changed to :-** `{input_str}`",
@@ -271,7 +271,7 @@ async def custom_font(event):
                     string,
                     "temp/logo.ttf",
                 )
-            addgvar("LOGO_FONT", string)
+            sgvar("LOGO_FONT", string)
             await edl(
                 event,
                 f"**Font for logo changed to :-** `{input_str}`",
@@ -296,13 +296,13 @@ async def custom_font(event):
                 time=80,
             )
         elif cmd == "c":
-            addgvar("LOGO_FONT_COLOR", input_str)
+            sgvar("LOGO_FONT_COLOR", input_str)
             await edl(
                 event,
                 f"**Foreground color for logo changed to :-** `{input_str}`",
             )
         else:
-            addgvar("LOGO_FONT_STROKE_COLOR", input_str)
+            sgvar("LOGO_FONT_STROKE_COLOR", input_str)
             await edl(event, f"**Stroke color for logo changed to :-** `{input_str}`")
     else:
         dog = compile(r"^\-?[1-9][0-9]*\.?[0-9]*")
@@ -315,7 +315,7 @@ async def custom_font(event):
         if cmd == "s":
             input_str = int(input_str)
             if input_str > 0 and input_str <= 1000:
-                addgvar("LOGO_FONT_SIZE", input_str)
+                sgvar("LOGO_FONT_SIZE", input_str)
                 await edl(event, f"**Font size is changed to :-** `{input_str}`")
             else:
                 await edl(
@@ -325,7 +325,7 @@ async def custom_font(event):
         elif cmd == "w":
             input_str = float(input_str)
             if input_str > 0 and input_str <= 100:
-                addgvar("LOGO_FONT_WIDTH", input_str)
+                sgvar("LOGO_FONT_WIDTH", input_str)
                 await edl(event, f"**Font width is changed to :-** `{input_str}`")
             else:
                 await edl(
@@ -335,7 +335,7 @@ async def custom_font(event):
         elif cmd == "h":
             input_str = float(input_str)
             if input_str > 0 and input_str <= 100:
-                addgvar("LOGO_FONT_HEIGHT", input_str)
+                sgvar("LOGO_FONT_HEIGHT", input_str)
                 await edl(event, f"**Font hight is changed to :-** `{input_str}`")
             else:
                 await edl(
@@ -345,7 +345,7 @@ async def custom_font(event):
         elif cmd == "sw":
             input_str = int(input_str)
             if input_str > 0 and input_str <= 100:
-                addgvar("LOGO_FONT_STROKE_WIDTH", input_str)
+                sgvar("LOGO_FONT_STROKE_WIDTH", input_str)
                 await edl(
                     event, f"**Font stroke width is changed to :-** `{input_str}`"
                 )
@@ -385,26 +385,26 @@ async def dog(event):
     if input_str in vars_list.keys():
         var = vars_list[input_str]
         if cmd == "g":
-            var_data = gvarstatus(var)
+            var_data = gvar(var)
             await edl(event, f"📑 Value of **{var}** is  `{var_data}`", time=60)
         elif cmd == "d":
             if input_str == "lbg" and osp.exists("./temp/bg_img.jpg"):
                 remove("./temp/bg_img.jpg")
             if input_str == "lf" and osp.exists("./temp/logo.ttf"):
                 remove("./temp/logo.ttf")
-            delgvar(var)
+            dgvar(var)
             await edl(
                 event, f"📑 Value of **{var}** is now deleted & set to default.", time=60
             )
     elif not input_str and cmd == "r":
-        delgvar("LOGO_BACKGROUND")
-        delgvar("LOGO_FONT_COLOR")
-        delgvar("LOGO_FONT")
-        delgvar("LOGO_FONT_SIZE")
-        delgvar("LOGO_FONT_HEIGHT")
-        delgvar("LOGO_FONT_WIDTH")
-        delgvar("LOGO_FONT_STROKE_COLOR")
-        delgvar("LOGO_FONT_STROKE_WIDTH")
+        dgvar("LOGO_BACKGROUND")
+        dgvar("LOGO_FONT_COLOR")
+        dgvar("LOGO_FONT")
+        dgvar("LOGO_FONT_SIZE")
+        dgvar("LOGO_FONT_HEIGHT")
+        dgvar("LOGO_FONT_WIDTH")
+        dgvar("LOGO_FONT_STROKE_COLOR")
+        dgvar("LOGO_FONT_STROKE_WIDTH")
         if osp.exists("./temp/bg_img.jpg"):
             remove("./temp/bg_img.jpg")
         if osp.exists("./temp/logo.ttf"):

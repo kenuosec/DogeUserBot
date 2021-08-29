@@ -20,7 +20,7 @@ from . import (
     dogealive,
     eor,
     get_readable_time,
-    gvarstatus,
+    gvar,
     mention,
     reply_id,
     tr,
@@ -82,11 +82,11 @@ async def thisalive(event):
     reply_to_id = await reply_id(event)
     uptime = await get_readable_time((time() - StartTime))
     _, check_sgnirts = check_data_base_heal_th()
-    ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or "🐶 Doɢᴇ UsᴇʀBoᴛ 🐾"
+    ALIVE_TEXT = gvar("ALIVE_TEXT") or "🐶 Doɢᴇ UsᴇʀBoᴛ 🐾"
     DOG_IMG = (
-        gvarstatus("ALIVE_PIC") or "https://telegra.ph/file/dd72e42027e6e7de9c0c9.jpg"
+        gvar("ALIVE_PIC") or "https://telegra.ph/file/dd72e42027e6e7de9c0c9.jpg"
     )
-    doge_caption = gvarstatus("ALIVE") or temp
+    doge_caption = gvar("ALIVE") or temp
     caption = doge_caption.format(
         msg=ALIVE_TEXT,
         mention=mention,
@@ -135,7 +135,7 @@ async def thisialive(event):
     uptime = await get_readable_time((time() - StartTime))
     _, check_sgnirts = check_data_base_heal_th()
     ALIVE_TEXT = "ㅤ"
-    doge_caption = gvarstatus("ALIVE") or itemp
+    doge_caption = gvar("ALIVE") or itemp
     caption = doge_caption.format(
         msg=ALIVE_TEXT,
         mention=mention,

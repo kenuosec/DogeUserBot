@@ -6,7 +6,7 @@ from telethon.events import CallbackQuery
 
 from ..core import check_owner
 from ..core.logger import logging
-from ..sql_helper.globals import addgvar
+from ..sql_helper.globals import sgvar
 from . import doge, get_back_button, lngs
 
 plugin_category = "bot"
@@ -43,7 +43,7 @@ async def setlang(event):
 async def setthelang(event):
     lang = event.data_match.group(1).decode("UTF-8")
     languages = lngs()
-    addgvar("DOGELANG", lang)
+    sgvar("DOGELANG", lang)
     await event.edit(
         f"**🌍 From now on, I will speak in {languages[lang]['natively']}.**",
         buttons=get_back_button("lang_menu"),

@@ -31,11 +31,11 @@ from . import (
     Config,
     _dogeutils,
     _format,
-    addgvar,
-    delgvar,
+    sgvar,
+    dgvar,
     doge,
     edl,
-    gvarstatus,
+    gvar,
     logging,
 )
 
@@ -67,7 +67,7 @@ COLLECTION_STRINGS = {
 
 
 async def autopicloop():
-    AUTOPICSTART = gvarstatus("autopic") == "true"
+    AUTOPICSTART = gvar("autopic") == "true"
     if AUTOPICSTART and Config.DEFAULT_PIC is None:
         if BOTLOG:
             return await doge.send_message(
@@ -75,9 +75,9 @@ async def autopicloop():
                 "**Error**\n`For functing of autopic you need to set DEFAULT_PIC var in Heroku vars`",
             )
         return
-    if gvarstatus("autopic") is not None:
+    if gvar("autopic") is not None:
         try:
-            counter = int(gvarstatus("autopic_counter"))
+            counter = int(gvar("autopic_counter"))
         except Exception as e:
             LOGS.warn(str(e))
     while AUTOPICSTART:
@@ -103,11 +103,11 @@ async def autopicloop():
             await sleep(Config.CHANGE_TIME)
         except BaseException:
             return
-        AUTOPICSTART = gvarstatus("autopic") == "true"
+        AUTOPICSTART = gvar("autopic") == "true"
 
 
 async def custompfploop():
-    CUSTOMPICSTART = gvarstatus("CUSTOM_PFP") == "true"
+    CUSTOMPICSTART = gvar("CUSTOM_PFP") == "true"
     i = 0
     while CUSTOMPICSTART:
         if len(get_collection_list("CUSTOM_PFP_LINKS")) == 0:
@@ -127,11 +127,11 @@ async def custompfploop():
             await sleep(Config.CHANGE_TIME)
         except BaseException:
             return
-        CUSTOMPICSTART = gvarstatus("CUSTOM_PFP") == "true"
+        CUSTOMPICSTART = gvar("CUSTOM_PFP") == "true"
 
 
 async def digitalpicloop():
-    DIGITALPICSTART = gvarstatus("digitalpic") == "true"
+    DIGITALPICSTART = gvar("digitalpic") == "true"
     i = 0
     while DIGITALPICSTART:
         if not path.exists(digitalpic_path):
@@ -164,11 +164,11 @@ async def digitalpicloop():
             await sleep(60)
         except BaseException:
             return
-        DIGITALPICSTART = gvarstatus("digitalpic") == "true"
+        DIGITALPICSTART = gvar("digitalpic") == "true"
 
 
 async def bloom_pfploop():
-    BLOOMSTART = gvarstatus("bloom") == "true"
+    BLOOMSTART = gvar("bloom") == "true"
     if BLOOMSTART and Config.DEFAULT_PIC is None:
         if BOTLOG:
             return await doge.send_message(
@@ -208,11 +208,11 @@ async def bloom_pfploop():
             await sleep(Config.CHANGE_TIME)
         except BaseException:
             return
-        BLOOMSTART = gvarstatus("bloom") == "true"
+        BLOOMSTART = gvar("bloom") == "true"
 
 
 async def autoname_loop():
-    AUTONAMESTART = gvarstatus("autoname") == "true"
+    AUTONAMESTART = gvar("autoname") == "true"
     while AUTONAMESTART:
         DM = strftime("%d-%m-%y")
         HM = strftime("%H:%M")
@@ -224,11 +224,11 @@ async def autoname_loop():
             LOGS.warning(str(ex))
             await sleep(ex.seconds)
         await sleep(Config.CHANGE_TIME)
-        AUTONAMESTART = gvarstatus("autoname") == "true"
+        AUTONAMESTART = gvar("autoname") == "true"
 
 
 async def autobio_loop():
-    AUTOBIOSTART = gvarstatus("autobio") == "true"
+    AUTOBIOSTART = gvar("autobio") == "true"
     while AUTOBIOSTART:
         DMY = strftime("%d.%m.%Y")
         HM = strftime("%H:%M")
@@ -240,7 +240,7 @@ async def autobio_loop():
             LOGS.warning(str(ex))
             await sleep(ex.seconds)
         await sleep(Config.CHANGE_TIME)
-        AUTOBIOSTART = gvarstatus("autobio") == "true"
+        AUTOBIOSTART = gvar("autobio") == "true"
 
 
 async def animeprofilepic(collection_images):
@@ -262,9 +262,9 @@ async def animeprofilepic(collection_images):
 
 
 async def autopfp_start():
-    if gvarstatus("autopfp_strings") is not None:
+    if gvar("autopfp_strings") is not None:
         AUTOPFP_START = True
-        string_list = COLLECTION_STRINGS[gvarstatus("autopfp_strings")]
+        string_list = COLLECTION_STRINGS[gvar("autopfp_strings")]
     else:
         AUTOPFP_START = False
     i = 0
@@ -279,7 +279,7 @@ async def autopfp_start():
         await doge(UploadProfilePhotoRequest(file))
         await _dogeutils.runcmd("rm -rf donottouch.jpg")
         await sleep(Config.CHANGE_TIME)
-        AUTOPFP_START = gvarstatus("autopfp_strings") is not None
+        AUTOPFP_START = gvar("autopfp_strings") is not None
 
 
 @doge.bot_cmd(
@@ -295,10 +295,10 @@ async def autopfp_start():
 )
 async def _(event):
     "To set random batman profile pics"
-    if gvarstatus("autopfp_strings") is not None:
-        pfp_string = gvarstatus("autopfp_strings")[:-8]
+    if gvar("autopfp_strings") is not None:
+        pfp_string = gvar("autopfp_strings")[:-8]
         return await edl(event, f"`{pfp_string} is already running.`")
-    addgvar("autopfp_strings", "batmanpfp_strings")
+    sgvar("autopfp_strings", "batmanpfp_strings")
     await event.edit("`Starting batman Profile Pic.`")
     await autopfp_start()
 
@@ -316,10 +316,10 @@ async def _(event):
 )
 async def _(event):
     "To set random thor profile pics"
-    if gvarstatus("autopfp_strings") is not None:
-        pfp_string = gvarstatus("autopfp_strings")[:-8]
+    if gvar("autopfp_strings") is not None:
+        pfp_string = gvar("autopfp_strings")[:-8]
         return await edl(event, f"`{pfp_string} is already running.`")
-    addgvar("autopfp_strings", "thorpfp_strings")
+    sgvar("autopfp_strings", "thorpfp_strings")
     await event.edit("`Starting thor Profile Pic.`")
     await autopfp_start()
 
@@ -359,13 +359,13 @@ async def _(event):
             input_str = int(input_str)
         except ValueError:
             input_str = 60
-    elif gvarstatus("autopic_counter") is None:
-        addgvar("autopic_counter", 30)
-    if gvarstatus("autopic") is not None and gvarstatus("autopic") == "true":
+    elif gvar("autopic_counter") is None:
+        sgvar("autopic_counter", 30)
+    if gvar("autopic") is not None and gvar("autopic") == "true":
         return await edl(event, "`Autopic is already enabled`")
-    addgvar("autopic", True)
+    sgvar("autopic", True)
     if input_str:
-        addgvar("autopic_counter", input_str)
+        sgvar("autopic_counter", input_str)
     await edl(event, "`Autopic has been started by my Master`")
     await autopicloop()
 
@@ -387,9 +387,9 @@ async def _(event):
     downloader.start(blocking=False)
     while not downloader.isFinished():
         pass
-    if gvarstatus("digitalpic") is not None and gvarstatus("digitalpic") == "true":
+    if gvar("digitalpic") is not None and gvar("digitalpic") == "true":
         return await edl(event, "`Digitalpic is already enabled`")
-    addgvar("digitalpic", True)
+    sgvar("digitalpic", True)
     await edl(event, "`Digitalpp has been started by my Master`")
     await digitalpicloop()
 
@@ -418,9 +418,9 @@ async def _(event):
     downloader.start(blocking=False)
     while not downloader.isFinished():
         pass
-    if gvarstatus("bloom") is not None and gvarstatus("bloom") == "true":
+    if gvar("bloom") is not None and gvar("bloom") == "true":
         return await edl(event, "`Bloom is already enabled`")
-    addgvar("bloom", True)
+    sgvar("bloom", True)
     await edl(event, "`Bloom has been started by my Master`")
     await bloom_pfploop()
 
@@ -461,11 +461,11 @@ async def useless(event):  # sourcery no-metrics
         flag = None
     list_link = get_collection_list("CUSTOM_PFP_LINKS")
     if flag is None:
-        if gvarstatus("CUSTOM_PFP") is not None and gvarstatus("CUSTOM_PFP") == "true":
+        if gvar("CUSTOM_PFP") is not None and gvar("CUSTOM_PFP") == "true":
             return await edl(event, "`Custom pp is already enabled`")
         if not list_link:
             return await edl(event, "**ಠ∀ಠ  There no links for custom pp...**")
-        addgvar("CUSTOM_PFP", True)
+        sgvar("CUSTOM_PFP", True)
         await edl(event, "`Starting custom pp....`")
         await custompfploop()
         return
@@ -478,8 +478,8 @@ async def useless(event):  # sourcery no-metrics
         await edl(event, links, 60)
         return
     if flag == "s":
-        if gvarstatus("CUSTOM_PFP") is not None and gvarstatus("CUSTOM_PFP") == "true":
-            delgvar("CUSTOM_PFP")
+        if gvar("CUSTOM_PFP") is not None and gvar("CUSTOM_PFP") == "true":
+            dgvar("CUSTOM_PFP")
             await event.client(
                 DeletePhotosRequest(
                     await event.client.get_profile_photos("me", limit=1)
@@ -526,9 +526,9 @@ async def useless(event):  # sourcery no-metrics
 )
 async def _(event):
     "To set your display name along with time"
-    if gvarstatus("autoname") is not None and gvarstatus("autoname") == "true":
+    if gvar("autoname") is not None and gvar("autoname") == "true":
         return await edl(event, "`Autoname is already enabled`")
-    addgvar("autoname", True)
+    sgvar("autoname", True)
     await edl(event, "`Autoname has been started by my Master `")
     await autoname_loop()
 
@@ -545,9 +545,9 @@ async def _(event):
 )
 async def _(event):
     "To update your bio along with time"
-    if gvarstatus("autobio") is not None and gvarstatus("autobio") == "true":
+    if gvar("autobio") is not None and gvar("autobio") == "true":
         return await edl(event, "`Autobio is already enabled`")
-    addgvar("autobio", True)
+    sgvar("autobio", True)
     await edl(event, "`Autobio has been started by my Master `")
     await autobio_loop()
 
@@ -575,27 +575,27 @@ async def _(event):
 async def _(event):  # sourcery no-metrics
     "To stop the functions of autoprofile plugin"
     input_str = event.pattern_match.group(1)
-    if input_str == "tpp" and gvarstatus("autopfp_strings") is not None:
-        pfp_string = gvarstatus("autopfp_strings")[:-8]
+    if input_str == "tpp" and gvar("autopfp_strings") is not None:
+        pfp_string = gvar("autopfp_strings")[:-8]
         if pfp_string != "tpp":
             return await edl(event, "`Thor pp isn't started`")
         await event.client(
             DeletePhotosRequest(await event.client.get_profile_photos("me", limit=1))
         )
-        delgvar("autopfp_strings")
+        dgvar("autopfp_strings")
         return await edl(event, "`Thor pp has been stopped now`")
-    if input_str == "bpp" and gvarstatus("autopfp_strings") is not None:
-        pfp_string = gvarstatus("autopfp_strings")[:-8]
+    if input_str == "bpp" and gvar("autopfp_strings") is not None:
+        pfp_string = gvar("autopfp_strings")[:-8]
         if pfp_string != "bpp":
             return await edl(event, "`Batman pp isn't started`")
         await event.client(
             DeletePhotosRequest(await event.client.get_profile_photos("me", limit=1))
         )
-        delgvar("autopfp_strings")
+        dgvar("autopfp_strings")
         return await edl(event, "`Batman pp has been stopped now`")
     if input_str == "autopic":
-        if gvarstatus("autopic") is not None and gvarstatus("autopic") == "true":
-            delgvar("autopic")
+        if gvar("autopic") is not None and gvar("autopic") == "true":
+            dgvar("autopic")
             if path.exists(autopic_path):
                 file = await event.client.upload_file(autopic_path)
                 try:
@@ -606,8 +606,8 @@ async def _(event):  # sourcery no-metrics
             return await edl(event, "`Autopic has been stopped now`")
         return await edl(event, "`Autopic haven't enabled`")
     if input_str == "dpp":
-        if gvarstatus("digitalpic") is not None and gvarstatus("digitalpic") == "true":
-            delgvar("digitalpic")
+        if gvar("digitalpic") is not None and gvar("digitalpic") == "true":
+            dgvar("digitalpic")
             await event.client(
                 DeletePhotosRequest(
                     await event.client.get_profile_photos("me", limit=1)
@@ -616,8 +616,8 @@ async def _(event):  # sourcery no-metrics
             return await edl(event, "`Digitalpp has been stopped now`")
         return await edl(event, "`Digitalpp haven't enabled`")
     if input_str == "bloom":
-        if gvarstatus("bloom") is not None and gvarstatus("bloom") == "true":
-            delgvar("bloom")
+        if gvar("bloom") is not None and gvar("bloom") == "true":
+            dgvar("bloom")
             if path.exists(autopic_path):
                 file = await event.client.upload_file(autopic_path)
                 try:
@@ -628,20 +628,20 @@ async def _(event):  # sourcery no-metrics
             return await edl(event, "`Bloom has been stopped now`")
         return await edl(event, "`Bloom haven't enabled`")
     if input_str == "autoname":
-        if gvarstatus("autoname") is not None and gvarstatus("autoname") == "true":
-            delgvar("autoname")
+        if gvar("autoname") is not None and gvar("autoname") == "true":
+            dgvar("autoname")
             await event.client(UpdateProfileRequest(first_name=DEFAULTUSER))
             return await edl(event, "`Autoname has been stopped now`")
         return await edl(event, "`Autoname haven't enabled`")
     if input_str == "autobio":
-        if gvarstatus("autobio") is not None and gvarstatus("autobio") == "true":
-            delgvar("autobio")
+        if gvar("autobio") is not None and gvar("autobio") == "true":
+            dgvar("autobio")
             await event.client(UpdateProfileRequest(about=DEFAULTUSERBIO))
             return await edl(event, "`Autobio has been stopped now`")
         return await edl(event, "`Autobio haven't enabled`")
     if input_str == "spam":
-        if gvarstatus("spamwork") is not None and gvarstatus("spamwork") == "true":
-            delgvar("spamwork")
+        if gvar("spamwork") is not None and gvar("spamwork") == "true":
+            dgvar("spamwork")
             return await edl(event, "`Spam cmd has been stopped now`")
         return await edl(event, "`You haven't started spam`")
     END_CMDS = [

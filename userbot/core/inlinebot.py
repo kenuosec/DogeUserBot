@@ -28,7 +28,7 @@ from ..helpers.functions.utube import (
     ytsearch_data,
 )
 from ..plugins import mention
-from ..sql_helper.globals import gvarstatus
+from ..sql_helper.globals import gvar
 from . import CMD_INFO, GRP_INFO, PLG_INFO, check_owner
 from .logger import logging
 
@@ -125,14 +125,14 @@ def paginate_help(
     category_pgno=0,
 ):  # sourcery no-metrics
     try:
-        number_of_rows = int(gvarstatus("NO_OF_ROWS_IN_HELP") or 6)
+        number_of_rows = int(gvar("NO_OF_ROWS_IN_HELP") or 6)
     except (ValueError, TypeError):
         number_of_rows = 6
     try:
-        number_of_cols = int(gvarstatus("NO_OF_COLUMNS_IN_HELP") or 2)
+        number_of_cols = int(gvar("NO_OF_COLUMNS_IN_HELP") or 2)
     except (ValueError, TypeError):
         number_of_cols = 2
-    HELP_EMOJI = gvarstatus("HELP_EMOJI") or " "
+    HELP_EMOJI = gvar("HELP_EMOJI") or " "
     helpable_plugins = [p for p in loaded_plugins if not p.startswith("_")]
     helpable_plugins = sorted(helpable_plugins)
     if len(HELP_EMOJI) == 2:
@@ -295,8 +295,8 @@ async def inline_handler(event):  # sourcery no-metrics
                     Button.inline("🐾 Iɴғo", data="infos"),
                 )
             ]
-            ALIVE_PIC = gvarstatus("ALIVE_PIC")
-            IALIVE_PIC = gvarstatus("IALIVE_PIC")
+            ALIVE_PIC = gvar("ALIVE_PIC")
+            IALIVE_PIC = gvar("IALIVE_PIC")
             if IALIVE_PIC:
                 DOG = [x for x in IALIVE_PIC.split()]
                 PIC = list(DOG)
@@ -565,14 +565,14 @@ async def inline_handler(event):  # sourcery no-metrics
             buttons = [
                 Button.inline(text="🪐 Sʜoᴡ Oᴘᴛɪoɴs", data="show_pmpermit_options"),
             ]
-            PM_PIC = gvarstatus("PM_PIC")
+            PM_PIC = gvar("PM_PIC")
             if PM_PIC:
                 DOG = [x for x in PM_PIC.split()]
                 PIC = list(DOG)
                 DOG_IMG = choice(PIC)
             else:
                 DOG_IMG = None
-            query = gvarstatus("pmpermit_text")
+            query = gvar("pmpermit_text")
             if DOG_IMG and DOG_IMG.endswith((".jpg", ".jpeg", ".png")):
                 result = builder.photo(
                     DOG_IMG,

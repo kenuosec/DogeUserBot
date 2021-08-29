@@ -4,7 +4,7 @@ from urllib.request import urlretrieve
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.photos import DeletePhotosRequest, UploadProfilePhotoRequest
 
-from . import addgvar, doge, edl, eor, gvarstatus
+from . import sgvar, doge, edl, eor, gvar
 
 plugin_category = "tool"
 
@@ -40,10 +40,10 @@ async def off_line(event):
             await eor(event, "**Changed profile to OffLine.**")
     remove(photo)
     first_name = user.first_name
-    addgvar("my_first_name", first_name)
+    sgvar("my_first_name", first_name)
     last_name = user.last_name
     if last_name:
-        addgvar("my_last_name", last_name)
+        sgvar("my_last_name", last_name)
     tag_name = OFFLINE_TAG
     await event.client(UpdateProfileRequest(last_name=first_name, first_name=tag_name))
     await edl(event, f"**`{tag_name} {first_name}`\nI am Offline now.**")
@@ -74,7 +74,7 @@ async def on_line(event):
         await eor(event, str(e))
     else:
         await eor(event, "**Changed profile to Online.**")
-    first_name = gvarstatus("my_first_name")
-    last_name = gvarstatus("my_last_name") or ""
+    first_name = gvar("my_first_name")
+    last_name = gvar("my_last_name") or ""
     await event.client(UpdateProfileRequest(last_name=last_name, first_name=first_name))
     await edl(event, f"**`{first_name} {last_name}`\nI am Online!**")

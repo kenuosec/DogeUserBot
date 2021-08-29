@@ -19,7 +19,7 @@ from . import (
     edl,
     eor,
     getTranslate,
-    gvarstatus,
+    gvar,
     humanbytes,
 )
 
@@ -326,7 +326,7 @@ async def _(event):
         raw_html = response_api.content
         soup = BeautifulSoup(raw_html, "html.parser")
         ext_details = soup.find_all("td", {"colspan": "3"})[-1].text
-        DOGELANG = gvarstatus("DOGELANG") or "en"
+        DOGELANG = gvar("DOGELANG") or "en"
         translated = await getTranslate(deEmojify(ext_details), dest=DOGELANG)
         await eor(
             event,

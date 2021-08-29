@@ -8,7 +8,7 @@ from ..sql_helper.welcome_sql import (
     rm_welcome_setting,
     update_previous_welcome,
 )
-from . import BOTLOG_CHATID, addgvar, delgvar, doge, edl, eor, gvarstatus, logging
+from . import BOTLOG_CHATID, sgvar, dgvar, doge, edl, eor, gvar, logging
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ async def _(event):  # sourcery no-metrics
         and (event.user_joined or event.user_added)
         and not (await event.get_user()).bot
     ):
-        if gvarstatus("clean_welcome") is None:
+        if gvar("clean_welcome") is None:
             try:
                 await event.client.delete_messages(event.chat_id, cws.previous_welcome)
             except Exception as e:
@@ -198,15 +198,15 @@ async def del_welcome(event):
     "To turn off or turn on of deleting previous welcome message."
     input_str = event.pattern_match.group(1)
     if input_str == "on":
-        if gvarstatus("clean_welcome") is None:
+        if gvar("clean_welcome") is None:
             return await edl(event, "__Already it was turned on.__")
-        delgvar("clean_welcome")
+        dgvar("clean_welcome")
         return await edl(
             event,
             "__From now on previous welcome message will be deleted and new welcome message will be sent.__",
         )
-    if gvarstatus("clean_welcome") is None:
-        addgvar("clean_welcome", "false")
+    if gvar("clean_welcome") is None:
+        sgvar("clean_welcome", "false")
         return await edl(
             event, "__From now on previous welcome message will not be deleted .__"
         )

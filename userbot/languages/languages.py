@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Union
 from googletrans import Translator
 from yaml import safe_load
 
-from ..sql_helper.globals import gvarstatus
+from ..sql_helper.globals import gvar
 
 languages = {}
 languages_folder = path.join(path.dirname(path.realpath(__file__)), "languages")
@@ -22,12 +22,12 @@ for file in listdir(languages_folder):
 
 def lan(key: str) -> Any:
     try:
-        return languages[(gvarstatus("DOGELANG") or "en")][key]
+        return languages[(gvar("DOGELANG") or "en")][key]
 
     except KeyError:
         try:
             return Translate.translate(
-                languages["en"][key], dest=gvarstatus("DOGELANG")
+                languages["en"][key], dest=gvar("DOGELANG")
             ).text
 
         except KeyError:

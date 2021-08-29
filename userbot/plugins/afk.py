@@ -16,7 +16,7 @@ from . import (
     doge,
     edl,
     eor,
-    gvarstatus,
+    gvar,
     logging,
     media_type,
     tgbot,
@@ -69,8 +69,8 @@ async def set_afk(event):
 
     await eor(event, "`Done`")
     add_afk(text, minfo, media)
-    if gvarstatus("AFKBIO"):
-        await event.client(UpdateProfileRequest(about=f"{gvarstatus('AFKBIO')}"))
+    if gvar("AFKBIO"):
+        await event.client(UpdateProfileRequest(about=f"{gvar('AFKBIO')}"))
     msg1, msg2 = None, None
     if text and media:
         if "Sticker" in minfo:
@@ -110,7 +110,7 @@ async def set_afk(event):
 async def remove_afk(event):
     if (
         event.is_private
-        and gvarstatus("pmpermit") == "true"
+        and gvar("pmpermit") == "true"
         and not is_approved(event.chat_id)
         and "afk"
         or "#afk" in event.text
@@ -120,8 +120,8 @@ async def remove_afk(event):
     if is_afk():
         _, _, _, afktime = is_afk()
         del_afk()
-        if gvarstatus("AFKRBIO"):
-            await event.client(UpdateProfileRequest(about=f"{gvarstatus('AFKRBIO')}"))
+        if gvar("AFKRBIO"):
+            await event.client(UpdateProfileRequest(about=f"{gvar('AFKRBIO')}"))
         afkevent = await event.reply(
             "**No Longer Afk**\n\nWas away for ~ `{}`".format(afktime)
         )
@@ -144,7 +144,7 @@ async def remove_afk(event):
 async def on_afk(event):
     if (
         event.is_private
-        and gvarstatus("pmpermit") == "true"
+        and gvar("pmpermit") == "true"
         and not is_approved(event.chat_id)
         or not is_afk()
         or "afk"
@@ -166,7 +166,7 @@ async def on_afk(event):
     my_last = me.last_name
     my_fullname = f"{my_first} {my_last}" if my_last else my_first
     my_username = f"@{me.username}" if me.username else my_mention
-    customafkmsg = gvarstatus("AFK") or None
+    customafkmsg = gvar("AFK") or None
     if customafkmsg is not None:
         if text:
             dogeafk = (

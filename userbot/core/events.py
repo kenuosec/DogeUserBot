@@ -26,7 +26,7 @@ from telethon.tl.types import (
 )
 
 from ..Config import Config
-from ..sql_helper.globals import gvarstatus
+from ..sql_helper.globals import gvar
 from .managers import eor
 
 
@@ -115,50 +115,50 @@ async def safe_check_text(msg):  # sourcery no-metrics
             (Config.STRING_SESSION in msg)
             or (Config.API_HASH in msg)
             or (Config.HEROKU_API_KEY and Config.HEROKU_API_KEY in msg)
-            or (gvarstatus("BOT_TOKEN") in msg)
-            or (gvarstatus("CURRENCY_API") and gvarstatus("CURRENCY_API") in msg)
-            or (gvarstatus("DEEPAI_API") and gvarstatus("DEEPAI_API") in msg)
+            or (gvar("BOT_TOKEN") in msg)
+            or (gvar("CURRENCY_API") and gvar("CURRENCY_API") in msg)
+            or (gvar("DEEPAI_API") and gvar("DEEPAI_API") in msg)
             or (
-                gvarstatus("G_DRIVE_CLIENT_ID")
-                and gvarstatus("G_DRIVE_CLIENT_ID") in msg
+                gvar("G_DRIVE_CLIENT_ID")
+                and gvar("G_DRIVE_CLIENT_ID") in msg
             )
             or (
-                gvarstatus("G_DRIVE_CLIENT_SECRET")
-                and gvarstatus("G_DRIVE_CLIENT_SECRET") in msg
+                gvar("G_DRIVE_CLIENT_SECRET")
+                and gvar("G_DRIVE_CLIENT_SECRET") in msg
             )
-            or (gvarstatus("G_DRIVE_DATA") and gvarstatus("G_DRIVE_DATA") in msg)
-            or (gvarstatus("GENIUS_API") and gvarstatus("GENIUS_API") in msg)
+            or (gvar("G_DRIVE_DATA") and gvar("G_DRIVE_DATA") in msg)
+            or (gvar("GENIUS_API") and gvar("GENIUS_API") in msg)
             or (
-                gvarstatus("GITHUB_ACCESS_TOKEN")
-                and gvarstatus("GITHUB_ACCESS_TOKEN") in msg
-            )
-            or (
-                gvarstatus("IBM_WATSON_CRED_PASSWORD")
-                and gvarstatus("IBM_WATSON_CRED_PASSWORD") in msg
+                gvar("GITHUB_ACCESS_TOKEN")
+                and gvar("GITHUB_ACCESS_TOKEN") in msg
             )
             or (
-                gvarstatus("IBM_WATSON_CRED_URL")
-                and gvarstatus("IBM_WATSON_CRED_URL") in msg
+                gvar("IBM_WATSON_CRED_PASSWORD")
+                and gvar("IBM_WATSON_CRED_PASSWORD") in msg
             )
-            or (gvarstatus("IPDATA_API") and gvarstatus("IPDATA_API") in msg)
-            or (gvarstatus("LASTFM_API") and gvarstatus("LASTFM_API") in msg)
             or (
-                gvarstatus("LASTFM_PASSWORD_PLAIN")
-                and gvarstatus("LASTFM_PASSWORD_PLAIN") in msg
+                gvar("IBM_WATSON_CRED_URL")
+                and gvar("IBM_WATSON_CRED_URL") in msg
             )
-            or (gvarstatus("LASTFM_SECRET") and gvarstatus("LASTFM_SECRET") in msg)
-            or (gvarstatus("OCRSPACE_API") and gvarstatus("OCRSPACE_API") in msg)
-            or (gvarstatus("RANDOMSTUFF_API") and gvarstatus("RANDOMSTUFF_API") in msg)
-            or (gvarstatus("REMOVEBG_API") and gvarstatus("REMOVEBG_API") in msg)
-            or (gvarstatus("SPAMWATCH_API") and gvarstatus("SPAMWATCH_API") in msg)
-            or (gvarstatus("SPOTIFY_DC") and gvarstatus("SPOTIFY_DC") in msg)
-            or (gvarstatus("SPOTIFY_KEY") and gvarstatus("SPOTIFY_KEY") in msg)
-            or (gvarstatus("SS_API") and gvarstatus("SS_API") in msg)
+            or (gvar("IPDATA_API") and gvar("IPDATA_API") in msg)
+            or (gvar("LASTFM_API") and gvar("LASTFM_API") in msg)
             or (
-                gvarstatus("TG_2STEP_VERIFICATION_CODE")
-                and gvarstatus("TG_2STEP_VERIFICATION_CODE") in msg
+                gvar("LASTFM_PASSWORD_PLAIN")
+                and gvar("LASTFM_PASSWORD_PLAIN") in msg
             )
-            or (gvarstatus("WEATHER_API") and gvarstatus("WEATHER_API") in msg)
+            or (gvar("LASTFM_SECRET") and gvar("LASTFM_SECRET") in msg)
+            or (gvar("OCRSPACE_API") and gvar("OCRSPACE_API") in msg)
+            or (gvar("RANDOMSTUFF_API") and gvar("RANDOMSTUFF_API") in msg)
+            or (gvar("REMOVEBG_API") and gvar("REMOVEBG_API") in msg)
+            or (gvar("SPAMWATCH_API") and gvar("SPAMWATCH_API") in msg)
+            or (gvar("SPOTIFY_DC") and gvar("SPOTIFY_DC") in msg)
+            or (gvar("SPOTIFY_KEY") and gvar("SPOTIFY_KEY") in msg)
+            or (gvar("SS_API") and gvar("SS_API") in msg)
+            or (
+                gvar("TG_2STEP_VERIFICATION_CODE")
+                and gvar("TG_2STEP_VERIFICATION_CODE") in msg
+            )
+            or (gvar("WEATHER_API") and gvar("WEATHER_API") in msg)
         )
     )
 

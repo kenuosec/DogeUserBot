@@ -11,12 +11,12 @@ from . import (
     BOTLOG_CHATID,
     MONTHS,
     _dogeutils,
-    addgvar,
+    sgvar,
     doge,
     edl,
     eor,
     fsmessage,
-    gvarstatus,
+    gvar,
     media_type,
 )
 
@@ -29,7 +29,7 @@ async def spam_function(event, teledoge, dog, sleeptimem, sleeptimet, DelaySpam=
     if len(dog) == 2:
         spam_message = str(dog[1])
         for _ in range(counter):
-            if gvarstatus("spamwork") is None:
+            if gvar("spamwork") is None:
                 return
             if event.reply_to_msg_id:
                 await teledoge.reply(spam_message)
@@ -38,7 +38,7 @@ async def spam_function(event, teledoge, dog, sleeptimem, sleeptimet, DelaySpam=
             await sleep(sleeptimet)
     elif event.reply_to_msg_id and teledoge.media:
         for _ in range(counter):
-            if gvarstatus("spamwork") is None:
+            if gvar("spamwork") is None:
                 return
             teledoge = await event.client.send_file(
                 event.chat_id, teledoge, caption=teledoge.text
@@ -78,7 +78,7 @@ async def spam_function(event, teledoge, dog, sleeptimem, sleeptimet, DelaySpam=
     elif event.reply_to_msg_id and teledoge.text:
         spam_message = teledoge.text
         for _ in range(counter):
-            if gvarstatus("spamwork") is None:
+            if gvar("spamwork") is None:
                 return
             await event.client.send_message(event.chat_id, spam_message)
             await sleep(sleeptimet)
@@ -144,7 +144,7 @@ async def spammer(event):
         sleeptimet = 0.1
         sleeptimem = 0.3
     await event.delete()
-    addgvar("spamwork", True)
+    sgvar("spamwork", True)
     await spam_function(event, teledoge, dog, sleeptimem, sleeptimet)
 
 
@@ -199,9 +199,9 @@ async def stickerpack_spam(event):
             )
         )
     )
-    addgvar("spamwork", True)
+    sgvar("spamwork", True)
     for m in reqd_sticker_set.documents:
-        if gvarstatus("spamwork") is None:
+        if gvar("spamwork") is None:
             return
         await event.client.send_file(event.chat_id, m)
         await sleep(0.7)
@@ -236,9 +236,9 @@ async def tmeme(event):
     cspam = str("".join(event.text.split(maxsplit=1)[1:]))
     message = cspam.replace(" ", "")
     await event.delete()
-    addgvar("spamwork", True)
+    sgvar("spamwork", True)
     for letter in message:
-        if gvarstatus("spamwork") is None:
+        if gvar("spamwork") is None:
             return
         await event.respond(letter)
     if BOTLOG:
@@ -271,9 +271,9 @@ async def tmeme(event):
     wspam = str("".join(event.text.split(maxsplit=1)[1:]))
     message = wspam.split()
     await event.delete()
-    addgvar("spamwork", True)
+    sgvar("spamwork", True)
     for word in message:
-        if gvarstatus("spamwork") is None:
+        if gvar("spamwork") is None:
             return
         await event.respond(word)
     if BOTLOG:
@@ -322,7 +322,7 @@ async def spammer(event):
             event, "__Use proper syntax for delay spam. For syntax refer doge menu.__"
         )
     await event.delete()
-    addgvar("spamwork", True)
+    sgvar("spamwork", True)
     await spam_function(event, reply, dog, sleeptimem, sleeptimet, DelaySpam=True)
 
 

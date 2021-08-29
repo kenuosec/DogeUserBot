@@ -20,7 +20,7 @@ from . import (
     HEROKU_APP,
     UPSTREAM_REPO_URL,
     Config,
-    delgvar,
+    dgvar,
     doge,
     edl,
     eor,
@@ -160,7 +160,7 @@ async def push(event, repo, ups_rem, ac_br, txt):
         await event.edit(f"{txt}\n**Here is the error log:**\n`{error}`")
         return repo.__del__()
     await event.edit("`Deploy was failed. So restarting to update`")
-    delgvar("ipaddress")
+    dgvar("ipaddress")
     try:
         await event.client.disconnect()
         if HEROKU_APP is not None:

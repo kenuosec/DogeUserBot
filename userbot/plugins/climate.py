@@ -10,7 +10,7 @@ from pytz import country_timezones as c_tz
 from pytz import timezone as tz
 from requests import get
 
-from . import WEATHER_API, WEATHER_CITY, _format, addgvar, doge, eor, logging, reply_id
+from . import WEATHER_API, WEATHER_CITY, _format, sgvar, doge, eor, logging, reply_id
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
@@ -171,7 +171,7 @@ async def set_default_city(event):
     result = loads(request.text)
     if request.status_code != 200:
         return await eor(event, "`Invalid country.`")
-    addgvar("WEATHER_CITY", CITY)
+    sgvar("WEATHER_CITY", CITY)
     cityname = result["name"]
     country = result["sys"]["country"]
     fullc_n = c_n[f"{country}"]

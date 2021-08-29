@@ -4,7 +4,7 @@ from telethon.errors import FloodWaitError, MessageNotModifiedError
 from telethon.events import CallbackQuery
 
 from ..Config import Config
-from ..sql_helper.globals import gvarstatus
+from ..sql_helper.globals import gvar
 
 
 def check_owner(func):
@@ -21,7 +21,7 @@ def check_owner(func):
                 pass
         else:
             HELP_TEXT = (
-                gvarstatus("HELP_TEXT")
+                gvar("HELP_TEXT")
                 or "🐶 Doɢᴇ UsᴇʀBoᴛ\
                     \n\n\
                     🐾 wow!\

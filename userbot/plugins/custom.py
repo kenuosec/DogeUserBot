@@ -5,13 +5,13 @@ from validators.url import url as validatorsurl
 from . import (
     BOTLOG,
     BOTLOG_CHATID,
-    addgvar,
-    delgvar,
+    sgvar,
+    dgvar,
     doge,
     edl,
     eor,
     fsmessage,
-    gvarstatus,
+    gvar,
     lan,
     logging,
 )
@@ -147,7 +147,7 @@ async def dvdvdv(event):  # sourcery no-metrics
                 if "PIC" in vname and not validatorsurl(i):
                     return await edl(event, "**Give me a correct link...**")
 
-            addgvar(vname, vinfo)
+            sgvar(vname, vinfo)
             if BOTLOG_CHATID:
                 await event.client.send_message(
                     BOTLOG_CHATID,
@@ -159,10 +159,10 @@ async def dvdvdv(event):  # sourcery no-metrics
                 event, f"🪀 Value of **{vname}** is changed to: `{vinfo}`", time=20
             )
         if cmd == "get":
-            var_data = gvarstatus(vname)
+            var_data = gvar(vname)
             await edl(event, f"🪀 Value of **{vname}** is  `{var_data}`", time=20)
         elif cmd == "del":
-            delgvar(vname)
+            dgvar(vname)
             if BOTLOG_CHATID:
                 await event.client.send_message(
                     BOTLOG_CHATID,
@@ -183,7 +183,7 @@ async def dvdvdv(event):  # sourcery no-metrics
                     event, f"Give some values which you want to save for **{apiname}**"
                 )
 
-            addgvar(apiname, apinfo)
+            sgvar(apiname, apinfo)
             if BOTLOG_CHATID:
                 await event.client.send_message(
                     BOTLOG_CHATID,
@@ -196,14 +196,14 @@ async def dvdvdv(event):  # sourcery no-metrics
                 f"⚙️ Value of **{apiname}** is changed.",
             )
         if cmd == "get":
-            api_data = gvarstatus(apiname)
+            api_data = gvar(apiname)
             await edl(event, "**I sent API data to BOTLOG.**")
             await event.client.send_message(
                 BOTLOG_CHATID,
                 f"⚙️ Value of **{apiname}** is  `{api_data}`",
             )
         elif cmd == "del":
-            delgvar(apiname)
+            dgvar(apiname)
             if BOTLOG_CHATID:
                 await event.client.send_message(
                     BOTLOG_CHATID,
@@ -263,13 +263,13 @@ async def custom_dogeuserbot(event):
         return await edl(event, "__Reply to custom text or url__")
     input_str = event.pattern_match.group(1)
     if input_str == "pmpermit":
-        addgvar("pmpermit_txt", text)
+        sgvar("pmpermit_txt", text)
     if input_str == "pmblock":
-        addgvar("pmblock", text)
+        sgvar("pmblock", text)
     if input_str == "startmsg":
-        addgvar("STARTTEXT", text)
+        sgvar("STARTTEXT", text)
     if input_str == "afk":
-        addgvar("AFK", text)
+        sgvar("AFK", text)
     await eor(event, f"__Your custom {input_str} has been updated__")
     if BOTLOG_CHATID:
         await event.client.send_message(
@@ -314,16 +314,16 @@ async def lang_set(value):
         )
     LANG = LANGUAGES[arg]
     if input_str == "trt":
-        addgvar("TRT_LANG", arg)
+        sgvar("TRT_LANG", arg)
         await eor(value, f"`Language for Translator changed to {LANG.title()}.`")
     elif input_str == "tts":
-        addgvar("TTS_LANG", arg)
+        sgvar("TTS_LANG", arg)
         await eor(value, f"`Language for Translated TTS changed to {LANG.title()}.`")
     elif input_str == "tocr":
-        addgvar("TOCR_LANG", arg)
+        sgvar("TOCR_LANG", arg)
         await eor(value, f"`Language for Translated OCR changed to {LANG.title()}.`")
     elif input_str == "ai":
-        addgvar("AI_LANG", arg)
+        sgvar("AI_LANG", arg)
         await eor(value, f"`Language for chatbot is changed to {LANG.title()}.`")
     elif input_str == "xg":
         XLANGLIST = [

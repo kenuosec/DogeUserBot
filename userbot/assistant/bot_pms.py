@@ -22,7 +22,7 @@ from ..sql_helper.bot_pms_sql import (
     get_user_reply,
 )
 from ..sql_helper.bot_starters import add_starter_to_db, get_starter_details
-from ..sql_helper.globals import delgvar, gvarstatus
+from ..sql_helper.globals import dgvar, gvar
 from . import BOTLOG, BOTLOG_CHATID, doge
 from .botmanagers import ban_user_from_bot
 
@@ -85,7 +85,7 @@ async def bot_start(event):
     my_fullname = f"{my_first} {my_last}" if my_last else my_first
     my_username = f"@{user.username}" if user.username else my_mention
     if chat.id != Config.OWNER_ID:
-        customstrmsg = gvarstatus("STARTTEXT") or None
+        customstrmsg = gvar("STARTTEXT") or None
         if customstrmsg is not None:
             start_msg = customstrmsg.format(
                 mention=mention,
@@ -457,11 +457,11 @@ def is_flood(uid: int) -> Optional[bool]:
 @doge.tgbot.on(CallbackQuery(data=compile(b"toggle_bot-antiflood_off$")))
 @check_owner
 async def settings_toggle(c_q: CallbackQuery):
-    if gvarstatus("bot_antif") is None:
+    if gvar("bot_antif") is None:
         return await c_q.answer(
             "**ℹ️ Bot AntiFlood was already disabled.**", alert=False
         )
-    delgvar("bot_antif")
+    dgvar("bot_antif")
     await c_q.answer("**ℹ️ Bot AntiFlood disabled.**", alert=False)
     await c_q.edit("**ℹ️ BOT_ANTIFLOOD is now disabled!**")
 
@@ -469,7 +469,7 @@ async def settings_toggle(c_q: CallbackQuery):
 @doge.shiba_cmd(incoming=True, func=lambda e: e.is_private)
 @doge.shiba_cmd(edited=True, func=lambda e: e.is_private)
 async def antif_on_msg(event):
-    if gvarstatus("bot_antif") is None:
+    if gvar("bot_antif") is None:
         return
     chat = await event.get_chat()
     if chat.id == Config.OWNER_ID:

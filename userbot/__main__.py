@@ -7,7 +7,7 @@ from .core.logger import logging
 from .core.session import doge
 from .languages import lan
 from .languages.constants import STARTEDUPDOGE
-from .sql_helper.globals import gvarstatus
+from .sql_helper.globals import gvar
 from .utils import (
     add_bot_to_logger_group,
     customize_assistantbot,
@@ -32,7 +32,7 @@ except Exception as e:
     exit()
 
 
-if gvarstatus("BOT_TOKEN") is None:
+if gvar("BOT_TOKEN") is None:
     doge.loop.run_until_complete(setup_assistantbot())
 
 
