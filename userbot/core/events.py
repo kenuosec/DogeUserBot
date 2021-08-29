@@ -114,7 +114,7 @@ async def safe_check_text(msg):  # sourcery no-metrics
         (
             (Config.STRING_SESSION in msg)
             or (Config.API_HASH in msg)
-            or (Config.HEROKU_API_KEY)
+            or (Config.HEROKU_API_KEY
             and Config.HEROKU_API_KEY in msg
         )
         or (gvarstatus("BOT_TOKEN") in msg)
@@ -158,6 +158,7 @@ async def safe_check_text(msg):  # sourcery no-metrics
             and gvarstatus("TG_2STEP_VERIFICATION_CODE") in msg
         )
         or (gvarstatus("WEATHER_API") and gvarstatus("WEATHER_API") in msg)
+        )
     )
 
 
