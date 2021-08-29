@@ -7,13 +7,13 @@ from telethon.utils import get_display_name
 
 from ..sql_helper.gban_sql_helper import get_gbanuser, is_gbanned
 from ..utils import is_admin
-from . import BOTLOG, BOTLOG_CHATID, Config, doge, eor, logging, spamwatch
+from . import ANTISPAMBOT_BAN, BOTLOG, BOTLOG_CHATID, SPAMWATCH, doge, eor, logging
 
 plugin_category = "admin"
 LOGS = logging.getLogger(__name__)
 
 
-if Config.ANTISPAMBOT_BAN:
+if ANTISPAMBOT_BAN == True:
 
     @doge.on(ChatAction())
     async def anti_spambot(event):  # sourcery no-metrics
@@ -56,8 +56,8 @@ if Config.ANTISPAMBOT_BAN:
                 dogbanned = True
             except Exception as e:
                 LOGS.info(e)
-        if spamwatch and not dogbanned:
-            ban = spamwatch.get_ban(user.id)
+        if SPAMWATCH and not dogbanned:
+            ban = SPAMWATCH.get_ban(user.id)
             if ban:
                 hmm = await event.reply(
                     f"[{user.first_name}](tg://user?id={user.id}) was banned by spamwatch for the reason `{ban.reason}`"
@@ -208,5 +208,5 @@ def banchecker(user_id):
 
 
 def spamchecker(user_id):
-    ban = spamwatch.get_ban(user_id) if spamwatch else None
+    ban = SPAMWATCH.get_ban(user_id) if SPAMWATCH else None
     return bool(ban)

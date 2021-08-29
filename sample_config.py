@@ -82,61 +82,11 @@ class Config(object):
     TEMP_DIR = os.environ.get("TEMP_DIR", "./temp/")
     # Time to update autoprofile cmds
     CHANGE_TIME = int(os.environ.get("CHANGE_TIME", 60))
-    # SpamWatch, CAS, SpamProtection ban needed or not
-    ANTISPAMBOT_BAN = os.environ.get("ANTISPAMBOT_BAN", False)
     # Is dual logging needed? Write; True or False
     DUAL_LOG = os.environ.get("DUAL_LOG", False)
     # Progress bar progress
     FINISHED_PROGRESS_STR = os.environ.get("FINISHED_PROGRESS_STR", "▰")
     UNFINISHED_PROGRESS_STR = os.environ.get("UNFINISHED_PROGRESS_STR", "▱")
-
-    # API VARS
-    # Get this value from https://free.currencyconverterapi.com/
-    CURRENCY_API = os.environ.get("CURRENCY_API", None)
-    # DeepAI value can get from https://deepai.org/
-    DEEP_AI = os.environ.get("DEEP_AI", None)
-    # Google Drive plugin for info: # TODO
-    G_DRIVE_CLIENT_ID = os.environ.get("G_DRIVE_CLIENT_ID", None)
-    G_DRIVE_CLIENT_SECRET = os.environ.get("G_DRIVE_CLIENT_SECRET", None)
-    G_DRIVE_FOLDER_ID = os.environ.get("G_DRIVE_FOLDER_ID", None)
-    G_DRIVE_DATA = os.environ.get("G_DRIVE_DATA", None)
-    G_DRIVE_INDEX_LINK = os.environ.get("G_DRIVE_INDEX_LINK", None)
-    # Genius lyrics get this value from https://genius.com/developers both has
-    GENIUS_API = os.environ.get("GENIUS_API", None)
-    # GitHub vars https://github.com/
-    GITHUB_ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", None)
-    GIT_REPO_NAME = os.environ.get("GIT_REPO_NAME", None)
-    # This is required for the speech to text plugin. Get your USERNAME from
-    # https://console.bluemix.net/docs/services/speech-to-text/getting-started.html
-    IBM_WATSON_CRED_URL = os.environ.get("IBM_WATSON_CRED_URL", None)
-    IBM_WATSON_CRED_PASSWORD = os.environ.get("IBM_WATSON_CRED_PASSWORD", None)
-    # Get free API from https://dashboard.ipdata.co/sign-up.html
-    IPDATA_API = os.environ.get("IPDATA_API", None)
-    # Last.fm plugin vars for info: # TODO
-    BIO_PREFIX = os.environ.get("BIO_PREFIX", None)
-    LASTFM_API = os.environ.get("LASTFM_API", None)
-    LASTFM_USERNAME = os.environ.get("LASTFM_USERNAME", None)
-    LASTFM_PASSWORD_PLAIN = os.environ.get("LASTFM_PASSWORD", None)
-    LASTFM_SECRET = os.environ.get("LASTFM_SECRET", None)
-    # Get a Free API Key from OCR.Space
-    OCRSPACE_API = os.environ.get("OCRSPACE_API", None)
-    # Get your own APPID from https://api.openweathermap.org/data/2.5/weather
-    OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
-    # Can get from https://coffeehouse.intellivoid.net/
-    RANDOM_STUFF_API_KEY = os.environ.get("RANDOM_STUFF_API_KEY", None)
-    # Get your own API key from https://www.remove.bg/
-    RMBG_API = os.environ.get("RMBG_API", None)
-    # Get your own ACCESS_KEY from http://api.screenshotlayer.com/api/capture for screenshot
-    SCREEN_SHOT_LAYER_ACCESS_KEY = os.environ.get("SCREEN_SHOT_LAYER_ACCESS_KEY", None)
-    # Spotify plugin vars for info: # TODO
-    SP_DC = os.environ.get("SP_DC", None)
-    SP_KEY = os.environ.get("SP_KEY", None)
-    # SpamWatch API you can get it from get API from https://t.me/SpamWatchBot?start=token
-    SPAMWATCH_API = os.environ.get("SPAMWATCH_API", None)
-    # For transfer channel 2 step verification code of Telegram
-    TG_2STEP_VERIFICATION_CODE = os.environ.get("TG_2STEP_VERIFICATION_CODE", None)
-    # JustWatch Country for watch plugin
-    WATCH_COUNTRY = os.environ.get("WATCH_COUNTRY", "TR")
 
     # DON'T EDIT BELOW THIS LINE IF YOU DON'T KNOW WHAT YOU ARE DOING
     # TG API limit. A message can have maximum 4096 characters!

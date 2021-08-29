@@ -10,7 +10,7 @@ from pytz import country_timezones as c_tz
 from pytz import timezone as tz
 from requests import get
 
-from . import Config, _format, addgvar, doge, eor, gvarstatus, logging, reply_id
+from . import WEATHER_API, WEATHER_CITY, _format, addgvar, doge, eor, logging, reply_id
 
 plugin_category = "tool"
 LOGS = logging.getLogger(__name__)
@@ -48,7 +48,7 @@ def sun(unix, ctimezone):
     info={
         "header": "To get the weather report of a city.",
         "description": "Shows you the weather report of a city. By default it is Istanbul, you can change it by {tr}setcity command.",
-        "note": "For functioning of this plugin you need to set OPEN_WEATHER_MAP_APPID var you can  get value from https://openweathermap.org/",
+        "note": "For functioning of this plugin you need to set WEATHER_API var you can  get value from https://openweathermap.org/",
         "usage": [
             "{tr}climate",
             "{tr}climate <city name>",
@@ -57,11 +57,10 @@ def sun(unix, ctimezone):
 )
 async def get_weather(event):  # sourcery no-metrics
     "To get the weather report of a city."
-    if not Config.OPEN_WEATHER_MAP_APPID:
-        Config.OPEN_WEATHER_MAP_APPID = "6fded1e1c5ef3f394283e3013a597879"
-        await eor(event, "`Get an API key from` https://openweathermap.org/ ``")
+    # if WEATHER_API is None:
+        # await eor(event, "`Get an API key from` https://openweathermap.org/ ``")
     input_str = "".join(event.text.split(maxsplit=1)[1:])
-    CITY = gvarstatus("DEFCITY") or "Istanbul" if not input_str else input_str
+    CITY = WEATHER_CITY if not input_str else input_str
     timezone_countries = {
         timezone: country
         for country, timezones in c_tz.items()
@@ -78,7 +77,7 @@ async def get_weather(event):  # sourcery no-metrics
             except KeyError:
                 return await eor(event, "`Invalid Country.`")
             CITY = newcity[0].strip() + "," + countrycode.strip()
-    url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={Config.OPEN_WEATHER_MAP_APPID}"
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={WEATHER_API}"
     async with ClientSession() as _session:
         async with _session.get(url) as request:
             requeststatus = request.status
@@ -134,7 +133,7 @@ async def get_weather(event):  # sourcery no-metrics
     info={
         "header": "To set default city for climate cmd",
         "description": "Sets your default city so you can just use .weather or .climate when ever you neededwithout typing city name each time",
-        "note": "For functioning of this plugin you need to set OPEN_WEATHER_MAP_APPID var you can  get value from https://openweathermap.org/",
+        "note": "For functioning of this plugin you need to set WEATHER_API var you can  get value from https://openweathermap.org/",
         "usage": [
             "{tr}climate",
             "{tr}climate <city name>",
@@ -143,11 +142,10 @@ async def get_weather(event):  # sourcery no-metrics
 )
 async def set_default_city(event):
     "To set default city for climate/weather cmd"
-    if not Config.OPEN_WEATHER_MAP_APPID:
-        Config.OPEN_WEATHER_MAP_APPID = "6fded1e1c5ef3f394283e3013a597879"
-        await eor(event, "`Get an API key from` https://openweathermap.org/ ``")
+    # if WEATHER_API is None:
+        # await eor(event, "`Get an API key from` https://openweathermap.org/ ``")
     input_str = event.pattern_match.group(1)
-    CITY = gvarstatus("DEFCITY") or "Istanbul" if not input_str else input_str
+    CITY = WEATHER_CITY if not input_str else input_str
     timezone_countries = {
         timezone: country
         for country, timezones in c_tz.items()
@@ -164,12 +162,12 @@ async def set_default_city(event):
             except KeyError:
                 return await eor(event, "`Invalid country.`")
             CITY = newcity[0].strip() + "," + countrycode.strip()
-    url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={Config.OPEN_WEATHER_MAP_APPID}"
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={WEATHER_API}"
     request = get(url)
     result = loads(request.text)
     if request.status_code != 200:
         return await eor(event, "`Invalid country.`")
-    addgvar("DEFCITY", CITY)
+    addgvar("WEATHER_CITY", CITY)
     cityname = result["name"]
     country = result["sys"]["country"]
     fullc_n = c_n[f"{country}"]
@@ -192,7 +190,7 @@ async def _(event):
     "weather report today from 'wttr.in'"
     input_str = event.pattern_match.group(1)
     if not input_str:
-        input_str = gvarstatus("DEFCITY") or "Istanbul"
+        input_str = WEATHER_CITY
     output = get(f"https://wttr.in/{input_str}?mnTC0&lang=en").text
     await eor(event, output, parse_mode=_format.parse_pre)
 
@@ -214,7 +212,7 @@ async def _(event):
     reply_to_id = await reply_id(event)
     input_str = event.pattern_match.group(1)
     if not input_str:
-        input_str = gvarstatus("DEFCITY") or "Istanbul"
+        input_str = WEATHER_CITY
     async with ClientSession() as session:
         sample_url = "https://wttr.in/{}.png"
         response_api_zero = await session.get(sample_url.format(input_str))

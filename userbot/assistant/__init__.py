@@ -1,4 +1,4 @@
-from userbot import BOTLOG, BOTLOG_CHATID, doge
+from userbot import BOTLOG, BOTLOG_CHATID, doge, tr
 
 from ..Config import Config
 from ..core.inlinebot import *

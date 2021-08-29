@@ -4,8 +4,6 @@ from .. import tr
 from .languages import lan
 
 # BASIS:
-STARTINGDOGE = lan("startingdoge")
-STARTUPDOGE = lan("startupdoge")
 STARTEDUPDOGE = f"\n\
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖\n\
 🐶 {lan('wowialive')}\n\
@@ -58,7 +56,7 @@ DEF_AFKS = [
         🏘 7 blocks & 7 houses...\n\
         \n\
         📵 A place where even messages can't reach me!",
-    "⌨ I'm away from the keyboard right now,\n\
+    "⌨️ I'm away from the keyboard right now,\n\
         but if you shout loud enough at the screen,\n\
         I can hear you.",
     "🔮 If I were here,\n\
@@ -111,8 +109,3 @@ DEF_KANGS = [
     "🔮 I'm using witchery to kang this sticker...",
 ]
 DOGEKANG = f"{str(choice(DEF_KANGS))}"
-
-# OTHERS:
-CMSGTEXT = lan("cmsgtext")
-MMSGTEXT = lan("mmsgtext")
-PMSGTEXT = lan("pmsgtext")

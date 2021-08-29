@@ -1,4 +1,4 @@
-"""Get a Image Post from Reddit"""
+
 # 👍 https://github.com/D3vd for his awesome API
 #
 # Copyright (C) 2020 BY - GitHub.com/code-rgb [TG - @DeletedUser420]
@@ -11,11 +11,12 @@ from . import (
     BOTLOG,
     BOTLOG_CHATID,
     _dogeutils,
-    age_verification,
     doge,
     edl,
+    lan,
     logging,
     reply_id,
+    wowmygroup,
 )
 
 plugin_category = "fun"
@@ -69,11 +70,13 @@ async def reddit_fetch(event):
         captionx += f"`Posted by u/{author}`\n"
         captionx += f"↕️ `{upvote}`\n"
         if r["spoiler"]:
-            captionx += "⚠️ Post marked as SPOILER\n"
+            captionx += "⚠️️ Post marked as SPOILER\n"
         if r["nsfw"]:
             captionx += "🔞 Post marked Adult \n"
-            if await age_verification(event, reply_to):
+            flag = await wowmygroup(event, lan("pmsgtext"))
+            if flag:
                 return
+
 
         await event.delete()
         captionx += f"Source: [r/{subreddit}]({postlink})"

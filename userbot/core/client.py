@@ -128,7 +128,7 @@ class DogeUserBotClient(TelegramClient):
                                     \n👤 Sender ID: {str(check.sender_id)}\
                                     \n🔗 Message Link: {await check.client.get_msg_link(check)}\
                                     \n\
-                                    \n➡ Event Trigger:\n{str(check.text)}\
+                                    \n➡️ Event Trigger:\n{str(check.text)}\
                                     \n\
                                     \nℹ️ Traceback Info:\n{str(format_exc())}\
                                     \n\
@@ -250,7 +250,7 @@ class DogeUserBotClient(TelegramClient):
                                     \n👤 Sender ID: {str(check.sender_id)}\
                                     \n🔗 Message Link: {await check.client.get_msg_link(check)}\
                                     \n\
-                                    \n➡ Event Trigger:\n{str(check.text)}\
+                                    \n➡️ Event Trigger:\n{str(check.text)}\
                                     \n\
                                     \nℹ️ Traceback Info:\n{str(format_exc())}\
                                     \n\

@@ -149,7 +149,7 @@ def errors_handler(func):
                         \n👥 Group ID: {str(check.chat_id)}\
                         \n👤 Sender ID: {str(check.sender_id)}\
                         \n\
-                        \n➡ Event Trigger:\n{str(check.text)}\
+                        \n➡️ Event Trigger:\n{str(check.text)}\
                         \n\
                         \nℹ️ Traceback Info:\n{str(format_exc())}\
                         \n\

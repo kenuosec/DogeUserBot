@@ -1,6 +1,6 @@
 from datetime import datetime
 from os import getcwd, makedirs
-from os import path as osp
+from os.path import basename, isdir, join
 from os import remove
 
 from aiohttp import ClientSession
@@ -8,12 +8,12 @@ from github import Github
 from pySmartDL import SmartDL
 from requests import get
 
-from . import Config, doge, edl, eor, lan, logging, reply_id
+from . import GITHUB_ACCESS_TOKEN, GIT_REPO_NAME, doge, edl, eor, lan, logging, reply_id
 
 plugin_category = "tool"
-LOGS = logging.getLogger(osp.basename(__name__))
+LOGS = logging.getLogger(basename(__name__))
 
-ppath = osp.join(getcwd(), "temp", "githubuser.jpg")
+ppath = join(getcwd(), "temp", "githubuser.jpg")
 GIT_TEMP_DIR = "./temp/"
 
 
@@ -107,23 +107,23 @@ async def _(event):
     info={
         "header": "To commit the replied plugin to github.",
         "description": "It uploads the given file to your github repo in **userbot/plugins** folder\
-        \nTo work commit plugin set `GITHUB_ACCESS_TOKEN` and `GIT_REPO_NAME` Variables in Heroku vars First",
+        \nTo work commit plugin set `GITHUB_ACCESS_TOKEN` and `GIT_REPO_NAME` Variables with {tr}setdog command vars First",
         "note": "As of now not needed i will sure develop it ",
         "usage": "{tr}commit",
     },
 )
 async def download(event):
     "To commit the replied plugin to github."
-    if Config.GITHUB_ACCESS_TOKEN is None:
+    if GITHUB_ACCESS_TOKEN is None:
         return await edl(event, "`Please ADD Proper Access Token from github.com`", 5)
 
-    if Config.GIT_REPO_NAME is None:
+    if GIT_REPO_NAME is None:
         return await edl(
             event, "`Please ADD Proper Github Repo Name of your userbot`", 5
         )
 
     mone = await eor(event, lan("processing"))
-    if not osp.isdir(GIT_TEMP_DIR):
+    if not isdir(GIT_TEMP_DIR):
         makedirs(GIT_TEMP_DIR)
     start = datetime.now()
     reply_message = await event.get_reply_message()
@@ -148,11 +148,11 @@ async def download(event):
 
 async def git_commit(file_name, mone):
     content_list = []
-    access_token = Config.GITHUB_ACCESS_TOKEN
+    access_token = GITHUB_ACCESS_TOKEN
     g = Github(access_token)
     file = open(file_name, "r", encoding="utf-8")
     commit_data = file.read()
-    repo = g.get_repo(Config.GIT_REPO_NAME)
+    repo = g.get_repo(GIT_REPO_NAME)
     LOGS.info(repo.name)
     create_file = True
     contents = repo.get_contents("")
@@ -172,7 +172,7 @@ async def git_commit(file_name, mone):
                 file_name, "Uploaded New Plugin", commit_data, branch="master"
             )
             LOGS.info("Committed File")
-            ccess = Config.GIT_REPO_NAME
+            ccess = GIT_REPO_NAME
             ccess = ccess.strip()
             await mone.edit(
                 f"`Commited On Your Github Repo`\n\n[Your PLUGINS](https://github.com/{ccess}/tree/master/userbot/plugins/)"

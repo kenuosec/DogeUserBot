@@ -4,7 +4,6 @@ from random import choice
 from re import compile
 from time import time
 
-from pylists import *
 from telethon.errors.rpcerrorlist import (
     MediaEmptyError,
     WebpageCurlFailedError,
@@ -19,13 +18,12 @@ from . import (
     check_data_base_heal_th,
     doge,
     dogealive,
-    edl,
     eor,
     get_readable_time,
-    get_user_from_event,
     gvarstatus,
     mention,
     reply_id,
+    tr,
     vdoge,
 )
 
@@ -49,6 +47,19 @@ temp = "{msg}\n\
 ┃ ᴘɪɴɢ - {ping} ms\n\
 ┗━━━━━━✦❘༻༺❘✦━━━━━━┛\n\
         ↠━━━━━ღ◆ღ━━━━━↞"
+
+itemp = "{msg}\n\
+┏━━━━━━✦❘༻༺❘✦━━━━━━┓\n\
+┃ ᴅoɢᴇ oғ - {mention}\n\
+┗━━━━━━✦❘༻༺❘✦━━━━━━┛\n\
+\n\
+┏━━━━━━✦❘༻༺❘✦━━━━━━┓\n\
+┃ ᴅoɢᴇ ᴠᴇʀꜱɪoɴ - {dv}\n\
+┃ ᴀʟɪᴠᴇ ꜱɪɴᴄᴇ - {uptime}\n\
+┃ ꜱᴛᴀᴛᴜꜱ - {db}\n\
+┃ ᴛᴇʟᴇᴛʜoɴ ᴠᴇʀꜱɪoɴ - {tv}\n\
+┃ ᴘʏᴛʜoɴ ᴠᴇʀꜱɪoɴ - {pv}\n\
+┗━━━━━━✦❘༻༺❘✦━━━━━━┛"
 
 
 @doge.bot_cmd(
@@ -97,55 +108,10 @@ async def thisalive(event):
         except (WebpageMediaEmptyError, MediaEmptyError, WebpageCurlFailedError):
             return await eor(
                 event,
-                f"**Media Value Error!!**\n__Change the link by __`.setdv`\n\n**__Can't get media from this link :-**__ `{PIC}`",
+                f"**Media Value Error!!**\n__Change the link by __`{tr}setdog`\n\n**__Can't get media from this link :-**__ `{PIC}`",
             )
     else:
         await eor(event, caption)
-
-
-@doge.bot_cmd(incoming=True, from_users=M_ST_RS, pattern="dlive$", disable_errors=True)
-async def dlive(event):
-    user = await get_user_from_event(event)
-    if user.id not in M_ST_RS:
-        return await edl(event, "**Only Doge admins can use, dude!**")
-    reply_to_id = await reply_id(event)
-    start = datetime.now()
-    ppingx = await event.reply("ㅤ")
-    end = datetime.now()
-    ms = (end - start).microseconds / 1000
-    uptime = await get_readable_time((time() - StartTime))
-    _, check_sgnirts = check_data_base_heal_th()
-    ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or "🐶 Doɢᴇ UsᴇʀBoᴛ 🐾"
-    DOG_IMG = (
-        gvarstatus("ALIVE_PIC") or "https://telegra.ph/file/dd72e42027e6e7de9c0c9.jpg"
-    )
-    doge_caption = gvarstatus("ALIVE") or temp
-    caption = doge_caption.format(
-        msg=ALIVE_TEXT,
-        mention=mention,
-        uptime=uptime,
-        tv=__version__,
-        dv=vdoge,
-        pv=python_version(),
-        db=check_sgnirts,
-        ping=ms,
-    )
-    if DOG_IMG:
-        DOG = [x for x in DOG_IMG.split()]
-        PIC = choice(DOG)
-        try:
-            await event.client.send_file(
-                event.chat_id, PIC, caption=caption, reply_to=reply_to_id
-            )
-            await event.delete()
-        except (WebpageMediaEmptyError, MediaEmptyError, WebpageCurlFailedError):
-            await event.reply(caption)
-    else:
-        await event.reply(caption)
-    try:
-        ppingx.delete()
-    except:
-        pass
 
 
 @doge.bot_cmd(
@@ -168,8 +134,8 @@ async def thisialive(event):
     reply_to_id = await reply_id(event)
     uptime = await get_readable_time((time() - StartTime))
     _, check_sgnirts = check_data_base_heal_th()
-    ALIVE_TEXT = "ㅤ\n"
-    doge_caption = gvarstatus("ALIVE") or temp
+    ALIVE_TEXT = "ㅤ"
+    doge_caption = gvarstatus("ALIVE") or itemp
     caption = doge_caption.format(
         msg=ALIVE_TEXT,
         mention=mention,

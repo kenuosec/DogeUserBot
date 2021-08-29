@@ -63,7 +63,7 @@ async def ban_user_from_bot(user, reason, reply_to=None):
         f"**🚨 You have been banned forever from using this bot.\n⛓ Reason:** {reason}"
     )
     await doge.tgbot.send_message(user.id, banned_msg)
-    info = f"**⚠ #Banned_Bot_PM_User**\
+    info = f"**⚠️ #Banned_Bot_PM_User**\
             \n\n👤 {_format.mentionuser(get_display_name(user) , user.id)}\
             \n**ℹ️ First Name:** {user.first_name}\
             \n**🆔 User ID:** `{user.id}`\
@@ -83,7 +83,7 @@ async def unban_user_from_bot(user, reason, reply_to=None):
     if reason is not None:
         banned_msg += f"\n**⛓ Reason:** __{reason}__"
     await doge.tgbot.send_message(user.id, banned_msg)
-    info = f"**⚠ #Unbanned_Bot_PM_User**\
+    info = f"**⚠️ #Unbanned_Bot_PM_User**\
             \n\n👤 {_format.mentionuser(get_display_name(user) , user.id)}\
             \n**ℹ️ First Name:** {user.first_name}\
             \n**🆔 User ID:** `{user.id}`"

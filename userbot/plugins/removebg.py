@@ -1,16 +1,17 @@
 # ported from uniborg (@spechide)
-from os import path, remove
+from os import remove
+from os.path import join
 
 from requests import post
 
-from . import Config, convert_toimage, convert_tosticker, doge, edl, eor, reply_id
+from . import REMOVEBG_API, Config, convert_toimage, convert_tosticker, doge, edl, eor, reply_id
 
 plugin_category = "misc"
 
 
 def ReTrieveFile(input_file_name):
     headers = {
-        "X-API-Key": Config.RMBG_API,
+        "X-API-Key": REMOVEBG_API,
     }
     files = {
         "image_file": (input_file_name, open(input_file_name, "rb")),
@@ -26,7 +27,7 @@ def ReTrieveFile(input_file_name):
 
 def ReTrieveURL(input_url):
     headers = {
-        "X-API-Key": Config.RMBG_API,
+        "X-API-Key": REMOVEBG_API,
     }
     data = {"image_url": input_url}
     return post(
@@ -57,10 +58,10 @@ def ReTrieveURL(input_url):
 )
 async def remove_background(event):
     "To remove background of a image."
-    if Config.RMBG_API is None:
+    if REMOVEBG_API is None:
         return await edl(
             event,
-            "`You have to set RMBG_API in Config vars with API token from remove.bg to use this plugin .`",
+            "`You have to set REMOVEBG_API in Config vars with API token from remove.bg to use this plugin .`",
         )
 
     cmd = event.pattern_match.group(1)
@@ -69,7 +70,7 @@ async def remove_background(event):
     if event.reply_to_msg_id and not input_str:
         reply_message = await event.get_reply_message()
         dogevent = await eor(event, "`Analysing this Image/Sticker...`")
-        file_name = path.join(Config.TEMP_DIR, "rbg.png")
+        file_name = join(Config.TEMP_DIR, "rbg.png")
         try:
             await event.client.download_media(reply_message, file_name)
         except Exception as e:

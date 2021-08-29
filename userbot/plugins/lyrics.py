@@ -3,11 +3,9 @@ from re import findall
 
 from lyricsgenius import Genius
 
-from . import Config, doge, eor
+from . import GENIUS_API, doge, eor
 
 plugin_category = "fun"
-
-GENIUS = Config.GENIUS_API_TOKEN
 
 
 @doge.bot_cmd(
@@ -20,7 +18,7 @@ GENIUS = Config.GENIUS_API_TOKEN
             ".l": "to get list of search lists.",
             ".n": "To get paticular song lyrics.",
         },
-        "note": "For functioning of this command set the GENIUS_API_TOKEN in heroku. Get value from  https://genius.com/developers.",
+        "note": "For functioning of this command set the GENIUS_API with {tr}setdog command. Get value from  https://genius.com/developers.",
         "usage": [
             "{tr}lyrics <artist name> - <song name>",
             "{tr}lyrics .l <song name>",
@@ -35,10 +33,10 @@ GENIUS = Config.GENIUS_API_TOKEN
 )
 async def lyrics(event):  # sourcery no-metrics
     "To fetch song lyrics"
-    if GENIUS is None:
+    if GENIUS_API is None:
         return await eor(
             event,
-            "`Set genius access token in heroku vars for functioning of this command`",
+            "`Set genius access token in API vars for functioning of this command`",
         )
     match = event.pattern_match.group(1)
     songno = findall(r".n\d+", match)
@@ -58,7 +56,7 @@ async def lyrics(event):  # sourcery no-metrics
     match = match.replace(".l", "")
     listview = bool(listview)
     query = match.strip()
-    genius = Genius(GENIUS)
+    genius = Genius(GENIUS_API)
     if "-" in query:
         args = query.split("-", 1)
         artist = args[0].strip(" ")

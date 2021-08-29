@@ -9,7 +9,7 @@ from telethon.tl.functions.contacts import (
 )
 from telethon.utils import get_display_name
 
-from . import CMSGTEXT, doge, edl, eor, wowmygroup
+from . import doge, edl, eor, lan, wowmygroup
 
 plugin_category = "tool"
 
@@ -66,7 +66,7 @@ async def contactsaddto(event):
                     grouptitle
                 ),
             )
-    flag = await wowmygroup(event, CMSGTEXT)
+    flag = await wowmygroup(event, lan("cmsgtext"))
     if flag:
         return
 

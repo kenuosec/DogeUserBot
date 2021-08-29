@@ -5,7 +5,8 @@ from userbot import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID
 
 from .core.logger import logging
 from .core.session import doge
-from .languages.constants import STARTEDUPDOGE, STARTINGDOGE, STARTUPDOGE
+from .languages import lan
+from .languages.constants import STARTEDUPDOGE
 from .sql_helper.globals import gvarstatus
 from .utils import (
     add_bot_to_logger_group,
@@ -23,9 +24,9 @@ LOGS = logging.getLogger("DogeUserBot")
 
 
 try:
-    LOGS.info(f"⏳ {STARTINGDOGE} 🐾")
+    LOGS.info(f"⏳ {lan('startingdoge')} 🐾")
     doge.loop.run_until_complete(setup_bot())
-    LOGS.info(f"✅ {STARTUPDOGE} 🐾")
+    LOGS.info(f"✅ {lan('startupdoge')} 🐾")
 except Exception as e:
     LOGS.error(f"{e}")
     exit()

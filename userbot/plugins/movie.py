@@ -5,7 +5,7 @@ from justwatch import JustWatch, justwatchapi
 from pySmartDL import SmartDL
 
 from . import (
-    Config,
+    WATCH_COUNTRY,
     doge,
     eor,
     get_cast,
@@ -29,9 +29,9 @@ def get_stream_data(query):
     stream_data = {}
     # Compatibility for Current Userge Users
     try:
-        country = Config.WATCH_COUNTRY
+        country = WATCH_COUNTRY
     except Exception:
-        country = "IN"
+        country = "TR"
     # Cooking Data
     just_watch = JustWatch(country=country)
     results = just_watch.search_for_item(query=query)

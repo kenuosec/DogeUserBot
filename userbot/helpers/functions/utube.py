@@ -170,7 +170,7 @@ def yt_search_btns(
     buttons = [
         [
             Button.inline(
-                text="⬅️  Back",
+                text="⬅️️  Back",
                 data=f"ytdl_back_{data_key}_{page}",
             ),
             Button.inline(

@@ -11,7 +11,7 @@ from telethon.tl.functions.channels import InviteToChannelRequest
 from telethon.tl.functions.messages import AddChatUserRequest
 from telethon.tl.types import InputPeerUser
 
-from . import MMSGTEXT, doge, edl, eor, get_chatinfo, wowmygroup
+from . import doge, edl, eor, get_chatinfo, lan, wowmygroup
 
 plugin_category = "tool"
 
@@ -115,7 +115,7 @@ async def getmembers(event):
     chat = await event.get_chat()
     creator = chat.creator
 
-    flag = await wowmygroup(event, MMSGTEXT)
+    flag = await wowmygroup(event, lan("mmsgtext"))
     if flag:
         return
 
@@ -147,7 +147,7 @@ async def addmembers(event):
     chat = await event.get_chat()
     creator = chat.creator
 
-    flag = await wowmygroup(event, MMSGTEXT)
+    flag = await wowmygroup(event, lan("mmsgtext"))
     if flag:
         return
 

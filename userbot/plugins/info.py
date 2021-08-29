@@ -15,6 +15,7 @@ from telethon.tl.types import Channel, Chat, User
 from telethon.utils import get_input_location, pack_bot_file_id
 
 from . import (
+    IPDATA_API,
     Config,
     _dogeutils,
     doge,
@@ -30,7 +31,8 @@ from . import (
     post_to_telegraph,
     reply_id,
     sanga_seperator,
-    spamwatch,
+    SPAMWATCH,
+    tr,
     wowcg_y,
     wowcmydev,
     yaml_format,
@@ -390,8 +392,8 @@ async def _(event):
         dc_id, location = get_input_location(replied_user.profile_photo)
     except Exception:
         dc_id = "Couldn't fetch DC ID!"
-    if spamwatch:
-        ban = spamwatch.get_ban(user_id)
+    if SPAMWATCH:
+        ban = SPAMWATCH.get_ban(user_id)
         if ban:
             sw = f"**Spamwatch Banned:** `True` \n       **-**🤷‍♂️**Reason: **`{ban.reason}`"
         else:
@@ -894,14 +896,13 @@ async def spy(event):
     if not inpt:
         return await edl(event, "**Give an ip address to lookup...**", 20)
     check = "" if inpt == "mine" else inpt
-    API = Config.IPDATA_API
-    if API is None:
+    if IPDATA_API is None:
         return await edl(
             event,
-            "**Get an API key from [Ipdata](https://dashboard.ipdata.co/sign-up.html) & set that in heroku var `IPDATA_API`**",
+            f"**Get an API key from [IPdata](https://dashboard.ipdata.co/sign-up.html) & set var `IPDATA_API` with {tr}setdog**",
             80,
         )
-    url = get(f"https://api.ipdata.co/{check}?api-key={API}")
+    url = get(f"https://api.ipdata.co/{check}?api-key={IPDATA_API}")
     r = url.json()
     try:
         return await edl(event, f"**{r['message']}**", 60)

@@ -1,6 +1,6 @@
 from json import dump, load
 from math import ceil
-from os import path
+from os.path import join as ospjoin
 from random import choice
 from re import compile, findall
 from time import time
@@ -16,7 +16,7 @@ from telethon.tl.types import (
 )
 from youtubesearchpython import VideosSearch
 
-from userbot import doge
+from userbot import doge, tr
 
 from ..Config import Config
 from ..helpers.functions import rand_key
@@ -36,7 +36,6 @@ LOGS = logging.getLogger(__name__)
 
 BTN_URL_REGEX = compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)")
 DOGLOGO = "https://telegra.ph/file/dd72e42027e6e7de9c0c9.jpg"
-tr = Config.CMDSET
 
 
 def getkey(val):
@@ -61,7 +60,7 @@ def main_menu():
     text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
         \n🐾 Hᴇʟᴘᴇʀ\
         \n\
-        \n◽ Boᴛ oғ {mention}**"
+        \n◽ Doɢᴇ oғ {mention}**"
     buttons = [
         (
             Button.inline(
@@ -238,7 +237,7 @@ def paginate_help(
             ),
             (
                 Button.inline(
-                    "⬅️ Bᴀᴄᴋ",
+                    "⬅️️ Bᴀᴄᴋ",
                     data=f"back_plugin_{category_plugins}_{category_pgno}",
                 ),
                 Button.inline(
@@ -254,7 +253,7 @@ def paginate_help(
         pairs = pairs + [
             (
                 Button.inline(
-                    "⬅️ Bᴀᴄᴋ",
+                    "⬅️️ Bᴀᴄᴋ",
                     data=f"back_plugin_{category_plugins}_{category_pgno}",
                 ),
                 Button.inline(
@@ -268,7 +267,7 @@ def paginate_help(
 
 
 def get_back_button(name):
-    button = [Button.inline("⬅️ Bᴀᴄᴋ", data=f"{name}")]
+    button = [Button.inline("⬅️️ Bᴀᴄᴋ", data=f"{name}")]
     return button
 
 
@@ -365,7 +364,7 @@ async def inline_handler(event):  # sourcery no-metrics
             query = query[7:]
             user, txct = query.split(" ", 1)
             builder = event.builder
-            troll = path.join("./userbot", "troll.txt")
+            troll = ospjoin("./userbot", "troll.txt")
             try:
                 jsondata = load(open(troll))
             except Exception:
@@ -415,7 +414,7 @@ async def inline_handler(event):  # sourcery no-metrics
             query = query[7:]
             user, txct = query.split(" ", 1)
             builder = event.builder
-            secret = path.join("./userbot", "secrets.txt")
+            secret = ospjoin("./userbot", "secrets.txt")
             try:
                 jsondata = load(open(secret))
             except Exception:
@@ -449,7 +448,7 @@ async def inline_handler(event):  # sourcery no-metrics
             timestamp = int(time() * 2)
             newsecret = {str(timestamp): {"userid": u, "text": txct}}
 
-            buttons = [Button.inline("🔐 Sʜoᴡ Mᴇssᴀɢᴇ", data=f"s_{timestamp}")]
+            buttons = [Button.inline("🔐 Sʜoᴡ Mᴇssᴀɢᴇ", data=f"sec_{timestamp}")]
             result = builder.article(
                 title="🐶 Doge UserBot Secret Message",
                 text=f"🔒 A whisper message to {teledoge}, only {teledoge} can see.",
@@ -464,7 +463,7 @@ async def inline_handler(event):  # sourcery no-metrics
         elif match3:
             query = query[5:]
             builder = event.builder
-            hide = path.join("./userbot", "hide.txt")
+            hide = ospjoin("./userbot", "hide.txt")
             try:
                 jsondata = load(open(hide))
             except Exception:
@@ -475,7 +474,7 @@ async def inline_handler(event):  # sourcery no-metrics
             buttons = [Button.inline("🔏 Rᴇᴀᴅ Mᴇssᴀɢᴇ", data=f"hide_{timestamp}")]
             result = builder.article(
                 title="🐶 Doge UserBot Hidden Message",
-                text=f"✖✖✖",
+                text=f"ㅤ",
                 buttons=buttons,
             )
             await event.answer([result] if result else None)
@@ -562,32 +561,6 @@ async def inline_handler(event):  # sourcery no-metrics
                         )
                     ]
                 )
-        elif string == "age_verification_alert":
-            buttons = [
-                Button.inline(text="⚠ Yᴇs ɪ'ᴍ +18", data="age_verification_true"),
-                Button.inline(text="🔞 No ɪ'ᴍ ɴoᴛ", data="age_verification_false"),
-            ]
-            markup = event.client.build_reply_markup(buttons)
-            photo = InputWebDocument(
-                url="https://i.imgur.com/Zg58iXc.jpg",
-                size=0,
-                mime_type="image/jpeg",
-                attributes=[],
-            )
-            text, msg_entities = await event.client._parse_message_text(
-                "<b>ARE YOU OLD ENOUGH FOR THIS?</b>", "html"
-            )
-            result = InputBotInlineResult(
-                id=str(uuid4()),
-                type="photo",
-                title="🔞 Age verification",
-                thumb=photo,
-                content=photo,
-                send_message=InputBotInlineMessageMediaAuto(
-                    reply_markup=markup, message=text, entities=msg_entities
-                ),
-            )
-            await event.answer([result] if result else None)
         elif string == "pmpermit":
             buttons = [
                 Button.inline(text="🪐 Sʜoᴡ Oᴘᴛɪoɴs", data="show_pmpermit_options"),
@@ -668,7 +641,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(
         f"**[🐶 Doɢᴇ UsᴇʀBoᴛ 🐾](https://t.me/DogeUserBot)\
         \n\
-        \n◽ Boᴛ oғ {mention}**",
+        \n◽ Doɢᴇ oғ {mention}**",
         buttons=buttons,
         link_preview=False,
     )
@@ -679,7 +652,7 @@ async def on_plugin_callback_query_handler(event):
     text = f"🐶 𝗗𝗢𝗚𝗘 𝗨𝗦𝗘𝗥𝗕𝗢𝗧 🐾\
             \n\
             \n🧩 Pʟᴜɢɪɴs: {len(PLG_INFO)}\
-            \n⌨ Coᴍᴍᴀɴᴅs: {len(CMD_INFO)}\
+            \n⌨️ Coᴍᴍᴀɴᴅs: {len(CMD_INFO)}\
             \n\
             \n{tr}doge .c <command>: For any command info.\
             \n{tr}s <query>: To search any commands."
@@ -696,7 +669,7 @@ async def on_plug_in_callback_query_handler(event):
             \n\
             \n🗃 Cᴀᴛᴇɢoʀʏ: **{category}\
             \n**🧩 Pʟᴜɢɪɴs: **{len(GRP_INFO[category])}\
-            \n**⌨ Coᴍᴍᴀɴᴅs: **{command_in_category(category)}"
+            \n**⌨️ Coᴍᴍᴀɴᴅs: **{command_in_category(category)}"
     await event.edit(text, buttons=buttons, link_preview=False)
 
 
@@ -717,7 +690,7 @@ async def on_plug_in_callback_query_handler(event):
                 \n\
                 \n🗃 Cᴀᴛᴇɢoʀʏ: **{category}\
                 \n**🧩 Pʟᴜɢɪɴs: **{len(GRP_INFO[category])}\
-                \n**⌨ Coᴍᴍᴀɴᴅs: **{command_in_category(category)}"
+                \n**⌨️ Coᴍᴍᴀɴᴅs: **{command_in_category(category)}"
     else:
         category_plugins = str(event.pattern_match.group(4).decode("UTF-8"))
         category_pgno = int(event.pattern_match.group(5).decode("UTF-8"))
@@ -734,7 +707,7 @@ async def on_plug_in_callback_query_handler(event):
                 \n\
                 \n🧩 Pʟᴜɢɪɴ: **{category}\
                 \n**🗃 Cᴀᴛᴇɢoʀʏ: **{getkey(category)}\
-                \n**⌨ Coᴍᴍᴀɴᴅs: **{len(PLG_INFO[category])}"
+                \n**⌨️ Coᴍᴍᴀɴᴅs: **{len(PLG_INFO[category])}"
     await event.edit(text, buttons=buttons, link_preview=False)
 
 
@@ -771,7 +744,7 @@ async def on_plug_in_callback_query_handler(event):
                 \n\
                 \n🧩 Pʟᴜɢɪɴ: **{category}\
                 \n**🗃 Cᴀᴛᴇɢoʀʏ: **{getkey(category)}\
-                \n**⌨ Coᴍᴍᴀɴᴅs: **{len(PLG_INFO[category])}"
+                \n**⌨️ Coᴍᴍᴀɴᴅs: **{len(PLG_INFO[category])}"
         try:
             return await event.edit(text, buttons=buttons, link_preview=False)
         except Exception as e:
@@ -820,7 +793,7 @@ async def on_plug_in_callback_query_handler(event):
     buttons = [
         (
             Button.inline(
-                "⬅️ Bᴀᴄᴋ",
+                "⬅️️ Bᴀᴄᴋ",
                 data=f"back_command_{category}_{pgno}_{category_plugins}_{category_pgno}",
             ),
             Button.inline(
@@ -836,7 +809,7 @@ async def on_plug_in_callback_query_handler(event):
     text = f"**🐶 [Doɢᴇ UsᴇʀBoᴛ](https://t.me/DogeUserBot)\
             \n🐾 Hᴇʟᴘᴇʀ\
             \n\
-            \n**⌨ Coᴍᴍᴀɴᴅ: **`{tr}{cmd}`\
+            \n⌨️ Coᴍᴍᴀɴᴅ: **`{tr}{cmd}`\
             \n**🧩 Pʟᴜɢɪɴ: **{category}\
             \n**🗃 Cᴀᴛᴇɢoʀʏ: **{category_plugins}\
             \n\

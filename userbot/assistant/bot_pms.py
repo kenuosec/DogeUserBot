@@ -132,7 +132,7 @@ async def bot_start(event):
             await event.client.send_message(
                 BOTLOG_CHATID,
                 f"**🚨 ERROR:**\nℹ️ There was a error while user starting your bot.\
-                \n➡ `{e}`",
+                \n➡️ `{e}`",
             )
     else:
         await check_bot_started_users(chat, event)
@@ -153,7 +153,7 @@ async def bot_pms(event):  # sourcery no-metrics
                 await event.client.send_message(
                     BOTLOG_CHATID,
                     f"**🚨 ERROR:**\nℹ️ While storing messages details in database\
-                    \n➡ `{str(e)}`",
+                    \n➡️ `{str(e)}`",
                 )
     else:
         if event.text.startswith("/"):
@@ -182,7 +182,7 @@ async def bot_pms(event):  # sourcery no-metrics
             except UserIsBlockedError:
                 return await event.reply(f"**❌ This bot was blocked by the user.**")
             except Exception as e:
-                return await event.reply(f"**🚨 ERROR:**\n➡ `{e}`")
+                return await event.reply(f"**🚨 ERROR:**\n➡️ `{e}`")
             try:
                 add_user_to_db(
                     reply_to, user_name, user_id, reply_msg, event.id, msg.id
@@ -193,7 +193,7 @@ async def bot_pms(event):  # sourcery no-metrics
                     await event.client.send_message(
                         BOTLOG_CHATID,
                         f"**🚨 ERROR:**\nℹ️ While storing messages details in database\
-                        \n➡ `{e}`",
+                        \n➡️ `{e}`",
                     )
 
 
@@ -226,7 +226,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
                     await event.client.send_message(
                         BOTLOG_CHATID,
                         f"**🚨 ERROR:**\nℹ️ While storing messages details in database\
-                        \n➡ `{e}`",
+                        \n➡️ `{e}`",
                     )
     else:
         reply_to = await reply_id(event)
@@ -344,14 +344,14 @@ async def send_flood_alert(user_) -> None:
                 await doge.tgbot.send_message(
                     BOTLOG_CHATID,
                     f"**🚨 ERROR:**\nℹ️ While updating flood count\
-                    \n➡ `{e}`",
+                    \n➡️ `{e}`",
                 )
         flood_count = FloodConfig.ALERT[user_.id]["count"]
     else:
         flood_count = FloodConfig.ALERT[user_.id]["count"] = 1
 
     flood_msg = (
-        r"**⚠️ #Flood_Warning**"
+        r"**⚠️️ #Flood_Warning**"
         "\n\n"
         f"**🆔 ID:** `{user_.id}`\n"
         f"**ℹ️ Name:** {get_display_name(user_)}\n"
@@ -401,7 +401,7 @@ async def send_flood_alert(user_) -> None:
             chat = await doge.tgbot.get_entity(BOTLOG_CHATID)
             await doge.tgbot.send_message(
                 Config.OWNER_ID,
-                f"**⚠️ [{botusername} flood warning!](https://t.me/c/{chat.id}/{fa_msg.id})**",
+                f"**⚠️️ [{botusername} flood warning!](https://t.me/c/{chat.id}/{fa_msg.id})**",
             )
         except UserIsBlockedError:
             if BOTLOG:
@@ -419,7 +419,7 @@ async def bot_pm_ban_cb(c_q: CallbackQuery):
     try:
         user = await doge.get_entity(user_id)
     except Exception as e:
-        await c_q.answer(f"**🚨 ERROR:**\n➡ `{e}`")
+        await c_q.answer(f"**🚨 ERROR:**\n➡️ `{e}`")
     else:
         await c_q.answer(f"**⏳ Banning UserID ->** `{user_id}`**...**", alert=False)
         await ban_user_from_bot(user, "Spamming Bot")

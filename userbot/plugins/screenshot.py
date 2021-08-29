@@ -1,6 +1,5 @@
 """
 `Credits` @amnd33p
-from ..helpers.utils import _format
 Modified by @mrconfused
 """
 
@@ -12,7 +11,7 @@ from requests import get
 from selenium.webdriver import Chrome, ChromeOptions
 from validators.url import url
 
-from . import Config, doge, eor, lan, reply_id
+from . import SS_API, Config, doge, eor, lan, reply_id
 
 plugin_category = "tool"
 
@@ -95,7 +94,7 @@ async def _(event):
     command=("scapture", plugin_category),
     info={
         "header": "To Take a screenshot of a website.",
-        "description": "For functioning of this command you need to set SCREEN_SHOT_LAYER_ACCESS_KEY var",
+        "description": "For functioning of this command you need to set SS_API var",
         "usage": "{tr}scapture <link>",
         "examples": "{tr}scapture https://github.com/DOG-E/DogeUserBot",
     },
@@ -104,10 +103,10 @@ async def _(event):
     "To Take a screenshot of a website."
     start = datetime.now()
     message_id = await reply_id(event)
-    if Config.SCREEN_SHOT_LAYER_ACCESS_KEY is None:
+    if SS_API is None:
         return await eor(
             event,
-            "`Need to get an API key from https://screenshotlayer.com/product and need to set it SCREEN_SHOT_LAYER_ACCESS_KEY !`",
+            "`Need to get an API key from https://screenshotlayer.com/product and need to set it SS_API !`",
         )
     dogevent = await eor(event, lan("processing"))
     sample_url = "https://api.screenshotlayer.com/api/capture?access_key={}&url={}&fullpage={}&viewport={}&format={}&force={}"
@@ -121,7 +120,7 @@ async def _(event):
         return await dogevent.edit("`The given input is not supported url`")
     response_api = get(
         sample_url.format(
-            Config.SCREEN_SHOT_LAYER_ACCESS_KEY, inputstr, "1", "2560x1440", "PNG", "1"
+            SS_API, inputstr, "1", "2560x1440", "PNG", "1"
         )
     )
     # https://stackoverflow.com/a/23718458/4723940

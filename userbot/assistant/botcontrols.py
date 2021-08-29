@@ -11,7 +11,7 @@ from ..helpers.utils import _format
 from ..sql_helper.bot_blacklists import check_is_black_list, get_all_bl_users
 from ..sql_helper.bot_starters import del_starter_from_db, get_all_starters
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from . import BOTLOG, BOTLOG_CHATID, doge
+from . import BOTLOG, BOTLOG_CHATID, doge, tr
 from .botmanagers import (
     ban_user_from_bot,
     get_user_and_reason,
@@ -22,7 +22,6 @@ from .botmanagers import (
 plugin_category = "bot"
 LOGS = logging.getLogger(__name__)
 botusername = Config.BOT_USERNAME
-cmhd = Config.CMDSET
 
 
 @doge.shiba_cmd(pattern="^/help$", from_users=Config.OWNER_ID)
@@ -38,9 +37,9 @@ async def bot_help(event):
 • **Note: **__Reason is must. without reason it won't work. __
 • **Cmd: **/unban <reason(optional)> or /unban <username/userid>
 • **Info: **__Reply to user message or provide username/userid to unban from the bot.__
-• **Note: **__To check banned users list use__ `{cmhd}bblist`.
+• **Note: **__To check banned users list use__ `{tr}bblist`.
 • **Cmd: **/broadcast
-• **Info: **__Reply to a message to get broadcasted to every user who started your bot. To get list of users use__ `{cmhd}botusers`.
+• **Info: **__Reply to a message to get broadcasted to every user who started your bot. To get list of users use__ `{tr}botusers`.
 • **Note: **__if user stoped/blocked the bot then he will be removed from your database that is he will erased from the bot_starters list.__
 """
     )
@@ -76,7 +75,7 @@ async def bot_broadcast(event):
             LOGS.error(str(e))
             if BOTLOG:
                 await event.client.send_message(
-                    BOTLOG_CHATID, f"**🚨 Error while broadcasting**\n➡ `{e}`"
+                    BOTLOG_CHATID, f"**🚨 Error while broadcasting**\n➡️ `{e}`"
                 )
         else:
             count += 1
@@ -145,7 +144,7 @@ async def ban_botpms(event):
         user = await event.client.get_entity(user_id)
         user_id = user.id
     except Exception as e:
-        return await event.reply(f"**🚨 ERROR:**\n➡ `{e}`")
+        return await event.reply(f"**🚨 ERROR:**\n➡️ `{e}`")
     if user_id == Config.OWNER_ID:
         return await event.reply("**🚨 I can't ban you master.**")
     check = check_is_black_list(user.id)
@@ -153,7 +152,7 @@ async def ban_botpms(event):
         return await event.client.send_message(
             event.chat_id,
             f"🛑 #Already_Banned\
-            \n➡ User already exists in my banned users list.\
+            \n➡️ User already exists in my banned users list.\
             \n**ℹ️ Reason For Bot BAN:** `{check.reason}`\
             \n**📅 Date:** `{check.date}`",
         )
@@ -173,7 +172,7 @@ async def ban_botpms(event):
         user = await event.client.get_entity(user_id)
         user_id = user.id
     except Exception as e:
-        return await event.reply(f"**🚨 ERROR:**\n➡ `{e}`")
+        return await event.reply(f"**🚨 ERROR:**\n➡️ `{e}`")
     check = check_is_black_list(user.id)
     if not check:
         return await event.client.send_message(

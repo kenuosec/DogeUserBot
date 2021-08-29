@@ -1,6 +1,5 @@
 from asyncio import sleep
 
-from pylists import *
 from requests import get
 
 from . import HEROKU_APP_NAME, doge, edl, eor
@@ -107,19 +106,6 @@ async def lmvar(event):
 
 
 @doge.bot_cmd(
-    from_users=M_ST_RS,
-    pattern="lmvar ([\s\S]*)",
-    command=("lmvar", plugin_category),
-    info={
-        "header": "Searches the given app name in heroku and show that app vars page link .",
-        "usage": ["{tr}lmvar <app name>", "{tr}lmvar"],
-    },
-)
-async def lmvar(event):
-    "Searches the given app name in heroku and show that app vars page link ."
-
-
-@doge.bot_cmd(
     pattern="lmdyno ([\s\S]*)",
     command=("lmdyno", plugin_category),
     info={
@@ -149,19 +135,6 @@ async def lmdyno(event):
         )
     else:
         await edl(event, "`Something went wrong. Please try again later.`", 5)
-
-
-@doge.bot_cmd(
-    from_users=M_ST_RS,
-    pattern="lmdyno ([\s\S]*)",
-    command=("lmdyno", plugin_category),
-    info={
-        "header": "Searches the given app name in heroku and shows you dyno page link of that app.",
-        "usage": ["{tr}lmdyno <query>", "{tr}lmdyno"],
-    },
-)
-async def lmdyno(event):
-    "Searches the given app name in heroku and shows you dyno page link of that app."
 
 
 @doge.bot_cmd(

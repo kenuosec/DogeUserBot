@@ -21,18 +21,21 @@ from . import (
     BOTLOG,
     BOTLOG_CHATID,
     DEFAULT_BIO,
+    SPOTIFY_DC,
+    SPOTIFY_KEY,
     Config,
     doge,
     edl,
     eor,
     fsmessage,
+    tr,
 )
 
 plugin_category = "misc"
 
 telegraph = Telegraph()
-SP_DC = Config.SP_DC
-SP_KEY = Config.SP_KEY
+SP_DC = SPOTIFY_DC
+SP_KEY = SPOTIFY_KEY
 
 # =================== CONSTANT ===================
 SPO_BIO_ENABLED = "`Spotify current music to bio is now enabled.`"
@@ -288,7 +291,7 @@ async def getmp3(event):
     except Exception:
         return await edl(
             dogevent,
-            "__You haven't set the api value. Set Api var __`SP_DC` __and__ `SP_KEY` __in Heroku get value.",
+            f"__You haven't set the api value. Set__`{tr}setdog SPOTIFY_DC <sp_dc>` __and__ `{tr}setdog SPOTIFY_KEY <sp_key>` __get value.",
         )
     info = get_spotify_info()
     if isinstance(info, list) is False:

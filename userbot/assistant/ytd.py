@@ -248,7 +248,7 @@ async def ytdl_callback(c_q: CallbackQuery):
             parse_mode="html",
         )
     elif choosen_btn == "listall":
-        await c_q.answer("➡ View Changed to: 📜 List", alert=False)
+        await c_q.answer("➡️ View Changed to: 📜 List", alert=False)
         list_res = "".join(
             search_data.get(vid_s).get("list_view") for vid_s in search_data
         )
@@ -276,7 +276,7 @@ async def ytdl_callback(c_q: CallbackQuery):
         )
     else:  # Detailed
         index = 1
-        await c_q.answer("➡ View Changed to: 📰 Detailed", alert=False)
+        await c_q.answer("➡️ View Changed to: 📰 Detailed", alert=False)
         first = search_data.get(str(index))
         await c_q.edit(
             text=first.get("message"),

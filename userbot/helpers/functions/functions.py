@@ -21,9 +21,7 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.events import NewMessage
 from telethon.tl.functions.contacts import UnblockRequest
 
-from ...Config import Config
 from ...core.logger import logging
-from ...sql_helper.globals import gvarstatus
 
 LOGS = logging.getLogger(__name__)
 
@@ -81,18 +79,6 @@ async def getTranslate(text, **kwargs):
             translator = Translator()
             await sleep(0.1)
     return result
-
-
-async def age_verification(event, reply_to_id):
-    PNSFW = gvarstatus("PNSFW") or "False"
-    if PNSFW.lower() == "true":
-        return False
-    results = await event.client.inline_query(
-        Config.BOT_USERNAME, "age_verification_alert"
-    )
-    await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
-    await event.delete()
-    return True
 
 
 def reddit_thumb_link(preview, thumb=None):

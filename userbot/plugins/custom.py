@@ -27,19 +27,49 @@ vlist = [
     "ALIVE_NAME",
     "ALIVE_PIC",
     "ALIVE_TEXT",
-    "PNSFW",
+    "CUSTOM_STICKER_PACKNAME",
     "DOGELANG",
     "HELP_EMOJI",
     "HELP_TEXT",
     "IALIVE_PIC",
+    "MAX_FLOOD_IN_PMS",
+    "NO_OF_ROWS_IN_HELP",
+    "NO_OF_COLUMNS_IN_HELP",
     "PM_PIC",
     "PM_TEXT",
     "PM_BLOCK",
-    "MAX_FLOOD_IN_PMS",
     "STARTTEXT",
-    "NO_OF_ROWS_IN_HELP",
-    "NO_OF_COLUMNS_IN_HELP",
-    "CUSTOM_STICKER_PACKNAME",
+]
+alist = [
+    "ANTISPAMBOT_BAN",
+    "CURRENCY_API",
+    "DEEPAI_API",
+    "G_DRIVE_CLIENT_ID",
+    "G_DRIVE_CLIENT_SECRET",
+    "G_DRIVE_DATA",
+    "G_DRIVE_FOLDER_ID",
+    "G_DRIVE_INDEX_LINK",
+    "GENIUS_API",
+    "GITHUB_ACCESS_TOKEN",
+    "GIT_REPO_NAME",
+    "IBM_WATSON_CRED_URL",
+    "IBM_WATSON_CRED_PASSWORD",
+    "IPDATA_API",
+    "LASTFM_API",
+    "LASTFM_USERNAME",
+    "LASTFM_PASSWORD_PLAIN",
+    "LASTFM_SECRET",
+    "OCRSPACE_API",
+    "RANDOMSTUFF_API",
+    "REMOVEBG_API",
+    "SPAMWATCH_API",
+    "SPOTIFY_DC",
+    "SPOTIFY_KEY",
+    "SS_API",
+    "TG_2STEP_VERIFICATION_CODE",
+    "WATCH_COUNTRY",
+    "WEATHER_API",
+    "WEATHER_CITY",
 ]
 oldvars = {
     "PM_TEXT": "pmpermit_txt",
@@ -48,8 +78,8 @@ oldvars = {
 
 
 @doge.bot_cmd(
-    pattern="(set|get|del)dv(?: |$)([\s\S]*)",
-    command=("dv", plugin_category),
+    pattern="(set|get|del)dog(?: |$)([\s\S]*)",
+    command=("dog", plugin_category),
     info={
         "header": "Set vars in database or check or delete",
         "description": "Set, fetch or delete values or vars directly in database without restart or heroku vars.\n\nYou can set multiple pics by giving space after links in alive, ialive, pm permit.",
@@ -60,15 +90,15 @@ oldvars = {
         },
         "var name": "**[List of Database Vars]**# TODO",
         "usage": [
-            "{tr}setdv <var name> <var value>",
-            "{tr}getdv <var name>",
-            "{tr}deldv <var name>",
+            "{tr}setdog <var name> <var value>",
+            "{tr}getdog <var name>",
+            "{tr}deldog <var name>",
         ],
         "examples": [
-            "{tr}setdv ALIVE_PIC <pic link>",
-            "{tr}setdv ALIVE_PIC <pic link 1> <pic link 2>",
-            "{tr}getdv ALIVE_PIC",
-            "{tr}deldv ALIVE_PIC",
+            "{tr}setdog ALIVE_PIC <pic link>",
+            "{tr}setdog ALIVE_PIC <pic link 1> <pic link 2>",
+            "{tr}getdog ALIVE_PIC",
+            "{tr}deldog ALIVE_PIC",
         ],
     },
 )
@@ -77,9 +107,10 @@ async def dvdvdv(event):  # sourcery no-metrics
     cmd = event.pattern_match.group(1).lower()
     vname = event.pattern_match.group(2)
     vnlist = "".join(f"{i}. `{each}`\n" for i, each in enumerate(vlist, start=1))
+    apilist = "".join(f"{i}. `{each}`\n" for i, each in enumerate(alist, start=1))
     if not vname:
-        return await edl(
-            event, f"**📑 Give correct var name from the list:\n\n**{vnlist}", 120
+        return await eor(
+            event, f"**🪀 Give correct VAR name from the list:\n\n**{vnlist}\n\n\n**⚙️ Give correct API name from the list:\n\n**{apilist}",
         )
 
     vinfo = None
@@ -124,11 +155,11 @@ async def dvdvdv(event):  # sourcery no-metrics
                 )
                 await event.client.send_message(BOTLOG_CHATID, vinfo, silent=True)
             await edl(
-                event, f"📑 Value of **{vname}** is changed to:- `{vinfo}`", time=20
+                event, f"🪀 Value of **{vname}** is changed to: `{vinfo}`", time=20
             )
         if cmd == "get":
             var_data = gvarstatus(vname)
-            await edl(event, f"📑 Value of **{vname}** is  `{var_data}`", time=20)
+            await edl(event, f"🪀 Value of **{vname}** is  `{var_data}`", time=20)
         elif cmd == "del":
             delgvar(vname)
             if BOTLOG_CHATID:
@@ -139,12 +170,52 @@ async def dvdvdv(event):  # sourcery no-metrics
                 )
             await edl(
                 event,
-                f"📑 Value of **{vname}** is now deleted & set to default.",
+                f"🪀 Value of **{vname}** is now deleted & set to default.",
+                time=20,
+            )
+    elif vname in apilist:
+        apiname = vname
+        apinfo = vinfo
+        if cmd == "set":
+            if not apinfo:
+                return await edl(
+                    event, f"Give some values which you want to save for **{apiname}**"
+                )
+
+            addgvar(apiname, apinfo)
+            if BOTLOG_CHATID:
+                await event.client.send_message(
+                    BOTLOG_CHATID,
+                    f"#SET_APIDATA\
+                    \n**{apiname}** is updated newly in database as below",
+                )
+                await event.client.send_message(BOTLOG_CHATID, apinfo, silent=True)
+            await edl(
+                event, f"⚙️ Value of **{apiname}** is changed.",
+            )
+        if cmd == "get":
+            api_data = gvarstatus(apiname)
+            await edl(event, "**I sent API data to BOTLOG.**")
+            await event.client.send_message(
+                    BOTLOG_CHATID,
+                    f"⚙️ Value of **{apiname}** is  `{api_data}`",
+            )
+        elif cmd == "del":
+            delgvar(apiname)
+            if BOTLOG_CHATID:
+                await event.client.send_message(
+                    BOTLOG_CHATID,
+                    f"#DEL_APIDATA\
+                    \n**{apiname}** is deleted from database",
+                )
+            await edl(
+                event,
+                f"⚙️ Value of **{apiname}** is now deleted & set to default.",
                 time=20,
             )
     else:
-        await edl(
-            event, f"**📑 Give correct var name from the list :\n\n**{vnlist}", time=60
+        await eor(
+            event, f"**🪀 Give correct VAR name from the list:\n\n**{vnlist}\n\n\n**⚙️ Give correct API name from the list:\n\n**{apilist}",
         )
 
 
@@ -176,7 +247,7 @@ async def dvdvdv(event):  # sourcery no-metrics
             "{afktime}": "see afk time for afk command",
         },
         "usage": "{tr}custom <option> reply",
-        "NOTE": "You can set,fetch or delete these by `{tr}setdv` , `{tr}getdv` & `{tr}deldv` as well.",
+        "NOTE": "You can set,fetch or delete these by `{tr}setdog` , `{tr}getdog` & `{tr}deldog` as well.",
     },
 )
 async def custom_dogeuserbot(event):

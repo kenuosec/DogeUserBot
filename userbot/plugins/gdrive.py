@@ -31,6 +31,7 @@ from . import (
     G_DRIVE_CLIENT_SECRET,
     G_DRIVE_DATA,
     G_DRIVE_FOLDER_ID,
+    G_DRIVE_INDEX_LINK,
     TMP_DOWNLOAD_DIRECTORY,
     CancelProcess,
     Config,
@@ -741,9 +742,9 @@ async def get_output(service, file_id):
         out = G_DRIVE_FOLDER_LINK.format(file_name, file_id)
     else:
         out = G_DRIVE_FILE_LINK.format(file_name, file_id, file_size)
-    if Config.G_DRIVE_INDEX_LINK:
+    if G_DRIVE_INDEX_LINK:
         link = osp.join(
-            Config.G_DRIVE_INDEX_LINK.rstrip("/"),
+            G_DRIVE_INDEX_LINK.rstrip("/"),
             quote(get_file_path(service, file_id, file_name)),
         )
         if mime_type == "application/vnd.google-apps.folder":

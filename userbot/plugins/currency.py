@@ -1,7 +1,7 @@
 from json import loads
 from re import sub
 
-from . import AioHttp, Config, doge, edl, eor
+from . import CURRENCY_API, AioHttp, doge, edl, eor, tr
 
 plugin_category = "tool"
 
@@ -19,10 +19,10 @@ plugin_category = "tool"
 )
 async def currency(event):
     """To convert one currency value to other."""
-    if Config.CURRENCY_API is None:
+    if CURRENCY_API is None:
         return await edl(
             event,
-            "__You haven't set the api value. Set Api var __`CURRENCY_API` __in heroku get value from https://free.currencyconverterapi.com__.",
+            f"__You haven't set the api value.__ `{tr}setdog CURRENCY_API <api>` __from https://free.currencyconverterapi.com__.",
             link_preview=False,
         )
     input_str = event.pattern_match.group(1)
@@ -36,7 +36,7 @@ async def currency(event):
     try:
         value = float(value)
         aresponse = await AioHttp().get_json(
-            f"https://free.currconv.com/api/v7/convert?q={fromcurrency}_{tocurrency}&compact=ultra&apiKey={Config.CURRENCY_API}"
+            f"https://free.currconv.com/api/v7/convert?q={fromcurrency}_{tocurrency}&compact=ultra&apiKey={CURRENCY_API}"
         )
         symbols = await AioHttp().get_raw(
             "https://raw.githubusercontent.com/DOG-E/Source/DOGE/Core/currency.py"

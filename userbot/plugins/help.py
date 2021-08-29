@@ -47,11 +47,11 @@ async def cmdinfo(input_str, event, plugin=False):
         await edl(
             event,
             f"**🚨 ERROR:**\
-            \n➡ `{e}`",
+            \n➡️ `{e}`",
         )
         return None
     outstr = f"**🐶 Doɢᴇ UsᴇʀBoᴛ\
-        \n\n⌨ Coᴍᴍᴀɴᴅ:** `{tr}{input_str}`\n"
+        \n\n⌨️ Coᴍᴍᴀɴᴅ:** `{tr}{input_str}`\n"
     plugin = get_key(input_str)
     if plugin is not None:
         outstr += f"**🧩 Pʟᴜɢɪɴ:** `{plugin}`\n"
@@ -72,14 +72,14 @@ async def plugininfo(input_str, event, flag):
         await edl(
             event,
             f"**🚨 ERROR:**\
-            \n➡ `{e}`",
+            \n➡️ `{e}`",
         )
         return None
     if len(cmds) == 1 and (flag is None or (flag and flag != "-p")):
         outstr = await cmdinfo(cmds[0], event, plugin=False)
         return outstr
     outstr = f"**🧩 Pʟᴜɢɪɴ:** `{input_str}`\n"
-    outstr += f"**⌨ Coᴍᴍᴀɴᴅs:** `{len(cmds)}`\n"
+    outstr += f"**⌨️ Coᴍᴍᴀɴᴅs:** `{len(cmds)}`\n"
     category = getkey(input_str)
     if category is not None:
         outstr += f"**🗃 Cᴀᴛᴇɢoʀʏ:** `{category}`\n\n"
@@ -197,7 +197,7 @@ async def _(event):
             return await edl(
                 event,
                 f"**🚨 ERROR:**\
-                \n➡ `{e}`",
+                \n➡️ `{e}`",
             )
         outstr = f"**🐶 Doɢᴇ UsᴇʀBoᴛ\
             \n\n🐾 {input_str.title()} has {len(cmds)} commands:**\n"

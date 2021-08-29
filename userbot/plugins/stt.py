@@ -5,7 +5,7 @@ from os import makedirs, path, remove
 from requests import post
 from telethon.events import MessageEdited, NewMessage
 
-from . import Config, doge, edl, eor, fsmessage, lan, media_type
+from . import IBM_WATSON_CRED_URL, IBM_WATSON_CRED_PASSWORD, Config, doge, edl, eor, fsmessage, gvarstatus, lan, media_type
 
 plugin_category = "tool"
 
@@ -55,8 +55,8 @@ async def _(event):
 
     except:
         if (
-            Config.IBM_WATSON_CRED_URL is None
-            or Config.IBM_WATSON_CRED_PASSWORD is None
+            IBM_WATSON_CRED_URL is None
+            or IBM_WATSON_CRED_PASSWORD is None
         ):
             return await edl(
                 event,
@@ -81,10 +81,10 @@ async def _(event):
         }
         data = open(required_file_name, "rb").read()
         response = post(
-            Config.IBM_WATSON_CRED_URL + "/v1/recognize",
+            IBM_WATSON_CRED_URL + "/v1/recognize",
             headers=headers,
             data=data,
-            auth=("apikey", Config.IBM_WATSON_CRED_PASSWORD),
+            auth=("apikey", IBM_WATSON_CRED_PASSWORD),
         )
         r = response.json()
         if "results" not in r:

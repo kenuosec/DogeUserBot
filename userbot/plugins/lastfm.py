@@ -20,7 +20,10 @@ from . import (
     BOTLOG,
     BOTLOG_CHATID,
     DEFAULT_BIO,
-    Config,
+    LASTFM_API,
+    LASTFM_PASSWORD_PLAIN,
+    LASTFM_SECRET,
+    LASTFM_USERNAME,
     deEmojify,
     doge,
     hide_inlinebot,
@@ -31,11 +34,6 @@ from . import (
 
 plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
-
-LASTFM_API = Config.LASTFM_API
-LASTFM_SECRET = Config.LASTFM_SECRET
-LASTFM_USERNAME = Config.LASTFM_USERNAME
-LASTFM_PASSWORD_PLAIN = Config.LASTFM_PASSWORD_PLAIN
 
 LASTFM_PASS = md5(LASTFM_PASSWORD_PLAIN)
 if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:

@@ -26,6 +26,7 @@ from telethon.tl.types import (
 )
 
 from ..Config import Config
+from ..sql_helper.globals import gvarstatus
 from .managers import eor
 
 
@@ -109,99 +110,51 @@ async def safe_check_text(msg):  # sourcery no-metrics
     if not msg:
         return False
     msg = str(msg)
-    if Config.BOT_TOKEN is None:
-        return bool(
+    return bool(
             (
                 (Config.STRING_SESSION in msg)
                 or (Config.API_HASH in msg)
-                or (Config.HEROKU_API_KEY and Config.HEROKU_API_KEY in msg)
-                or (Config.CURRENCY_API and Config.CURRENCY_API in msg)
-                or (Config.DEEP_AI and Config.DEEP_AI in msg)
-                or (Config.G_DRIVE_CLIENT_ID and Config.G_DRIVE_CLIENT_ID in msg)
+                or (Config.HEROKU_API_KEY) and Config.HEROKU_API_KEY in msg)
+                or (gvarstatus("BOT_TOKEN") in msg)
+                or (gvarstatus("CURRENCY_API") and gvarstatus("CURRENCY_API") in msg)
+                or (gvarstatus("DEEPAI_API") and gvarstatus("DEEPAI_API") in msg)
+                or (gvarstatus("G_DRIVE_CLIENT_ID") and gvarstatus("G_DRIVE_CLIENT_ID") in msg)
                 or (
-                    Config.G_DRIVE_CLIENT_SECRET and Config.G_DRIVE_CLIENT_SECRET in msg
+                    gvarstatus("G_DRIVE_CLIENT_SECRET") and gvarstatus("G_DRIVE_CLIENT_SECRET") in msg
                 )
-                or (Config.G_DRIVE_DATA and Config.G_DRIVE_DATA in msg)
-                or (Config.GENIUS_API and Config.GENIUS_API in msg)
-                or (Config.GITHUB_ACCESS_TOKEN and Config.GITHUB_ACCESS_TOKEN in msg)
+                or (gvarstatus("G_DRIVE_DATA") and gvarstatus("G_DRIVE_DATA") in msg)
+                or (gvarstatus("GENIUS_API") and gvarstatus("GENIUS_API") in msg)
+                or (gvarstatus("GITHUB_ACCESS_TOKEN") and gvarstatus("GITHUB_ACCESS_TOKEN") in msg)
                 or (
-                    Config.IBM_WATSON_CRED_PASSWORD
-                    and Config.IBM_WATSON_CRED_PASSWORD in msg
+                    gvarstatus("IBM_WATSON_CRED_PASSWORD")
+                    and gvarstatus("IBM_WATSON_CRED_PASSWORD") in msg
                 )
-                or (Config.IBM_WATSON_CRED_URL and Config.IBM_WATSON_CRED_URL in msg)
-                or (Config.IPDATA_API and Config.IPDATA_API in msg)
-                or (Config.LASTFM_API and Config.LASTFM_API in msg)
+                or (gvarstatus("IBM_WATSON_CRED_URL") and gvarstatus("IBM_WATSON_CRED_URL") in msg)
+                or (gvarstatus("IPDATA_API") and gvarstatus("IPDATA_API") in msg)
+                or (gvarstatus("LASTFM_API") and gvarstatus("LASTFM_API") in msg)
                 or (
-                    Config.LASTFM_PASSWORD_PLAIN and Config.LASTFM_PASSWORD_PLAIN in msg
+                    gvarstatus("LASTFM_PASSWORD_PLAIN") and gvarstatus("LASTFM_PASSWORD_PLAIN") in msg
                 )
-                or (Config.LASTFM_SECRET and Config.LASTFM_SECRET in msg)
-                or (Config.OCRSPACE_API and Config.OCRSPACE_API in msg)
+                or (gvarstatus("LASTFM_SECRET") and gvarstatus("LASTFM_SECRET") in msg)
+                or (gvarstatus("OCRSPACE_API") and gvarstatus("OCRSPACE_API") in msg)
+                or (gvarstatus("RANDOMSTUFF_API") and gvarstatus("RANDOMSTUFF_API") in msg)
+                or (gvarstatus("REMOVEBG_API") and gvarstatus("REMOVEBG_API") in msg)
+                or (gvarstatus("SPAMWATCH_API") and gvarstatus("SPAMWATCH_API") in msg)
+                or (gvarstatus("SPOTIFY_DC") and gvarstatus("SPOTIFY_DC") in msg)
+                or (gvarstatus("SPOTIFY_KEY") and gvarstatus("SPOTIFY_KEY") in msg)
                 or (
-                    Config.OPEN_WEATHER_MAP_APPID
-                    and Config.OPEN_WEATHER_MAP_APPID in msg
+                    gvarstatus("SS_API")
+                    and gvarstatus("SS_API") in msg
                 )
-                or (Config.RANDOM_STUFF_API_KEY and Config.RANDOM_STUFF_API_KEY in msg)
-                or (Config.RMBG_API and Config.RMBG_API in msg)
                 or (
-                    Config.SCREEN_SHOT_LAYER_ACCESS_KEY
-                    and Config.SCREEN_SHOT_LAYER_ACCESS_KEY in msg
+                    gvarstatus("TG_2STEP_VERIFICATION_CODE")
+                    and gvarstatus("TG_2STEP_VERIFICATION_CODE") in msg
                 )
-                or (Config.SP_DC and Config.SP_DC in msg)
-                or (Config.SP_KEY and Config.SP_KEY in msg)
-                or (Config.SPAMWATCH_API and Config.SPAMWATCH_API in msg)
                 or (
-                    Config.TG_2STEP_VERIFICATION_CODE
-                    and Config.TG_2STEP_VERIFICATION_CODE in msg
-                )
-            )
-        )
-    else:
-        return bool(
-            (
-                (Config.STRING_SESSION in msg)
-                or (Config.API_HASH in msg)
-                or (Config.BOT_TOKEN in msg)
-                or (Config.HEROKU_API_KEY and Config.HEROKU_API_KEY in msg)
-                or (Config.CURRENCY_API and Config.CURRENCY_API in msg)
-                or (Config.DEEP_AI and Config.DEEP_AI in msg)
-                or (Config.G_DRIVE_CLIENT_ID and Config.G_DRIVE_CLIENT_ID in msg)
-                or (
-                    Config.G_DRIVE_CLIENT_SECRET and Config.G_DRIVE_CLIENT_SECRET in msg
-                )
-                or (Config.G_DRIVE_DATA and Config.G_DRIVE_DATA in msg)
-                or (Config.GENIUS_API and Config.GENIUS_API in msg)
-                or (Config.GITHUB_ACCESS_TOKEN and Config.GITHUB_ACCESS_TOKEN in msg)
-                or (
-                    Config.IBM_WATSON_CRED_PASSWORD
-                    and Config.IBM_WATSON_CRED_PASSWORD in msg
-                )
-                or (Config.IBM_WATSON_CRED_URL and Config.IBM_WATSON_CRED_URL in msg)
-                or (Config.IPDATA_API and Config.IPDATA_API in msg)
-                or (Config.LASTFM_API and Config.LASTFM_API in msg)
-                or (
-                    Config.LASTFM_PASSWORD_PLAIN and Config.LASTFM_PASSWORD_PLAIN in msg
-                )
-                or (Config.LASTFM_SECRET and Config.LASTFM_SECRET in msg)
-                or (Config.OCRSPACE_API and Config.OCRSPACE_API in msg)
-                or (
-                    Config.OPEN_WEATHER_MAP_APPID
-                    and Config.OPEN_WEATHER_MAP_APPID in msg
-                )
-                or (Config.RANDOM_STUFF_API_KEY and Config.RANDOM_STUFF_API_KEY in msg)
-                or (Config.RMBG_API and Config.RMBG_API in msg)
-                or (
-                    Config.SCREEN_SHOT_LAYER_ACCESS_KEY
-                    and Config.SCREEN_SHOT_LAYER_ACCESS_KEY in msg
-                )
-                or (Config.SP_DC and Config.SP_DC in msg)
-                or (Config.SP_KEY and Config.SP_KEY in msg)
-                or (Config.SPAMWATCH_API and Config.SPAMWATCH_API in msg)
-                or (
-                    Config.TG_2STEP_VERIFICATION_CODE
-                    and Config.TG_2STEP_VERIFICATION_CODE in msg
+                    gvarstatus("WEATHER_API")
+                    and gvarstatus("WEATHER_API") in msg
                 )
             )
-        )
 
 
 async def send_message(

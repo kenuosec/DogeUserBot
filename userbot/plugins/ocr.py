@@ -6,6 +6,7 @@ from googletrans import LANGUAGES
 from requests import post
 
 from . import (
+    OCRSPACE_API,
     Config,
     _dogetools,
     convert_toimage,
@@ -21,7 +22,7 @@ plugin_category = "tool"
 
 
 async def ocr_space_file(
-    filename, overlay=False, api_key=Config.OCRSPACE_API, language="eng"
+    filename, overlay=False, api_key=OCRSPACE_API, language="eng"
 ):
     """OCR.space API request with local file.
         Python3.5 - not tested on 2.7
@@ -31,7 +32,7 @@ async def ocr_space_file(
     :param api_key: OCR.space API key.
                     Defaults to 'helloworld'.
     :param language: Language code to be used in OCR.
-                    List of available language codes can be found on https://ocr.space/OCRAPI
+                    List of available language codes can be found on https://ocr.space/OCRAPI#language
                     Defaults to 'en'.
     :return: Result in JSON format.
     """
@@ -55,7 +56,7 @@ async def ocr_space_file(
     command=("ocr", plugin_category),
     info={
         "header": "To read text in image/gif/sticker/video and print it.",
-        "description": "Reply to an image or sticker to extract text from it.\n\nGet language codes from [here](https://ocr.space/ocrapi).",
+        "description": "Reply to an image or sticker to extract text from it.\n\nGet language codes from [here](https://ocr.space/ocrapi#language).",
         "usage": "{tr}ocr <language code>",
         "examples": "{tr}ocr eng",
     },

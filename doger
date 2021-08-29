@@ -58,7 +58,10 @@ repo = Repo.init()
 origin = repo.create_remote("temponame", OFFICIAL_UPSTREAM_REPO)
 
 origin.fetch()
-repo.create_head(ACTIVE_BRANCH_NAME, origin.refs[ACTIVE_BRANCH_NAME])
+try:
+    repo.create_head(ACTIVE_BRANCH_NAME, origin.refs[ACTIVE_BRANCH_NAME])
+except OSError:
+    pass
 repo.heads[ACTIVE_BRANCH_NAME].checkout(True)
 ')
 }
@@ -77,7 +80,10 @@ repo = Repo.init()
 origin = repo.create_remote("temponame", OFFICIAL_UPSTREAM_REPO)
 
 origin.fetch()
-repo.create_head(ACTIVE_BRANCH_NAME, origin.refs[ACTIVE_BRANCH_NAME])
+try:
+    repo.create_head(ACTIVE_BRANCH_NAME, origin.refs[ACTIVE_BRANCH_NAME])
+except OSError:
+    pass
 repo.heads[ACTIVE_BRANCH_NAME].checkout(True)
 ')
 }
