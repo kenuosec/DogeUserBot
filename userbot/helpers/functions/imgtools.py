@@ -364,9 +364,7 @@ def mediatoarttext(dogemedia, output):
     image_colors = ImageColorGenerator(image_color)
     wc.recolor(color_func=image_colors)
     outputfile = (
-        join("./temp", "textart.webp")
-        if dogemedia
-        else join("./temp", "textart.jpg")
+        join("./temp", "textart.webp") if dogemedia else join("./temp", "textart.jpg")
     )
     wc.to_file(outputfile)
     return outputfile

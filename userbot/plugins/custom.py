@@ -420,7 +420,9 @@ async def lang_set(value):
             )
             response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
             respond = await response
-            await dogevent.edit(f"**Changed @XiaomiGeeksBot language:**\n{respond.message.message}")
+            await dogevent.edit(
+                f"**Changed @XiaomiGeeksBot language:**\n{respond.message.message}"
+            )
             await conv.mark_read()
             await conv.cancel_all()
 

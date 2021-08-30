@@ -212,9 +212,7 @@ async def imemes(event):
     except BaseException:
         pass
     outputfile = (
-        join("./temp", "invert.webp")
-        if teledoge
-        else join("./temp", "invert.jpg")
+        join("./temp", "invert.webp") if teledoge else join("./temp", "invert.jpg")
     )
     await invert_colors(meme_file, outputfile)
     await event.client.send_file(
@@ -258,9 +256,7 @@ async def smemes(event):
     except BaseException:
         pass
     outputfile = (
-        join("./temp", "solarize.webp")
-        if teledoge
-        else join("./temp", "solarize.jpg")
+        join("./temp", "solarize.webp") if teledoge else join("./temp", "solarize.jpg")
     )
     await solarize(meme_file, outputfile)
     await event.client.send_file(
@@ -509,9 +505,7 @@ async def frmemes(event):
     except BaseException:
         pass
     outputfile = (
-        join("./temp", "framed.webp")
-        if teledoge
-        else join("./temp", "framed.jpg")
+        join("./temp", "framed.webp") if teledoge else join("./temp", "framed.jpg")
     )
     try:
         await add_frame(meme_file, outputfile, doginput, colr)
