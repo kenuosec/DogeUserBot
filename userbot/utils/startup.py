@@ -84,6 +84,24 @@ async def setup_bot():
         exit(1)
 
 
+async def autous():
+    try:
+        await doge(JoinChannelRequest("@DogeUserBot"))
+        if gvar("AUTOUS") is False:
+            return
+        else:
+            try:
+                await doge(JoinChannelRequest("@DogeSup"))
+            except:
+                pass
+            try:
+                await doge(JoinChannelRequest("@DogePlugin"))
+            except:
+                pass
+    except:
+        pass
+
+
 async def setup_assistantbot():
     """
     To setup assistant bot
@@ -282,12 +300,12 @@ async def verifyLoggerGroup():
                 + str(e)
             )
     else:
-        descript = "🚧 DON'T LEAVE THIS GROUP!\n⛔ If you delete group,\nall your previous snips, etc. will be lost.\nㅤ\n🧡 @DogeUserBot"
+        descript = "🚧 DON'T DELETE THIS GROUP!\n⛔ If you delete group,\n▫️ all your previous snips, etc. will be lost.\nㅤ\n🧡 @DogeUserBot"
         gphoto = await doge.upload_file(file="userbot/helpers/resources/DogeBotLog.jpg")
         _, groupid = await create_supergroup(
             "🐾 Doɢᴇ Boᴛ Loɢ", doge, Config.BOT_USERNAME, descript, gphoto
         )
-        descmsg = "**🚧 DON'T LEAVE OR\n🚧 DON'T DELETE OR\n🚧 DON'T CHANGE THIS GROUP!**\n\n⛔ If you change or delete group,\nall your previous snips, welcome, etc. will be lost.\n\n**🧡 @DogeUserBot**"
+        descmsg = "**🚧 DON'T LEAVE OR\n🚧 DON'T DELETE OR\n🚧 DON'T CHANGE THIS GROUP!**\n\n⛔ If you change or delete group,\n▫️ all your previous snips, welcome, etc. will be lost.\n\n**🧡 @DogeUserBot**"
         msg = await doge.send_message(groupid, descmsg)
         await msg.pin()
         sgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
@@ -298,12 +316,12 @@ async def verifyLoggerGroup():
     if Config.PMLOGGER:
         if PM_LOGGER_GROUP_ID != -100 or gvar("PM_LOGGER_GROUP_ID"):
             return
-        descript = "🚧 DON'T DELETE THIS GROUP!\n⛔ If you delete group,\nPM Logger won't work.\nㅤ\n🧡 @DogeUserBot"
+        descript = "🚧 DON'T DELETE THIS GROUP!\n⛔ If you delete group,\n▫️ PM Logger won't work.\nㅤ\n🧡 @DogeUserBot"
         gphoto = await doge.upload_file(file="userbot/helpers/resources/DogePmLog.jpg")
         _, groupid = await create_supergroup(
             "🐾 Doɢᴇ Pᴍ Loɢ", doge, Config.BOT_USERNAME, descript, gphoto
         )
-        descmsg = "**🚧 DON'T LEAVE OR\n🚧 DON'T DELETE OR\n🚧 DON'T CHANGE THIS GROUP!**\n\n⛔ If you change or delete group,\nPM Logger will not work.\n\n**🦴 IF YOU WANT TO DELETE THIS GROUP,\nMUST FIRST WRITE:**\n`.set var PMLOGGER False`\n\n**🧡 @DogeUserBot**"
+        descmsg = "**🚧 DON'T LEAVE OR\n🚧 DON'T DELETE OR\n🚧 DON'T CHANGE THIS GROUP!**\n\n⛔ If you change or delete group,\n▫️ PM Logger will not work.\n\n**🦴 IF YOU WANT TO DELETE THIS GROUP,\nMUST FIRST WRITE:**\n`.set var PMLOGGER False`\n\n**🧡 @DogeUserBot**"
         msg = await doge.send_message(groupid, descmsg)
         await msg.pin()
         sgvar("PM_LOGGER_GROUP_ID", groupid)
@@ -337,14 +355,14 @@ async def verifyLoggerGroup():
     if Config.PLUGINS:
         if PLUGIN_CHANNEL or gvar("PLUGIN_CHANNEL"):
             return
-        descript = "🚧 DON'T DELETE THIS CHANNEL!\n⛔ If you delete channel,\nall installed extra plugins will be lost.\nㅤ\n🧡 @DogeUserBot"
+        descript = "🚧 DON'T DELETE THIS CHANNEL!\n⛔ If you delete channel,\n▫️ all installed extra plugins will be lost.\nㅤ\n🧡 @DogeUserBot"
         cphoto = await doge.upload_file(
             file="userbot/helpers/resources/DogeExtraPlugin.jpg"
         )
         _, channelid = await create_channel(
             "🐾 Doɢᴇ Exᴛʀᴀ Pʟᴜɢɪɴs", doge, descript, cphoto
         )
-        descmsg = "**🚧 DON'T LEAVE OR\n🚧 DON'T DELETE OR\n🚧 DON'T CHANGE THIS CHANNEL!**\n\n⛔ If you change or delete channel,\nall your installed externally plugins will be lost.\n\n**🦴 IF YOU WANT TO DELETE THIS CHANNEL,\nMUST FIRST WRITE:**\n`.set var PLUGINS False`\n\n**🧡 @DogeUserBot**"
+        descmsg = "**🚧 DON'T LEAVE OR\n🚧 DON'T DELETE OR\n🚧 DON'T CHANGE THIS CHANNEL!**\n\n⛔ If you change or delete channel,\n▫️ all your installed externally plugins will be lost.\n\n**🦴 IF YOU WANT TO DELETE THIS CHANNEL,\nMUST FIRST WRITE:**\n`.set var PLUGINS False`\n\n**🧡 @DogeUserBot**"
         msg = await doge.send_message(channelid, descmsg)
         await msg.pin()
         sgvar("PLUGIN_CHANNEL", channelid)
@@ -383,54 +401,6 @@ async def add_bot_to_logger_group(chat_id):
             )
         except Exception as e:
             LOGS.error(str(e))
-
-
-async def customize_assistantbot():
-    """
-    To customize assistant bot
-    """
-    try:
-        bot = await doge.get_entity(doge.tgbot.me.username)
-        bf = "BotFather"
-        if bot.photo is None:
-            LOGS.info("🥏 I'm customizing your Telegram assistant bot with @BotFather!")
-            botusername = f"@{doge.tgbot.me.username}"
-            if (doge.me.username) is None:
-                master = doge.me.first_name
-            else:
-                master = f"@{doge.me.username}"
-            await doge.send_message(bf, "/cancel")
-            await sleep(0.5)
-            await doge.send_message(bf, "/start")
-            await sleep(1)
-            await doge.send_message(bf, "/setuserpic")
-            await sleep(1)
-            await doge.send_message(bf, botusername)
-            await sleep(1)
-            await doge.send_file(bf, "userbot/helpers/resources/DogeAssistant.jpg")
-            await sleep(2)
-            await doge.send_message(bf, "/setabouttext")
-            await sleep(1)
-            await doge.send_message(bf, botusername)
-            await sleep(1)
-            await doge.send_message(
-                bf,
-                f"🧡 I'ᴍ Assɪsᴛᴀɴᴛ Boᴛ oꜰ {master}\n\n🐶 Mᴀᴅᴇ wɪᴛʜ ❤️ ʙʏ @DogeUserBot 🐾",
-            )
-            await sleep(2)
-            await doge.send_message(bf, "/setdescription")
-            await sleep(1)
-            await doge.send_message(bf, botusername)
-            await sleep(1)
-            await doge.send_message(
-                bf,
-                f"🐕‍🦺 Doɢᴇ UsᴇʀBoᴛ Assɪsᴛᴀɴᴛ Boᴛ\n🧡 Mᴀsᴛᴇʀ: {master}\n\n🐶 Mᴀᴅᴇ wɪᴛʜ ❤️ ʙʏ @DogeUserBot 🐾",
-            )
-            LOGS.info(
-                f"🥏 DONE! @{botusername} I'm customized your Telegram assistant bot successfully!"
-            )
-    except Exception as e:
-        LOGS.info(str(e))
 
 
 async def startupmessage():
@@ -491,19 +461,49 @@ async def startupmessage():
         return None
 
 
-async def autous():
+async def customize_assistantbot():
+    """
+    To customize assistant bot
+    """
     try:
-        await doge(JoinChannelRequest("@DogeUserBot"))
-        if gvar("AUTOUS") is False:
-            return
-        else:
-            try:
-                await doge(JoinChannelRequest("@DogeSup"))
-            except:
-                pass
-            try:
-                await doge(JoinChannelRequest("@DogePlugin"))
-            except:
-                pass
-    except:
-        pass
+        bot = await doge.get_entity(doge.tgbot.me.username)
+        bf = "BotFather"
+        if bot.photo is None:
+            LOGS.info("🥏 I'm customizing your Telegram assistant bot with @BotFather!")
+            botusername = f"@{doge.tgbot.me.username}"
+            if (doge.me.username) is None:
+                master = doge.me.first_name
+            else:
+                master = f"@{doge.me.username}"
+            await doge.send_message(bf, "/cancel")
+            await sleep(0.5)
+            await doge.send_message(bf, "/start")
+            await sleep(1)
+            await doge.send_message(bf, "/setuserpic")
+            await sleep(1)
+            await doge.send_message(bf, botusername)
+            await sleep(1)
+            await doge.send_file(bf, "userbot/helpers/resources/DogeAssistant.jpg")
+            await sleep(2)
+            await doge.send_message(bf, "/setabouttext")
+            await sleep(1)
+            await doge.send_message(bf, botusername)
+            await sleep(1)
+            await doge.send_message(
+                bf,
+                f"🧡 I'ᴍ Assɪsᴛᴀɴᴛ Boᴛ oꜰ {master}\n\n🐶 Mᴀᴅᴇ wɪᴛʜ ❤️ ʙʏ @DogeUserBot 🐾",
+            )
+            await sleep(2)
+            await doge.send_message(bf, "/setdescription")
+            await sleep(1)
+            await doge.send_message(bf, botusername)
+            await sleep(1)
+            await doge.send_message(
+                bf,
+                f"🐕‍🦺 Doɢᴇ UsᴇʀBoᴛ Assɪsᴛᴀɴᴛ Boᴛ\n🧡 Mᴀsᴛᴇʀ: {master}\n\n🐶 Mᴀᴅᴇ wɪᴛʜ ❤️ ʙʏ @DogeUserBot 🐾",
+            )
+            LOGS.info(
+                f"🥏 DONE! @{botusername} I'm customized your Telegram assistant bot successfully!"
+            )
+    except Exception as e:
+        LOGS.info(str(e))

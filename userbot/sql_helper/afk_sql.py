@@ -10,7 +10,7 @@ except BaseException:
 
 
 def add_afk(msg, media_type, media):
-    time = datetime.now().strftime("%b %d %Y %I:%M:%S%p")
+    time = datetime.now().strftime("%b %d %H:%M:%S")
     sgvar("AFK_DB", str([msg, media_type, media, time]))
     return
 
@@ -18,7 +18,7 @@ def add_afk(msg, media_type, media):
 def is_afk():
     afk = gvar("AFK_DB")
     if afk:
-        start_time = datetime.strptime(afk[3], "%b %d %Y %I:%M:%S%p")
+        start_time = datetime.strptime(afk[3], "%b %d %H:%M:%S")
         afk_since = str(datetime.now().replace(microsecond=0) - start_time)
         return afk[0], afk[1], afk[2], afk_since
     return False

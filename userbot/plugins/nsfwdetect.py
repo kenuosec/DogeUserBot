@@ -7,7 +7,7 @@ from requests import post
 
 from . import DEEPAI_API, doge, edl, eor, tr
 
-plugin_category = "tool"
+plugin_category = "hub"
 
 
 @doge.bot_cmd(

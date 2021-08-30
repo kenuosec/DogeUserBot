@@ -172,6 +172,7 @@ def errors_handler(func):
             text += "__💬 If you wanna you can report it.__\n\n"
             text += f"🐾 Forward this message {link}.\n\n"
             text += "__**🦴 Nothing is logged except of error and date!**__\n\n"
+            text += f"**▫️ Event Trigger:** `{str(check.text)}`\n\n"
             text += f"**🚨 Error Report: **[{new['error']}]({pastelink})"
             await check.client.send_message(
                 Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False

@@ -94,7 +94,7 @@ def main_menu():
                 data=f"tool_menu",
             ),
             Button.inline(
-                f"🔮 Hᴜʙ ({len(GRP_INFO['hub'])})",
+                f"🍑 Hᴜʙ ({len(GRP_INFO['hub'])})",
                 data=f"hub_menu",
             ),
         ),

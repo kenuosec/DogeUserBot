@@ -50,7 +50,7 @@ async def hi_buddy(event):
 ```python
 @doge.bot_cmd(
     pattern="Regex for command",
-    command=("Just command name", plugin_category), # Use plugin_category name from predefined names (admin,bot,fun,misc,tool,hub)
+    command=("Just command name", plugin_category), # Use plugin_category name from predefined names (admin, bot, fun, misc, tool, hub)
     info={
         "header": string - "intro for command",
         "description": string - "Description for command",

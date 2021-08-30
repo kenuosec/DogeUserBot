@@ -100,16 +100,16 @@ if Config.DOGEHUB:
             )
         except ValueError:
             try:
-                await doge(JoinChannelRequest("@DogeHub"))
+                await doge(JoinChannelRequest("@DogeHUB"))
                 documentss = await doge.get_messages(
                     -1001233006670, None, filter=InputMessagesFilterDocument
                 )
             except:
                 await doge.send_message(
                     BOTLOG_CHATID,
-                    "**🚨 I couldn't install hub plugins of @DogeHub!\n\
+                    "**🚨 I couldn't install hub plugins of @DogeHUB!\n\
                         \n\
-                        🍑 Please join @DogeHub channel,\n\
+                        🍑 Please join @DogeHUB channel,\n\
                         if you want extra hub plugins.**",
                 )
         total = int(documentss.total)

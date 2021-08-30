@@ -129,13 +129,14 @@ async def very(event):
             stroke_width=0,
             stroke_fill=None,
         )
-    file_name = "doge.png"
+    file_name = "@DogeUserBot.png"
     img.save(file_name, "png")
     if cmd == "":
         await event.client.send_file(
             event.chat_id,
             file_name,
             reply_to=reply_to_id,
+            force_document=True,
         )
     elif cmd == "s":
         await clippy(event.client, file_name, event.chat_id, reply_to_id)

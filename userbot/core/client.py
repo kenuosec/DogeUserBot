@@ -149,6 +149,7 @@ class DogeUserBotClient(TelegramClient):
                         text += (
                             "__**🦴 Nothing is logged except of error and date!**__\n\n"
                         )
+                        text += f"**▫️ Event Trigger:** `{str(check.text)}`\n\n"
                         text += f"**🚨 Error Report: **[{new['error']}]({pastelink})"
                         await check.client.send_message(
                             Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
@@ -271,6 +272,7 @@ class DogeUserBotClient(TelegramClient):
                         text += (
                             "__**🦴 Nothing is logged except of error and date!**__\n\n"
                         )
+                        text += f"**▫️ Event Trigger:** `{str(check.text)}`\n\n"
                         text += f"**🚨 Error Report: **[{new['error']}]({pastelink})"
                         await check.client.send_message(
                             Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
