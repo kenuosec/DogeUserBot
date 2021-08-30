@@ -138,6 +138,10 @@ async def gwallpapers(event):
     }
     googleimages.download(args)
     dog = choice(listdir(path.abspath(f"./downloads/{wallname}/")))
-    await event.client.send_file(event.chat_id, f"./downloads/{wallname}/{dog}", force_document=True,)
+    await event.client.send_file(
+        event.chat_id,
+        f"./downloads/{wallname}/{dog}",
+        force_document=True,
+    )
     rmtree(f"./downloads/{wallname}/")
     await dogevent.delete()

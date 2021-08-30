@@ -28,7 +28,7 @@ async def get_task(mode, choice):
     url = "https://psycatgames.com/api/tod-v2/"
     data = {
         "id": "truth-or-dare",
-        "language": gvar('DOGELANG') or "en",
+        "language": gvar("DOGELANG") or "en",
         "category": category[choice],
         "type": mode,
     }
