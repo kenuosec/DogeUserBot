@@ -1,25 +1,23 @@
 # Made by @mrconfused and @sandy1709
 # memify plugin for catuserbot
-from asyncio import create_subprocess_exec, sleep
-from asyncio.subprocess import PIPE
+from asyncio import sleep
 from base64 import b64decode
-from os import mkdir
-from os import path as ospath
-from os import remove
+from os import mkdir, remove
+from os.path import exists, isdir, join
 
-from cv2 import VideoCapture, imwrite
-from PIL.Image import open as Imopen
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
+from PIL.Image import open
+from telethon.tl.functions.messages import ImportChatInviteRequest
 
 from . import (
     _dogetools,
     add_frame,
     asciiart,
     convert_toimage,
+    convert_tosticker,
     crop,
     doge,
-    dogemmfhelper,
-    dogemmshelper,
+    dogememify_helper,
+    dogememifyhelper,
     edl,
     eor,
     flip_image,
@@ -90,7 +88,7 @@ async def maccmd(event):  # sourcery no-metrics
             return await edl(
                 imag[0], "__Unable to extract image from the replied message.__"
             )
-        image = Imopen(imag[1])
+        image = open(imag[1])
     except Exception as e:
         return await edl(dogevent, f"**Error in identifying image:**\n__{e}__")
     output = pframehelper(image)
@@ -98,7 +96,7 @@ async def maccmd(event):  # sourcery no-metrics
         event.chat_id, output, reply_to=reply, force_document=force
     )
     await dogevent.delete()
-    if ospath.exists(output):
+    if exists(output):
         remove(output)
 
 
@@ -147,7 +145,7 @@ async def amemes(event):
         return await edl(event, "`Reply to supported Media...`")
     happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
-    if not ospath.isdir("./temp"):
+    if not isdir("./temp"):
         mkdir("./temp")
     teledoge = None
     output = await _dogetools.media_to_pic(event, reply)
@@ -159,14 +157,14 @@ async def amemes(event):
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         teledoge = True
     try:
-        happy = Get(happy)
+        happy = ImportChatInviteRequest(happy)
         await event.client(happy)
     except BaseException:
         pass
     outputfile = (
-        ospath.join("./temp", "ascii_file.webp")
+        join("./temp", "ascii_file.webp")
         if teledoge
-        else ospath.join("./temp", "ascii_file.jpg")
+        else join("./temp", "ascii_file.jpg")
     )
     c_list = random_color()
     color1 = c_list[0]
@@ -178,7 +176,7 @@ async def amemes(event):
     )
     await output[0].delete()
     for files in (outputfile, meme_file):
-        if files and ospath.exists(files):
+        if files and exists(files):
             remove(files)
 
 
@@ -197,7 +195,7 @@ async def imemes(event):
         return
     happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
-    if not ospath.isdir("./temp/"):
+    if not isdir("./temp/"):
         mkdir("./temp/")
     teledoge = None
     output = await _dogetools.media_to_pic(event, reply)
@@ -209,14 +207,14 @@ async def imemes(event):
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         teledoge = True
     try:
-        happy = Get(happy)
+        happy = ImportChatInviteRequest(happy)
         await event.client(happy)
     except BaseException:
         pass
     outputfile = (
-        ospath.join("./temp", "invert.webp")
+        join("./temp", "invert.webp")
         if teledoge
-        else ospath.join("./temp", "invert.jpg")
+        else join("./temp", "invert.jpg")
     )
     await invert_colors(meme_file, outputfile)
     await event.client.send_file(
@@ -224,7 +222,7 @@ async def imemes(event):
     )
     await output[0].delete()
     for files in (outputfile, meme_file):
-        if files and ospath.exists(files):
+        if files and exists(files):
             remove(files)
 
 
@@ -243,7 +241,7 @@ async def smemes(event):
         return await edl(event, "`Reply to supported Media...`")
     happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
-    if not ospath.isdir("./temp"):
+    if not isdir("./temp"):
         mkdir("./temp")
     teledoge = None
     output = await _dogetools.media_to_pic(event, reply)
@@ -255,14 +253,14 @@ async def smemes(event):
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         teledoge = True
     try:
-        happy = Get(happy)
+        happy = ImportChatInviteRequest(happy)
         await event.client(happy)
     except BaseException:
         pass
     outputfile = (
-        ospath.join("./temp", "solarize.webp")
+        join("./temp", "solarize.webp")
         if teledoge
-        else ospath.join("./temp", "solarize.jpg")
+        else join("./temp", "solarize.jpg")
     )
     await solarize(meme_file, outputfile)
     await event.client.send_file(
@@ -270,7 +268,7 @@ async def smemes(event):
     )
     await output[0].delete()
     for files in (outputfile, meme_file):
-        if files and ospath.exists(files):
+        if files and exists(files):
             remove(files)
 
 
@@ -289,7 +287,7 @@ async def mmemes(event):
         return await edl(event, "`Reply to supported Media...`")
     happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
-    if not ospath.isdir("./temp"):
+    if not isdir("./temp"):
         mkdir("./temp")
     teledoge = None
     output = await _dogetools.media_to_pic(event, reply)
@@ -301,14 +299,14 @@ async def mmemes(event):
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         teledoge = True
     try:
-        happy = Get(happy)
+        happy = ImportChatInviteRequest(happy)
         await event.client(happy)
     except BaseException:
         pass
     outputfile = (
-        ospath.join("./temp", "mirror_file.webp")
+        join("./temp", "mirror_file.webp")
         if teledoge
-        else ospath.join("./temp", "mirror_file.jpg")
+        else join("./temp", "mirror_file.jpg")
     )
     await mirror_file(meme_file, outputfile)
     await event.client.send_file(
@@ -316,7 +314,7 @@ async def mmemes(event):
     )
     await output[0].delete()
     for files in (outputfile, meme_file):
-        if files and ospath.exists(files):
+        if files and exists(files):
             remove(files)
 
 
@@ -335,7 +333,7 @@ async def fmemes(event):
         return await edl(event, "`Reply to supported Media...`")
     happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
-    if not ospath.isdir("./temp"):
+    if not isdir("./temp"):
         mkdir("./temp")
     teledoge = None
     output = await _dogetools.media_to_pic(event, reply)
@@ -347,14 +345,14 @@ async def fmemes(event):
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         teledoge = True
     try:
-        happy = Get(happy)
+        happy = ImportChatInviteRequest(happy)
         await event.client(happy)
     except BaseException:
         pass
     outputfile = (
-        ospath.join("./temp", "flip_image.webp")
+        join("./temp", "flip_image.webp")
         if teledoge
-        else ospath.join("./temp", "flip_image.jpg")
+        else join("./temp", "flip_image.jpg")
     )
     await flip_image(meme_file, outputfile)
     await event.client.send_file(
@@ -362,7 +360,7 @@ async def fmemes(event):
     )
     await output[0].delete()
     for files in (outputfile, meme_file):
-        if files and ospath.exists(files):
+        if files and exists(files):
             remove(files)
 
 
@@ -381,7 +379,7 @@ async def gmemes(event):
         return await edl(event, "`Reply to supported Media...`")
     happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
-    if not ospath.isdir("./temp"):
+    if not isdir("./temp"):
         mkdir("./temp")
     teledoge = None
     output = await _dogetools.media_to_pic(event, reply)
@@ -393,14 +391,14 @@ async def gmemes(event):
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         teledoge = True
     try:
-        happy = Get(happy)
+        happy = ImportChatInviteRequest(happy)
         await event.client(happy)
     except BaseException:
         pass
     outputfile = (
-        ospath.join("./temp", "grayscale.webp")
+        join("./temp", "grayscale.webp")
         if teledoge
-        else ospath.join("./temp", "grayscale.jpg")
+        else join("./temp", "grayscale.jpg")
     )
     await grayscale(meme_file, outputfile)
     await event.client.send_file(
@@ -408,7 +406,7 @@ async def gmemes(event):
     )
     await output[0].delete()
     for files in (outputfile, meme_file):
-        if files and ospath.exists(files):
+        if files and exists(files):
             remove(files)
 
 
@@ -429,7 +427,7 @@ async def zmemes(event):
         return await edl(event, "`Reply to supported Media...`")
     happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
-    if not ospath.isdir("./temp"):
+    if not isdir("./temp"):
         mkdir("./temp")
     teledoge = None
     output = await _dogetools.media_to_pic(event, reply)
@@ -441,14 +439,14 @@ async def zmemes(event):
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         teledoge = True
     try:
-        happy = Get(happy)
+        happy = ImportChatInviteRequest(happy)
         await event.client(happy)
     except BaseException:
         pass
     outputfile = (
-        ospath.join("./temp", "zoomimage.webp")
+        join("./temp", "zoomimage.webp")
         if teledoge
-        else ospath.join("./temp", "zoomimage.jpg")
+        else join("./temp", "zoomimage.jpg")
     )
     try:
         await crop(meme_file, outputfile, doginput)
@@ -462,7 +460,7 @@ async def zmemes(event):
         return await output[0].edit(f"`{e}`")
     await output[0].delete()
     for files in (outputfile, meme_file):
-        if files and ospath.exists(files):
+        if files and exists(files):
             remove(files)
 
 
@@ -494,7 +492,7 @@ async def frmemes(event):
         return await edl(event, "`Reply to supported Media...`")
     happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     dogid = await reply_id(event)
-    if not ospath.isdir("./temp"):
+    if not isdir("./temp"):
         mkdir("./temp")
     teledoge = None
     output = await _dogetools.media_to_pic(event, reply)
@@ -506,14 +504,14 @@ async def frmemes(event):
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         teledoge = True
     try:
-        happy = Get(happy)
+        happy = ImportChatInviteRequest(happy)
         await event.client(happy)
     except BaseException:
         pass
     outputfile = (
-        ospath.join("./temp", "framed.webp")
+        join("./temp", "framed.webp")
         if teledoge
-        else ospath.join("./temp", "framed.jpg")
+        else join("./temp", "framed.jpg")
     )
     try:
         await add_frame(meme_file, outputfile, doginput, colr)
@@ -528,125 +526,77 @@ async def frmemes(event):
     await event.delete()
     await output[0].delete()
     for files in (outputfile, meme_file):
-        if files and ospath.exists(files):
+        if files and exists(files):
             remove(files)
 
 
 @doge.bot_cmd(
-    pattern="mmf(?:\s|$)([\s\S]*)",
+    pattern="(mmf|mms)(?:\s|$)([\s\S]*)",
     command=("mmf", plugin_category),
     info={
-        "header": "To write text on images.",
+        "header": "To write text on stickers or images.",
         "description": "To create memes.",
+        "options": {
+            "mmf": "Output will be image.",
+            "mms": "Output will be sticker.",
+        },
         "usage": [
             "{tr}mmf toptext ; bottomtext",
-        ],
-        "examples": [
-            "{tr}mmf wow (only on top)",
-            "{tr}mmf ; doge (only on bottom)",
-            "{tr}mmf wow ; doge (both on top and bottom) <reply_media>",
-        ],
-    },
-)
-async def dogemmf(event):
-    reply = await event.get_reply_message()
-    dogeinput = event.pattern_match.group(1)
-    if not (reply and (reply.media)):
-        return await edl(event, "`Reply to any media!`")
-    if not dogeinput:
-        return await edl(event, "`Give me something text to write...`")
-    dogemeem = await reply.download_media()
-    if dogemeem.endswith((".tgs")):
-        dogevent = await eor(event, "`WOW this is animated sticker!`")
-        cmd = ["lottie_convert.py", dogemeem, "@DogeUserBot.png"]
-        file = "@DogeUserBot.png"
-        process = await create_subprocess_exec(*cmd, stdout=PIPE, stderr=PIPE)
-        stdout, stderr = await process.communicate()
-        stderr.decode().strip()
-        stdout.decode().strip()
-    elif dogemeem.endswith((".webp", ".png")):
-        dogevent = await eor(event, "`Processing`")
-        im = Imopen(dogemeem)
-        im.save("@DogeUserBot.png", format="PNG", optimize=True)
-        file = "@DogeUserBot.png"
-    else:
-        dogevent = await eor(event, "`Processing`")
-        img = VideoCapture(dogemeem)
-        heh, lol = img.read()
-        imwrite("@DogeUserBot.png", lol)
-        file = "@DogeUserBot.png"
-    if gvar("CNG_FONTS") is None:
-        CNG_FONTS = "userbot/helpers/resources/fonts/impact.ttf"
-    else:
-        CNG_FONTS = gvar("CNG_FONTS")
-    stick = await dogemmfhelper(file, dogeinput, CNG_FONTS)
-    await event.client.send_file(
-        event.chat_id, stick, force_document=False, reply_to=event.reply_to_msg_id
-    )
-    await dogevent.delete()
-    try:
-        remove(dogemeem)
-        remove(file)
-        remove(stick)
-    except BaseException:
-        pass
-
-
-@doge.bot_cmd(
-    pattern="mms(?:\s|$)([\s\S]*)",
-    command=("mms", plugin_category),
-    info={
-        "header": "To write text on stickers.",
-        "description": "To create memes.",
-        "usage": [
             "{tr}mms toptext ; bottomtext",
         ],
         "examples": [
-            "{tr}mms wow (only on top)",
-            "{tr}mms ; doge (only on bottom)",
-            "{tr}mms wow ; doge (both on top and bottom) <reply_media>",
+            "{tr}mmf hello (only on top)",
+            "{tr}mmf ; hello (only on bottom)",
+            "{tr}mmf hi ; hello (both on top and bottom)",
         ],
     },
 )
-async def dogemms(event):
+async def memes(event):
+    "To write text on stickers or image"
+    cmd = event.pattern_match.group(1)
+    dogeinput = event.pattern_match.group(2)
     reply = await event.get_reply_message()
-    dogeinput = event.pattern_match.group(1)
-    if not (reply and (reply.media)):
-        return await edl(event, "`Reply to any media`")
+    if not reply:
+        return await edl(event, "`Reply to supported Media...`")
+    dogeid = await reply_id(event)
+    happy = b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not dogeinput:
-        return await edl(event, "`Give me something text to write`")
-    dogemeem = await reply.download_media()
-    if dogemeem.endswith((".tgs")):
-        dogevent = await eor(event, "`WOW this is animated sticker`")
-        cmd = ["lottie_convert.py", dogemeem, "@DogeUserBot.png"]
-        file = "@DogeUserBot.png"
-        process = await create_subprocess_exec(*cmd, stdout=PIPE, stderr=PIPE)
-        stdout, stderr = await process.communicate()
-        stderr.decode().strip()
-        stdout.decode().strip()
-    elif dogemeem.endswith((".webp", ".png")):
-        dogevent = await eor(event, "`Processing`")
-        im = Imopen(dogemeem)
-        im.save("@DogeUserBot.png", format="PNG", optimize=True)
-        file = "@DogeUserBot.png"
+        return await edl(
+            event, "`what should i write on that u idiot give text to memify`"
+        )
+    if ";" in dogeinput:
+        top, bottom = dogeinput.split(";", 1)
     else:
-        dogevent = await eor(event, "`Processing`")
-        img = VideoCapture(dogemeem)
-        heh, lol = img.read()
-        imwrite("@DogeUserBot.png", lol)
-        file = "@DogeUserBot.png"
-    if gvar("CNG_FONTS") is None:
-        CNG_FONTS = "userbot/helpers/resources/fonts/impact.ttf"
-    else:
-        CNG_FONTS = gvar("CNG_FONTS")
-    pic = await dogemmshelper(file, dogeinput, CNG_FONTS)
-    await event.client.send_file(
-        event.chat_id, pic, force_document=False, reply_to=event.reply_to_msg_id
-    )
-    await dogevent.delete()
+        top = dogeinput
+        bottom = ""
+    if not isdir("./temp"):
+        mkdir("./temp")
+    output = await _dogetools.media_to_pic(event, reply)
+    if output[1] is None:
+        return await edl(
+            output[0], "__Unable to extract image from the replied message.__"
+        )
     try:
-        remove(dogemeem)
-        remove(file)
+        happy = ImportChatInviteRequest(happy)
+        await event.client(happy)
     except BaseException:
         pass
-    remove(pic)
+    meme_file = convert_toimage(output[1])
+    meme = join("./temp", "dogememe.jpg")
+    if gvar("CNG_FONTS") is None:
+        CNG_FONTS = "userbot/helpers/styles/impact.ttf"
+    else:
+        CNG_FONTS = gvar("CNG_FONTS")
+    if max(len(top), len(bottom)) < 21:
+        await dogememify_helper(CNG_FONTS, top, bottom, meme_file, meme)
+    else:
+        await dogememifyhelper(top, bottom, CNG_FONTS, meme_file, meme)
+    if cmd != "mmf":
+        meme = convert_tosticker(meme)
+    await event.client.send_file(
+        event.chat_id, meme, reply_to=dogeid, force_document=False
+    )
+    await output[0].delete()
+    for files in (meme, meme_file):
+        if files and exists(files):
+            remove(files)

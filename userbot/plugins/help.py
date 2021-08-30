@@ -129,7 +129,7 @@ async def cmdlist():
 
 
 @doge.bot_cmd(
-    pattern="([Dd][Oo][Gg][Ee]|[Hh]elp) ?(.c|.p|.all)? ?([\s\S]*)?",
+    pattern="([Dd]oge|help) ?(.c|.p|.a)? ?([\s\S]*)?",
     command=("doge", plugin_category),
     info={
         "header": "To get guide for DogeUserBot.",
@@ -150,8 +150,8 @@ async def cmdlist():
 )
 async def _(event):
     "🐶 To get guide for @DogeUserBot."
-    flag = event.pattern_match.group(1)
-    input_str = event.pattern_match.group(2)
+    flag = event.pattern_match.group(2)
+    input_str = event.pattern_match.group(3)
     reply_to_id = await reply_id(event)
     if flag and flag == ".c" and input_str:
         outstr = await cmdinfo(input_str, event)
@@ -161,7 +161,7 @@ async def _(event):
         outstr = await plugininfo(input_str, event, flag)
         if outstr is None:
             return
-    elif flag == ".all":
+    elif flag == ".a":
         outstr = await grpinfo()
     else:
         results = await event.client.inline_query(Config.BOT_USERNAME, "help")
@@ -172,14 +172,14 @@ async def _(event):
 
 
 @doge.bot_cmd(
-    pattern="cmd(s)(?:\s|$)([\s\S]*)",
-    command=("cmd", plugin_category),
+    pattern="cmds(?:\s|$)([\s\S]*)",
+    command=("cmds", plugin_category),
     info={
         "header": "To show list of cmds.",
         "description": "If no input is given then will show list of all commands.",
         "usage": [
             "{tr}cmds",
-            "{tr}cmd <plugin name> for paticular plugin",
+            "{tr}cmds <plugin name> for paticular plugin",
         ],
     },
 )

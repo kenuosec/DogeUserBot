@@ -1,10 +1,11 @@
 from io import BytesIO
-from os import path, remove
+from os import getcwd, remove
+from os.path import join
 from random import choice, randint, uniform
 from string import hexdigits
 from textwrap import wrap
 
-from colour import Color
+from colour import Color as colour
 from numpy import array, asarray, mean, sum
 from PIL import Image
 from PIL.ImageDraw import Draw
@@ -18,6 +19,9 @@ from PIL.ImageOps import grayscale as IOgrayscale
 from PIL.ImageOps import invert, mirror, posterize
 from PIL.ImageOps import solarize as IOsolarize
 from scipy.ndimage import gaussian_gradient_magnitude
+from wand.color import Color
+from wand.drawing import Drawing
+from wand.image import Image as wandimage
 from wordcloud import ImageColorGenerator, WordCloud
 
 
@@ -34,7 +38,7 @@ def random_color():
 
 
 def convert_toimage(image, filename=None):
-    filename = filename or path.join("./temp/", "temp.jpg")
+    filename = filename or join("./temp/", "temp.jpg")
     img = Image.open(image)
     if img.mode != "RGB":
         img = img.convert("RGB")
@@ -44,7 +48,7 @@ def convert_toimage(image, filename=None):
 
 
 def convert_tosticker(response, filename=None):
-    filename = filename or path.join("./temp/", "temp.webp")
+    filename = filename or join("./temp/", "temp.webp")
     image = Image.open(response)
     if image.mode != "RGB":
         image.convert("RGB")
@@ -180,7 +184,7 @@ def asciiart(in_f, SC, GCF, out_f, color1, color2, bgcolor="black"):
     img = (1.0 - img / img.max()) ** GCF * (chars.size - 1)
     lines = ("\n".join(("".join(r) for r in chars[img.astype(int)]))).split("\n")
     nbins = len(lines)
-    colorRange = list(Color(color1).range_to(Color(color2), nbins))
+    colorRange = list(colour(color1).range_to(colour(color2), nbins))
     newImg_width = letter_width * widthByLetter
     newImg_height = letter_height * heightByLetter
     newImg = Image.new("RGBA", (newImg_width, newImg_height), bgcolor)
@@ -268,206 +272,71 @@ async def pframehelper(image):
     return output
 
 
-async def dogemmfhelper(image_path, dogeinput, CNG_FONTS):
-    img = Image.open(image_path)
-    remove(image_path)
-    i_width, i_height = img.size
-    text = dogeinput
-    if ";" in text:
-        upper_text, lower_text = text.split(";")
-    else:
-        upper_text = text
-        lower_text = ""
+async def dogememify_helper(CNG_FONTS, topString, bottomString, filename, endname):
+    img = Image.open(filename)
+    imageSize = img.size
+    fontSize = int(imageSize[1] / 5)
+    font = truetype(CNG_FONTS, fontSize)
+    topTextSize = font.getsize(topString)
+    bottomTextSize = font.getsize(bottomString)
+    while topTextSize[0] > imageSize[0] - 20 or bottomTextSize[0] > imageSize[0] - 20:
+        fontSize -= 1
+        font = truetype(CNG_FONTS, fontSize)
+        topTextSize = font.getsize(topString)
+        bottomTextSize = font.getsize(bottomString)
+
+    topTextPositionX = (imageSize[0] / 2) - (topTextSize[0] / 2)
+    topTextPositionY = 0
+    topTextPosition = (topTextPositionX, topTextPositionY)
+
+    bottomTextPositionX = (imageSize[0] / 2) - (bottomTextSize[0] / 2)
+    bottomTextPositionY = imageSize[1] - bottomTextSize[1]
+    bottomTextPosition = (bottomTextPositionX, bottomTextPositionY)
     draw = Draw(img)
-    m_font = truetype(CNG_FONTS, int((70 / 640) * i_width))
-    current_h, pad = 10, 5
-    if upper_text:
-        for u_text in wrap(upper_text, width=15):
-            u_width, u_height = draw.textsize(u_text, font=m_font)
+    outlineRange = int(fontSize / 15)
+    for x in range(-outlineRange, outlineRange + 1):
+        for y in range(-outlineRange, outlineRange + 1):
             draw.text(
-                xy=(((i_width - u_width) / 2) - 1, int((current_h / 640) * i_width)),
-                text=u_text,
-                font=m_font,
-                fill=(0, 0, 0),
+                (topTextPosition[0] + x, topTextPosition[1] + y),
+                topString,
+                (0, 0, 0),
+                font=font,
             )
             draw.text(
-                xy=(((i_width - u_width) / 2) + 1, int((current_h / 640) * i_width)),
-                text=u_text,
-                font=m_font,
-                fill=(0, 0, 0),
+                (bottomTextPosition[0] + x, bottomTextPosition[1] + y),
+                bottomString,
+                (0, 0, 0),
+                font=font,
             )
-            draw.text(
-                xy=((i_width - u_width) / 2, int(((current_h / 640) * i_width)) - 1),
-                text=u_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-            draw.text(
-                xy=(((i_width - u_width) / 2), int(((current_h / 640) * i_width)) + 1),
-                text=u_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-            draw.text(
-                xy=((i_width - u_width) / 2, int((current_h / 640) * i_width)),
-                text=u_text,
-                font=m_font,
-                fill=(255, 255, 255),
-            )
-            current_h += u_height + pad
-    if lower_text:
-        for l_text in wrap(lower_text, width=15):
-            u_width, u_height = draw.textsize(l_text, font=m_font)
-            draw.text(
-                xy=(
-                    ((i_width - u_width) / 2) - 1,
-                    i_height - u_height - int((80 / 640) * i_width),
-                ),
-                text=l_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-            draw.text(
-                xy=(
-                    ((i_width - u_width) / 2) + 1,
-                    i_height - u_height - int((80 / 640) * i_width),
-                ),
-                text=l_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-            draw.text(
-                xy=(
-                    (i_width - u_width) / 2,
-                    (i_height - u_height - int((80 / 640) * i_width)) - 1,
-                ),
-                text=l_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-            draw.text(
-                xy=(
-                    (i_width - u_width) / 2,
-                    (i_height - u_height - int((80 / 640) * i_width)) + 1,
-                ),
-                text=l_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-            draw.text(
-                xy=(
-                    (i_width - u_width) / 2,
-                    i_height - u_height - int((80 / 640) * i_width),
-                ),
-                text=l_text,
-                font=m_font,
-                fill=(255, 255, 255),
-            )
-            current_h += u_height + pad
-    imag = "@DogeUserBot.webp"
-    img.save(imag, "WebP")
-    return imag
+    draw.text(topTextPosition, topString, (255, 255, 255), font=font)
+    draw.text(bottomTextPosition, bottomString, (255, 255, 255), font=font)
+    img.save(endname)
 
 
-async def dogemmshelper(image_path, dogeinput, CNG_FONTS):
-    img = Image.open(image_path)
-    remove(image_path)
-    i_width, i_height = img.size
-    text = dogeinput
-    if ";" in text:
-        upper_text, lower_text = text.split(";")
-    else:
-        upper_text = text
-        lower_text = ""
-    draw = Draw(img)
-    m_font = truetype(CNG_FONTS, int((70 / 640) * i_width))
-    current_h, pad = 10, 5
+async def dogememifyhelper(upper_text, lower_text, CNG_FONTS, picture_name, endname):
+    main_image = wandimage(filename=picture_name)
+    main_image.resize(
+        1024, int(((main_image.height * 1.0) / (main_image.width * 1.0)) * 1024.0)
+    )
+    upper_text = "\n".join(wrap(upper_text, get_warp_length(main_image.width))).upper()
+    lower_text = "\n".join(wrap(lower_text, get_warp_length(main_image.width))).upper()
+    MARGINS = [50, 150, 250, 350, 450]
+    lower_margin = MARGINS[lower_text.count("\n")]
+    text_draw = Drawing()
+    text_draw.font = join(getcwd(), CNG_FONTS)
+    text_draw.font_size = 100
+    text_draw.text_alignment = "center"
+    text_draw.stroke_color = Color("black")
+    text_draw.stroke_width = 3
+    text_draw.fill_color = Color("white")
     if upper_text:
-        for u_text in wrap(upper_text, width=15):
-            u_width, u_height = draw.textsize(u_text, font=m_font)
-            draw.text(
-                xy=(((i_width - u_width) / 2) - 1, int((current_h / 640) * i_width)),
-                text=u_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-            draw.text(
-                xy=(((i_width - u_width) / 2) + 1, int((current_h / 640) * i_width)),
-                text=u_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-            draw.text(
-                xy=((i_width - u_width) / 2, int(((current_h / 640) * i_width)) - 1),
-                text=u_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-            draw.text(
-                xy=(((i_width - u_width) / 2), int(((current_h / 640) * i_width)) + 1),
-                text=u_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-            draw.text(
-                xy=((i_width - u_width) / 2, int((current_h / 640) * i_width)),
-                text=u_text,
-                font=m_font,
-                fill=(255, 255, 255),
-            )
-            current_h += u_height + pad
+        text_draw.text((main_image.width) // 2, 80, upper_text)
     if lower_text:
-        for l_text in wrap(lower_text, width=15):
-            u_width, u_height = draw.textsize(l_text, font=m_font)
-            draw.text(
-                xy=(
-                    ((i_width - u_width) / 2) - 1,
-                    i_height - u_height - int((20 / 640) * i_width),
-                ),
-                text=l_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-            draw.text(
-                xy=(
-                    ((i_width - u_width) / 2) + 1,
-                    i_height - u_height - int((20 / 640) * i_width),
-                ),
-                text=l_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-            draw.text(
-                xy=(
-                    (i_width - u_width) / 2,
-                    (i_height - u_height - int((20 / 640) * i_width)) - 1,
-                ),
-                text=l_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-            draw.text(
-                xy=(
-                    (i_width - u_width) / 2,
-                    (i_height - u_height - int((20 / 640) * i_width)) + 1,
-                ),
-                text=l_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-            draw.text(
-                xy=(
-                    (i_width - u_width) / 2,
-                    i_height - u_height - int((20 / 640) * i_width),
-                ),
-                text=l_text,
-                font=m_font,
-                fill=(255, 255, 255),
-            )
-            current_h += u_height + pad
-    pics = "@DogeUserBot.png"
-    img.save(pics, "png")
-    return pics
+        text_draw.text(
+            (main_image.width) // 2, main_image.height - lower_margin, lower_text
+        )
+    text_draw(main_image)
+    main_image.save(filename=endname)
 
 
 def mediatoarttext(dogemedia, output):
@@ -495,9 +364,9 @@ def mediatoarttext(dogemedia, output):
     image_colors = ImageColorGenerator(image_color)
     wc.recolor(color_func=image_colors)
     outputfile = (
-        path.join("./temp", "textart.webp")
+        join("./temp", "textart.webp")
         if dogemedia
-        else path.join("./temp", "textart.jpg")
+        else join("./temp", "textart.jpg")
     )
     wc.to_file(outputfile)
     return outputfile

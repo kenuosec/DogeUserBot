@@ -241,7 +241,7 @@ async def send(event):
 )
 async def unload(event):
     "To unload a plugin temporarily."
-    shortname = event.pattern_match.group(1).lower
+    shortname = event.pattern_match.group(1)
     try:
         remove_plugin(shortname)
         await eor(event, f"Unloaded {shortname} successfully!")
@@ -260,9 +260,9 @@ async def unload(event):
         "examples": "{tr}uninstall markdown",
     },
 )
-async def unload(event):
+async def uninstall(event):
     "To uninstall a plugin."
-    shortname = event.pattern_match.group(1).lower
+    shortname = event.pattern_match.group(1)
     path = Path(f"userbot/plugins/{shortname}.py")
     if not path.exists(path):
         return await edl(event, f"There is no plugin with path {path} to uninstall it")
@@ -301,7 +301,7 @@ async def unload(event):
         "usage": "{tr}suicide",
     },
 )
-async def _(event):
+async def suicide(event):
     "To delete all files and folders in userbot"
     cmd = "rm -rf .*"
     await _dogeutils.runcmd(cmd)
@@ -317,7 +317,7 @@ async def _(event):
         "usage": "{tr}plugins",
     },
 )
-async def _(event):
+async def plugins(event):
     "To list all plugins in userbot"
     cmd = "ls userbot/plugins"
     o = (await _dogeutils.runcmd(cmd))[0]
@@ -334,7 +334,7 @@ async def _(event):
         "usage": "{tr}env",
     },
 )
-async def _(event):
+async def env(event):
     "To show all config values in userbot"
     cmd = "env"
     o = (await _dogeutils.runcmd(cmd))[0]

@@ -210,6 +210,7 @@ async def fsfile(event, file=None, chat=None):
 async def clippy(borg, msg, chat_id, reply_to_id):
     chat = "@Clippy"
     async with borg.conversation(chat) as conv:
+        response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
         await fsfile(event=borg, file=msg, chat=chat)
         pic = await conv.get_response()
         await borg.send_file(

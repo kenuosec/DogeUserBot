@@ -3,7 +3,7 @@ from datetime import datetime
 from os import makedirs, path, remove
 
 from requests import post
-from telethon.events import MessageEdited, NewMessage
+from telethon.events import NewMessage
 
 from . import (
     IBM_WATSON_CRED_PASSWORD,
@@ -42,7 +42,7 @@ async def _(event):
             )
         dogevent = await eor(event, "`I'm listening to voice...`")
         async with doge.conversation(chat) as conv:
-            response = conv.wait_event(MessageEdited(incoming=True, from_users=chat))
+            response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
             await fsmessage(event, reply, forward=True, chat=chat)
             response = await response
             if response.text.startswith("👋"):
@@ -67,7 +67,7 @@ async def _(event):
         if IBM_WATSON_CRED_URL is None or IBM_WATSON_CRED_PASSWORD is None:
             return await edl(
                 event,
-                "`You need to set the required ENV variables for this module. \nModule stopping`",
+                "`You need to set the required ENV variables for this module.\nModule stopping`",
             )
         start = datetime.now()
         langu = "en"
@@ -96,7 +96,6 @@ async def _(event):
         r = response.json()
         if "results" not in r:
             return await dogevent.edit(r["error"])
-        # process the json to appropriate string format
         results = r["results"]
         transcript_response = ""
         transcript_confidence = ""
@@ -115,7 +114,6 @@ async def _(event):
                 langu, transcript_response, ms, transcript_confidence
             )
         await dogevent.edit(string_to_show)
-        # now, remove the temporary file
         remove(required_file_name)
 
 
@@ -137,7 +135,7 @@ async def _(event):
         if response.text.startswith("📁"):
             await eor(
                 dogevent,
-                f"**Changed the setting:\n\n{response.text}**",
+                f"**Changed the setting:**\n\n{response.text}",
             )
         else:
             await edl(dogevent, "**Voicy not working!**")
