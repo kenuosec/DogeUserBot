@@ -22,14 +22,14 @@ async def country_(message):
     await eor(message, "`Searching For Country.....`")
     lol = message.pattern_match.group(1)
     if not lol:
-        await edl(message, "`Please Give Input!`")
-        return
+        return await edl(message, "`Please Give Input!`")
+
     country = CountryInfo(lol)
     try:
         a = country.info()
-    except:
-        await edl(message, "`Country not found. Maybe you need to learn geography!`")
-        return
+    except BaseException:
+        return await edl(message, "`Country not found. Maybe you need to learn geography!`")
+
     name = a.get("name")
     bb = a.get("altSpellings")
     hu = ""

@@ -189,7 +189,7 @@ async def load(event):
         await eor(
             event,
             f"Couldn't load {shortname} because of the following error:\
-                \n{e}",
+            \n{e}",
         )
 
 
@@ -282,7 +282,7 @@ async def uninstall(event):
                 search=shortname,
             ):
                 await message.delete()
-        except:
+        except BaseException:
             pass
         await eor(event, f"{shortname} uninstalled successfully!")
     except Exception as e:

@@ -19,8 +19,8 @@ plugin_category = "bot"
 async def _(event):
     "To check ping"
     flag = event.pattern_match.group(1)
-    start = datetime.now()
     if flag == "a":
+        start = datetime.now()
         dogevent = await eor(event, "!....")
         await sleep(0.3)
         await dogevent.edit("..!..")
@@ -43,13 +43,12 @@ async def _(event):
 ┗━━━━━━━━━━━━━━**",
         )
     elif flag == "f":
-        event = await eor(event, "🐶 Pong!")
+        start = datetime.now()
+        dogevent = await eor(event, "⬛⬛⬛⬛⬛⬛⬛⬛⬛")
         end = datetime.now()
         ms = (end - start).microseconds / 1000
         uptime = await get_readable_time((time() - StartTime))
-        animation_ttl = range(26)
         animation_chars = [
-            "⬛⬛⬛⬛⬛⬛⬛⬛⬛",
             "⬛⬛⬛⬛⬛⬛⬛⬛⬛\n\
 ⬛‎📶‎📶‎📶‎📶‎📶‎📶‎📶⬛",
             "⬛⬛⬛⬛⬛⬛⬛⬛⬛\n\
@@ -375,11 +374,11 @@ async def _(event):
 ⬛‎📶⬛‎📶‎📶‎📶‎📶‎📶⬛\n\
 ⬛⬛⬛⬛⬛⬛⬛⬛⬛",
         ]
-        for i in animation_ttl:
+        for i in range(24):
             await sleep(0.3)
-            await event.edit(animation_chars[i % 26])
-        await event.edit(
-            f"‎‎‎‎‎‎‎‎‎⬛⬛⬛⬛⬛⬛⬛⬛⬛\n\
+            await dogevent.edit(animation_chars[i % 24])
+        await dogevent.edit(
+            f"⬛⬛⬛⬛⬛⬛⬛⬛⬛\n\
 ⬛📶📶📶📶📶📶📶⬛\n\
 ⬛⬛⬛⬛📶⬛⬛📶⬛\n\
 ⬛⬛⬛⬛📶⬛⬛📶⬛\n\
@@ -412,6 +411,7 @@ async def _(event):
 ◽ Doɢᴇ oғ {mention}**",
         )
     else:
+        start = datetime.now()
         dogevent = await eor(event, "🐶 Pong!")
         end = datetime.now()
         ms = (end - start).microseconds / 1000

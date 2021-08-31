@@ -210,9 +210,8 @@ async def fsfile(event, file=None, chat=None):
 async def clippy(borg, msg, chat_id, reply_to_id):
     chat = "@Clippy"
     async with borg.conversation(chat) as conv:
-        response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
         await fsfile(event=borg, file=msg, chat=chat)
-        pic = await conv.get_response()
+        pic = await conv.wait_event(NewMessage(incoming=True, from_users=chat))
         await borg.send_file(
             chat_id,
             pic,
@@ -226,7 +225,7 @@ async def mememaker(event, msg, dog, chat_id, reply_to_id):
     chat = "@TheMemeMakerBot"
     async with event.client.conversation(chat) as conv:
         await fsmessage(event=event, text=msg, chat=chat)
-        pic = await conv.get_response()
+        pic = await conv.wait_event(NewMessage(incoming=True, from_users=chat))
         await dog.delete()
         await event.client.send_file(
             chat_id,
@@ -241,10 +240,9 @@ async def xiaomeme(event, msg, dogevent):
     chat = "@XiaomiGeeksBot"
     async with event.client.conversation(chat) as conv:
         await fsmessage(event=event, text=msg, chat=chat)
-        response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
-        respond = await response
+        xio = await conv.wait_event(NewMessage(incoming=True, from_users=chat))
         await dogevent.delete()
-        await event.client.forward_messages(event.chat_id, respond.message)
+        await event.client.forward_messages(event.chat_id, xio.message.message)
         await conv.mark_read()
         await conv.cancel_all()
 

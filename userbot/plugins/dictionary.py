@@ -134,7 +134,7 @@ async def tureng(event):
     url = "https://tureng.com/tr/turkce-ingilizce/" + word
     try:
         answer = get(url)
-    except:
+    except BaseException:
         return await edl(event, "No connection")
     soup = BeautifulSoup(answer.content, "html.parser")
     trlated = "The meaning of the word {}:\n\n".format(word)
@@ -144,5 +144,5 @@ async def tureng(event):
         for val in td[0:5]:
             trlated = "{} 👉 {}\n".format(trlated, val.text)
         await eor(event, trlated)
-    except:
+    except BaseException:
         await edl(event, "I couldn't find the result")

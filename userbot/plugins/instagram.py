@@ -114,7 +114,7 @@ async def iginfo(event):
         await dogevent.delete()
         await doge.send_file(event.chat_id, "@DogeUserBot.jpg", caption=msg)
         remove("@DogeUserBot.jpg")
-    except:
+    except BaseException:
         await edl(
             dogevent,
             f"**🚨 ERROR:\n⛔ Instagram username **`{last}`** is incorrect.\n\n💫 Check & try again!**",

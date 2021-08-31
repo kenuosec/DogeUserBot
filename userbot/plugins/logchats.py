@@ -58,13 +58,13 @@ async def monito_p_m_s(event):  # sourcery no-metrics
                             )
                         )
                     LOG_CHATS_.COUNT = 0
-                LOG_CHATS_.NEWPM = await event.client.send_message(
+                LOG_CHATS_.NEWPM = await tgbot.send_message(
                     Config.PM_LOGGER_GROUP_ID,
                     f"👤{_format.mentionuser(sender.first_name , sender.id)} has sent a new message \nID: `{chat.id}`",
                 )
             try:
                 if event.message:
-                    await event.client.forward_messages(
+                    await tgbot.forward_messages(
                         Config.PM_LOGGER_GROUP_ID, event.message, silent=True
                     )
                 LOG_CHATS_.COUNT += 1
@@ -131,7 +131,7 @@ async def log(log_text):
             reply_msg = await log_text.get_reply_message()
             await reply_msg.forward_to(BOTLOG_CHATID)
         elif log_text.pattern_match.group(1):
-            user = f"#LOG\nChat ID: {log_text.chat_id}\n\n"
+            user = f"#SAVED\nChat ID: {log_text.chat_id}\n\n"
             textx = user + log_text.pattern_match.group(1)
             await log_text.client.send_message(BOTLOG_CHATID, textx)
         else:

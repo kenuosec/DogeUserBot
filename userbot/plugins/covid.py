@@ -35,7 +35,7 @@ async def corona(event):
             "https://coronavirus-19-api.herokuapp.com/countries/"
             + country_names[country]
         ).json()
-    except:
+    except BaseException:
         return await edl(dogevent, "An error has occurred.")
 
     case = worldData["cases"]

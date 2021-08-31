@@ -12,9 +12,7 @@ from urllib3.exceptions import InsecureRequestWarning
 
 from . import (
     HEROKU_API_KEY,
-    HEROKU_APP,
     HEROKU_APP_NAME,
-    Config,
     Heroku,
     doge,
     edl,
@@ -52,13 +50,14 @@ async def variable(var):  # sourcery no-metrics
     """
     Manage most of ConfigVars setting, set new var, get current var, or delete var...
     """
-    if (Config.HEROKU_API_KEY is None) or (Config.HEROKU_APP_NAME is None):
+    if (HEROKU_API_KEY is None) or (HEROKU_APP_NAME is None):
         return await edl(
             var,
             "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`.",
         )
+    app = Heroku.app(HEROKU_APP_NAME)
     exe = var.pattern_match.group(1)
-    heroku_var = HEROKU_APP.config()
+    heroku_var = app.config()
     if exe == "get":
         dog = await eor(var, "`Getting information...`")
         await sleep(1.0)
@@ -142,7 +141,7 @@ async def dyno_usage(dyno):
     user_id = Heroku.account().id
     headers = {
         "User-Agent": useragent,
-        "Authorization": f"Bearer {Config.HEROKU_API_KEY}",
+        "Authorization": f"Bearer {HEROKU_API_KEY}",
         "Accept": "application/vnd.heroku+json; version=3.account-quotas",
     }
     path = "/accounts/" + user_id + "/actions/get-quota"
@@ -177,7 +176,7 @@ async def dyno_usage(dyno):
     await sleep(1.5)
     return await dyno.edit(
         "**Dyno Usage**:\n\n"
-        f" -> `Dyno usage for` **{Config.HEROKU_APP_NAME}**:\n"
+        f" -> `Dyno usage for` **{HEROKU_APP_NAME}**:\n"
         f"     •  `{AppHours}`**h** `{AppMinutes}`**m**\n"
         f"        **%**`{AppPercentage}`"
         "\n\n"

@@ -14,6 +14,7 @@ from . import (
     lan,
     logging,
     sgvar,
+    tgbot,
 )
 
 plugin_category = "bot"
@@ -124,14 +125,14 @@ async def dvdvdv(event):  # sourcery no-metrics
         if vname in oldvars:
             vname = oldvars[vname]
         if cmd == "set":
-            if not vinfo and vname == "ALIVE" or "AFK":
+            if not vinfo and (vname == "ALIVE" or vname == "AFK"):
                 return await edl(
                     event,
                     "**💠 Check @DogeTemp for alive templates.**",
                     45,
                 )
 
-            if len(vinfo) > 70 and vname == "AFKBIO" or "AFKRBIO":
+            if len(vinfo) > 70 and (vname == "AFKBIO" or vname == "AFKRBIO"):
                 return await edl(
                     event,
                     "**🚧 Max bio length is 70 characters.**",
@@ -310,70 +311,22 @@ async def lang_set(value):
     if arg not in LANGUAGES:
         return await eor(
             value,
-            f"`Invalid Language code !!`\n`Available language codes for TRT`:\n\n`{LANGUAGES}`",
+            f"`🚨 Invalid Language code!`\n**🌐 Available language codes:**\n\n`{LANGUAGES}`",
         )
     LANG = LANGUAGES[arg]
     if input_str == "trt":
         sgvar("TRT_LANG", arg)
-        await eor(value, f"`Language for Translator changed to {LANG.title()}.`")
+        await eor(value, f"**🌐 Language for Translator changed to {LANG.title()}.**")
     elif input_str == "tts":
         sgvar("TTS_LANG", arg)
-        await eor(value, f"`Language for Translated TTS changed to {LANG.title()}.`")
+        await eor(value, f"**🌐 Language for Text to Speech changed to {LANG.title()}.**")
     elif input_str == "tocr":
         sgvar("TOCR_LANG", arg)
-        await eor(value, f"`Language for Translated OCR changed to {LANG.title()}.`")
+        await eor(value, f"**🌐 Language for Translated OCR changed to {LANG.title()}.**")
     elif input_str == "ai":
         sgvar("AI_LANG", arg)
-        await eor(value, f"`Language for chatbot is changed to {LANG.title()}.`")
+        await eor(value, f"**🌐 Language for AI ChatBot changed to {LANG.title}.**")
     elif input_str == "xg":
-        XLANGLIST = [
-            "ar",
-            "be",
-            "bg",
-            "cn",
-            "cs",
-            "de",
-            "en",
-            "es",
-            "fr",
-            "id",
-            "it",
-            "mx",
-            "nl",
-            "pl",
-            "pt",
-            "ru",
-            "sq",
-            "tr",
-        ]
-        if not arg and arg not in XLANGLIST:
-            return await edl(
-                value,
-                "@XiaomiGeekBot Language List:\
-                        \n\
-                        \n🇸🇦 `ar` - Arabic (العربية)\
-                        \n🇧🇾 `be` - Belarusian (Беларуская)\
-                        \n🇧🇬 `bg` - Bulgarian (български език)\
-                        \n🇨🇳 `cn` - Chinese (中文)\
-                        \n🇨🇿 `cs` - Czech (česky)\
-                        \n🇩🇪 `de` - German (Deutsch)\
-                        \n🇬🇧 `en` - English (English)\
-                        \n🇪🇸 `es` - Spanish (español)\
-                        \n🇲🇽 `mx` - Spanish (Mexico) (español)\
-                        \n🇫🇷 `fr` - French (français)\
-                        \n🇮🇩 `id` - Indonesian (Bahasa Indonesia)\
-                        \n🇮🇹 `it` - Italian (Italiano)\
-                        \n🇳🇱 `nl` - Dutch (Nederlands)\
-                        \n🇵🇱 `pl` - Polish (polski)\
-                        \n🇵🇹 `pt` - Portuguese (Brazil) (Português)\
-                        \n🇷🇺 `ru` - Russian (русский язык)\
-                        \n🇦🇱 `sq` - Albanian (Shqip)\
-                        \n🇹🇷 `tr` - Turkish (Türkçe)\
-                        \n\
-                        \n",
-                time=60,
-            )
-
         dogevent = await eor(value, lan("processing"))
         chat = "@XiaomiGeeksBot"
         async with doge.conversation(chat) as conv:
@@ -413,39 +366,65 @@ async def lang_set(value):
                 xl = "sq - Albanian (Shqip)"
             elif arg == "tr":
                 xl = "tr - Turkish (Türkçe)"
-            await fsmessage(
+            try:
+                await fsmessage(
                 event=value,
                 text=xl,
                 chat=chat,
+                )
+            except UnboundLocalError:
+                return await edl(
+                value,
+                "🌐 @XiaomiGeekBot Language List:\
+                        \n\
+                        \n🇸🇦 `ar` - Arabic (العربية)\
+                        \n🇧🇾 `be` - Belarusian (Беларуская)\
+                        \n🇧🇬 `bg` - Bulgarian (български език)\
+                        \n🇨🇳 `cn` - Chinese (中文)\
+                        \n🇨🇿 `cs` - Czech (česky)\
+                        \n🇩🇪 `de` - German (Deutsch)\
+                        \n🇬🇧 `en` - English (English)\
+                        \n🇪🇸 `es` - Spanish (español)\
+                        \n🇲🇽 `mx` - Spanish (Mexico) (español)\
+                        \n🇫🇷 `fr` - French (français)\
+                        \n🇮🇩 `id` - Indonesian (Bahasa Indonesia)\
+                        \n🇮🇹 `it` - Italian (Italiano)\
+                        \n🇳🇱 `nl` - Dutch (Nederlands)\
+                        \n🇵🇱 `pl` - Polish (polski)\
+                        \n🇵🇹 `pt` - Portuguese (Brazil) (Português)\
+                        \n🇷🇺 `ru` - Russian (русский язык)\
+                        \n🇦🇱 `sq` - Albanian (Shqip)\
+                        \n🇹🇷 `tr` - Turkish (Türkçe)",
+                time=60,
             )
-            response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
-            respond = await response
+
+            await conv.wait_event(NewMessage(incoming=True, from_users=chat))
             await dogevent.edit(
-                f"**Changed @XiaomiGeeksBot language:**\n{respond.message.message}"
+                f"**🌐 Language for @XiaomiGeeksBot changed to {LANG.title}.**"
             )
             await conv.mark_read()
             await conv.cancel_all()
 
     if BOTLOG:
         if input_str == "trt":
-            await value.client.send_message(
-                BOTLOG_CHATID, f"`Language for Translator changed to {LANG.title()}.`"
+            await tgbot.send_message(
+                BOTLOG_CHATID, f"#SET_LANGUAGE\n\n**🌐 Language for Translator changed to {LANG.title()}.**"
             )
         elif input_str == "tts":
-            await value.client.send_message(
-                BOTLOG_CHATID, f"`Language for TTS changed to {LANG.title()}.`"
+            await tgbot.send_message(
+                BOTLOG_CHATID, f"#SET_LANGUAGE\n\n**🌐 Language for Text to Speech changed to {LANG.title()}.**"
             )
         elif input_str == "tocr":
-            await value.client.send_message(
+            await tgbot.send_message(
                 BOTLOG_CHATID,
-                f"`Language for Translated OCR changed to {LANG.title()}.`",
+                f"#SET_LANGUAGE\n\n**🌐 Language for Translated OCR changed to {LANG.title()}.**",
             )
         elif input_str == "ai":
-            await value.client.send_message(
-                BOTLOG_CHATID, f"`Language for chatbot is changed to {LANG.title()}.`"
+            await tgbot.send_message(
+                BOTLOG_CHATID, f"#SET_LANGUAGE\n\n**🌐 Language for AI ChatBot is changed to {LANG.title()}.**"
             )
         elif input_str == "xg":
-            await value.client.send_message(
+            await tgbot.send_message(
                 BOTLOG_CHATID,
-                f"`Language for @XiaomiGeekBot is changed to {LANG.title()}.`",
+                f"#SET_LANGUAGE\n\n**🌐 Language for @XiaomiGeekBot is changed to {LANG.title()}.**",
             )

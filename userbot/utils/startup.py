@@ -92,13 +92,13 @@ async def autous():
         else:
             try:
                 await doge(JoinChannelRequest("@DogeSup"))
-            except:
+            except BaseException:
                 pass
             try:
                 await doge(JoinChannelRequest("@DogePlugin"))
-            except:
+            except BaseException:
                 pass
-    except:
+    except BaseException:
         pass
 
 

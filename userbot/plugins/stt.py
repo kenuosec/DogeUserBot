@@ -42,9 +42,8 @@ async def _(event):
             )
         dogevent = await eor(event, "`I'm listening to voice...`")
         async with doge.conversation(chat) as conv:
-            response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
             await fsmessage(event, reply, forward=True, chat=chat)
-            response = await response
+            response = await conv.wait_event(NewMessage(incoming=True, from_users=chat))
             if response.text.startswith("👋"):
                 await eor(
                     dogevent,
@@ -63,7 +62,7 @@ async def _(event):
             await conv.mark_read()
             await conv.cancel_all()
 
-    except:
+    except BaseException:
         if IBM_WATSON_CRED_URL is None or IBM_WATSON_CRED_PASSWORD is None:
             return await edl(
                 event,
@@ -130,8 +129,7 @@ async def _(event):
     dogevent = await eor(event, lan("processing"))
     async with doge.conversation(chat) as conv:
         await fsmessage(event=event, text="/files", chat=chat)
-        response = conv.wait_event(NewMessage(incoming=True, from_users=chat))
-        response = await response
+        response = await conv.wait_event(NewMessage(incoming=True, from_users=chat))
         if response.text.startswith("📁"):
             await eor(
                 dogevent,

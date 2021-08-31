@@ -284,11 +284,11 @@ async def inline_handler(event):  # sourcery no-metrics
     if query_user_id == Config.OWNER_ID or query_user_id in Config.SUDO_USERS:
         hmm = compile("troll (.*) (.*)")
         match = findall(hmm, query)
-        inf = compile("sec (.*) (.*)")
+        inf = compile("s (.*) (.*)")
         match2 = findall(inf, query)
         hid = compile("hide (.*)")
         match3 = findall(hid, query)
-        if query.startswith("ㅤ") or query.startswith("dogeuserbot"):
+        if query.startswith("ㅤ"):
             buttons = [
                 (
                     Button.url("🐶 Doɢᴇ UsᴇʀBoᴛ", "https://t.me/DogeUserBot"),
@@ -411,7 +411,7 @@ async def inline_handler(event):  # sourcery no-metrics
             else:
                 dump(newtroll, open(troll, "w"))
         elif match2:
-            query = query[7:]
+            query = query[2:]
             user, txct = query.split(" ", 1)
             builder = event.builder
             secret = ospjoin("./userbot", "secrets.txt")
@@ -448,7 +448,7 @@ async def inline_handler(event):  # sourcery no-metrics
             timestamp = int(time() * 2)
             newsecret = {str(timestamp): {"userid": u, "text": txct}}
 
-            buttons = [Button.inline("🔐 Sʜoᴡ Mᴇssᴀɢᴇ", data=f"sec_{timestamp}")]
+            buttons = [Button.inline("🔐 Sʜoᴡ Mᴇssᴀɢᴇ", data=f"s_{timestamp}")]
             result = builder.article(
                 title="🐶 Doge UserBot Secret Message",
                 text=f"🔒 A whisper message to {teledoge}, only {teledoge} can see.",
@@ -483,7 +483,7 @@ async def inline_handler(event):  # sourcery no-metrics
                 dump(jsondata, open(hide, "w"))
             else:
                 dump(newhide, open(hide, "w"))
-        elif string == "help" or "doge":
+        elif (string == "help" or string == "doge"):
             _result = main_menu()
             result = builder.article(
                 title="🐶 Doge UserBot Help",

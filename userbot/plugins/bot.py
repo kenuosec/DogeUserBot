@@ -1,5 +1,5 @@
 # plugin by @Infinity20998 for Catuserbot
-from . import doge, edl, reply_id
+from . import doge, edl, reply_id, tgbot
 
 plugin_category = "bot"
 
@@ -20,7 +20,7 @@ async def botmsg(event):
     reply_to_id = await reply_id(event)
     if not text:
         return await edl(event, "__What should I send through bot? Give some text.__")
-    await event.client.tgbot.send_message(chat, text, reply_to=reply_to_id)
+    await tgbot.send_message(chat, text, reply_to=reply_to_id)
     await event.delete()
 
 
@@ -39,5 +39,5 @@ async def botmsg(event):
         return await edl(event, "Reply to a media file...")
     media = await reply_message.download_media()
     chat = event.chat_id
-    await event.client.tgbot.send_file(chat, media)
+    await tgbot.send_file(chat, media)
     await event.delete()
