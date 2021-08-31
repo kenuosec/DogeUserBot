@@ -319,10 +319,14 @@ async def lang_set(value):
         await eor(value, f"**🌐 Language for Translator changed to {LANG.title()}.**")
     elif input_str == "tts":
         sgvar("TTS_LANG", arg)
-        await eor(value, f"**🌐 Language for Text to Speech changed to {LANG.title()}.**")
+        await eor(
+            value, f"**🌐 Language for Text to Speech changed to {LANG.title()}.**"
+        )
     elif input_str == "tocr":
         sgvar("TOCR_LANG", arg)
-        await eor(value, f"**🌐 Language for Translated OCR changed to {LANG.title()}.**")
+        await eor(
+            value, f"**🌐 Language for Translated OCR changed to {LANG.title()}.**"
+        )
     elif input_str == "ai":
         sgvar("AI_LANG", arg)
         await eor(value, f"**🌐 Language for AI ChatBot changed to {LANG.title}.**")
@@ -368,14 +372,14 @@ async def lang_set(value):
                 xl = "tr - Turkish (Türkçe)"
             try:
                 await fsmessage(
-                event=value,
-                text=xl,
-                chat=chat,
+                    event=value,
+                    text=xl,
+                    chat=chat,
                 )
             except UnboundLocalError:
                 return await edl(
-                value,
-                "🌐 @XiaomiGeekBot Language List:\
+                    value,
+                    "🌐 @XiaomiGeekBot Language List:\
                         \n\
                         \n🇸🇦 `ar` - Arabic (العربية)\
                         \n🇧🇾 `be` - Belarusian (Беларуская)\
@@ -395,8 +399,8 @@ async def lang_set(value):
                         \n🇷🇺 `ru` - Russian (русский язык)\
                         \n🇦🇱 `sq` - Albanian (Shqip)\
                         \n🇹🇷 `tr` - Turkish (Türkçe)",
-                time=60,
-            )
+                    time=60,
+                )
 
             await conv.wait_event(NewMessage(incoming=True, from_users=chat))
             await dogevent.edit(
@@ -408,11 +412,13 @@ async def lang_set(value):
     if BOTLOG:
         if input_str == "trt":
             await tgbot.send_message(
-                BOTLOG_CHATID, f"#SET_LANGUAGE\n\n**🌐 Language for Translator changed to {LANG.title()}.**"
+                BOTLOG_CHATID,
+                f"#SET_LANGUAGE\n\n**🌐 Language for Translator changed to {LANG.title()}.**",
             )
         elif input_str == "tts":
             await tgbot.send_message(
-                BOTLOG_CHATID, f"#SET_LANGUAGE\n\n**🌐 Language for Text to Speech changed to {LANG.title()}.**"
+                BOTLOG_CHATID,
+                f"#SET_LANGUAGE\n\n**🌐 Language for Text to Speech changed to {LANG.title()}.**",
             )
         elif input_str == "tocr":
             await tgbot.send_message(
@@ -421,7 +427,8 @@ async def lang_set(value):
             )
         elif input_str == "ai":
             await tgbot.send_message(
-                BOTLOG_CHATID, f"#SET_LANGUAGE\n\n**🌐 Language for AI ChatBot is changed to {LANG.title()}.**"
+                BOTLOG_CHATID,
+                f"#SET_LANGUAGE\n\n**🌐 Language for AI ChatBot is changed to {LANG.title()}.**",
             )
         elif input_str == "xg":
             await tgbot.send_message(

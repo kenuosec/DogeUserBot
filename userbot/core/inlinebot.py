@@ -483,7 +483,7 @@ async def inline_handler(event):  # sourcery no-metrics
                 dump(jsondata, open(hide, "w"))
             else:
                 dump(newhide, open(hide, "w"))
-        elif (string == "help" or string == "doge"):
+        elif string == "help" or string == "doge":
             _result = main_menu()
             result = builder.article(
                 title="🐶 Doge UserBot Help",

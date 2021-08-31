@@ -28,7 +28,9 @@ async def country_(message):
     try:
         a = country.info()
     except BaseException:
-        return await edl(message, "`Country not found. Maybe you need to learn geography!`")
+        return await edl(
+            message, "`Country not found. Maybe you need to learn geography!`"
+        )
 
     name = a.get("name")
     bb = a.get("altSpellings")
